@@ -17,7 +17,7 @@ class Curriculum(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
-    course = db.relationship('Course', back_populate='curriculum')
+    course = db.relationship('Course', back_populates='curriculum')
 
     images = db.relationship('CurriculumImage', back_populates='curriculum')
 

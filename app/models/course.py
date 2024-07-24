@@ -17,7 +17,7 @@ class Course(db.Model):
 
     images = db.relationship('CourseImage', back_populates='course')
 
-    grade = db.relationship('Grade', back_populate='courses')
+    grade = db.relationship('Grade', back_populates='courses')
 
     student = db.relationship('Student', back_populates='courses')
 
