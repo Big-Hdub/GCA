@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from app.models.student import StudentCourses
 from sqlalchemy.sql import func
 
 
@@ -18,7 +19,7 @@ class Course(db.Model):
 
     grades = db.relationship('Grade', back_populates='courses')
 
-    student = db.relationship('Student', back_populates='courses')
+    students = db.relationship('Student', secondary=StudentCourses, back_populates='courses')
 
     curriculum = db.relationship('Curriculum', back_populates='course')
 
