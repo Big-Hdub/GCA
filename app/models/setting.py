@@ -17,7 +17,7 @@ class Setting(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
-    user = db.relationship('User', back_populates='settings')
+    user = db.relationship('User', back_populates='settings', )
 
     image = db.relationship('ProfileImage', back_populates='settings')
 

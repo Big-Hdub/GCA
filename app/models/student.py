@@ -10,6 +10,14 @@ Family = db.Table('families',
 if environment == 'production':
     Family.schema = SCHEMA
 
+StudentCourses = db.Table('student_courses',
+    db.Column('course_id', db.Integer, db.ForeignKey(add_prefix_for_prod('courses.id')), primary_key=True),
+    db.Column('student_id', db.Integer, db.ForeignKey(add_prefix_for_prod('students.id')), primary_key=True),
+    )
+
+if environment == 'production':
+    StudentCourses.schema = SCHEMA
+
 
 class Student(db.Model):
     __tablename__ = 'students'
@@ -19,7 +27,7 @@ class Student(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('courses.id')), nullable=False)
+    # course_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('courses.id')), nullable=False)
     grade_level = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
@@ -30,7 +38,7 @@ class Student(db.Model):
 
     grades = db.relationship('Grade', back_populates='student', cascade='all, delete-orphan')
 
-    courses = db.relationship('Course', back_populates='student')
+    courses = db.relationship('Course', secondary=StudentCourses, back_populates='students')
 
     complete = db.relationship('StudentCurriculum', back_populates='student', cascade='all, delete-orphan')
 
