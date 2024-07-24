@@ -35,7 +35,7 @@ class Student(db.Model):
 
     complete = db.relationship('StudentCurriculum', back_populates='student', cascade='all, delete-orphan')
 
-    curriculum = db.relationship('Curriculum', secondary='student_curriculums', back_populates='students')
+    curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary='student_curriculums', back_populates='students')
 
     def to_dict(self):
         return {
