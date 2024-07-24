@@ -25,7 +25,7 @@ class Curriculum(db.Model):
 
     students = db.relationship('Student', overlaps='curriculum,complete,student', secondary='student_curriculums', back_populates='curriculum')
     if environment == "production":
-        curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='students')
+        students = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='students')
 
     def to_dict(self):
         return {
