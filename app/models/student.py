@@ -1,5 +1,4 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-# from .student_curriculum import StudentCurriculum
 from sqlalchemy.sql import func
 
 
@@ -36,6 +35,8 @@ class Student(db.Model):
     complete = db.relationship('StudentCurriculum', back_populates='student', cascade='all, delete-orphan')
 
     curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary='student_curriculums', back_populates='students')
+    if environment == "production":
+        curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='students')
 
     def to_dict(self):
         return {
