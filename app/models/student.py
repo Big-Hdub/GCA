@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+# from .student_curriculum import StudentCurriculum
 from sqlalchemy.sql import func
 
 
@@ -18,8 +19,8 @@ class Student(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    course_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('courses.id')), nullable=False)
     grade_level = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
@@ -30,11 +31,11 @@ class Student(db.Model):
 
     grades = db.relationship('Grade', back_populates='student', cascade='all, delete-orphan')
 
-    courses = db.relationship('Course', back_populates='student', cascade='all, delete-orphan')
+    courses = db.relationship('Course', back_populates='student')
 
-    complete = db.relationship('StudentsCurriculum', back_populates='student', cascade='all, delete-orphan')
+    complete = db.relationship('StudentCurriculum', back_populates='student', cascade='all, delete-orphan')
 
-    curriculum = db.relationship('Curriculum', secondary='StudentCurriculum', back_populates='student')
+    curriculum = db.relationship('Curriculum', secondary='student_curriculums', back_populates='students')
 
     def to_dict(self):
         return {

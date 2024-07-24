@@ -19,7 +19,7 @@ class Setting(db.Model):
 
     user = db.relationship('User', back_populates='settings')
 
-    images = db.relationship('ProfileImage', back_populates='settings')
+    image = db.relationship('ProfileImage', back_populates='settings')
 
     def to_dict(self):
         return {

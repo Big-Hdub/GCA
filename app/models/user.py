@@ -25,8 +25,6 @@ class User(db.Model, UserMixin):
 
     students = db.relationship('Student', back_populates='user', cascade='all, delete-orphan')
 
-    courses = db.relationship('Course', back_populates='user', cascade='all, delete-orphan')
-
     children = db.relationship('Student', secondary=Family, back_populates='parents')
 
     @property

@@ -15,7 +15,7 @@ class Grade(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
-    students = db.relationship('Student', back_populates='grades')
+    student = db.relationship('Student', back_populates='grades')
 
     courses = db.relationship('Course', back_populates='grades')
 

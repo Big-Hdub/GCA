@@ -10,14 +10,13 @@ class Course(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     teacher = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
-    image_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('course_images.id')), nullable=False, default=1)
     title = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
     images = db.relationship('CourseImage', back_populates='course')
 
-    grade = db.relationship('Grade', back_populates='courses')
+    grades = db.relationship('Grade', back_populates='courses')
 
     student = db.relationship('Student', back_populates='courses')
 
