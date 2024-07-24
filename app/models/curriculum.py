@@ -23,7 +23,7 @@ class Curriculum(db.Model):
 
     complete = db.relationship('StudentCurriculum', back_populates='curriculum')
 
-    students = db.relationship('Student', secondary='student_curriculums', back_populates='curriculum')
+    students = db.relationship('Student', overlaps='curriculum,complete,student', secondary='student_curriculums', back_populates='curriculum')
 
     def to_dict(self):
         return {
