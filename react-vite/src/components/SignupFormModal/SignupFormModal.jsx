@@ -9,6 +9,9 @@ function SignupFormModal() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [age, setAge] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
@@ -25,6 +28,9 @@ function SignupFormModal() {
 
     const serverResponse = await dispatch(
       thunkSignup({
+        age,
+        first_name: firstName,
+        last_name: lastName,
         email,
         username,
         password,
@@ -39,10 +45,37 @@ function SignupFormModal() {
   };
 
   return (
-    <>
+    <div className="flex column">
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
-      <form onSubmit={handleSubmit}>
+      <form className="flex column" onSubmit={handleSubmit}>
+        <label>
+          Age
+          <input
+            type="number"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+          />
+        </label>
+        {errors.age && <p>{errors.age}</p>}
+        <label>
+          First name
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+          />
+        </label>
+        {errors.first_name && <p>{errors.first_name}</p>}
+        <label>
+          Last name
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </label>
+        {errors.last_name && <p>{errors.last_name}</p>}
         <label>
           Email
           <input
@@ -85,7 +118,7 @@ function SignupFormModal() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 
