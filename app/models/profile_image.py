@@ -13,6 +13,8 @@ class ProfileImage(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
+    settings = db.relationship('Setting', back_populates='image')
+
     def to_dict(self):
         return {
             'url': self.url

@@ -2,6 +2,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from .student import Family
 
 
 class User(db.Model, UserMixin):
@@ -19,6 +20,14 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
+
+    settings = db.relationship('Setting', back_populates='user', cascade='all, delete-orphan')
+
+    students = db.relationship('Student', back_populates='user', cascade='all, delete-orphan')
+
+    courses = db.relationship('Course', back_populates='user', cascade='all, delete-orphan')
+
+    children = db.relationship('Student', secondary=Family, back_populates='parents')
 
     @property
     def password(self):

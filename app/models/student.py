@@ -2,13 +2,13 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
 
-family = db.Table('families',
+Family = db.Table('families',
     db.Column('parent_id', db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), primary_key=True),
     db.Column('student_id', db.Integer, db.ForeignKey(add_prefix_for_prod('students.id')), primary_key=True),
     )
 
 if environment == 'production':
-    family.schema = SCHEMA
+    Family.schema = SCHEMA
 
 
 class Student(db.Model):
@@ -23,6 +23,18 @@ class Student(db.Model):
     grade_level = db.Column(db.String(20), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
+
+    user = db.relationship('User', back_populates='students')
+
+    parents = db.relationship('User', secondary=Family, back_populates='children')
+
+    grades = db.relationship('Grade', back_populates='student', cascade='all, delete-orphan')
+
+    courses = db.relationship('Course', back_populates='student', cascade='all, delete-orphan')
+
+    complete = db.relationship('StudentsCurriculum', back_populates='student', cascade='all, delete-orphan')
+
+    curriculum = db.relationship('Curriculum', secondary='StudentCurriculum', back_populates='student')
 
     def to_dict(self):
         return {

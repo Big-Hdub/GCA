@@ -2,27 +2,22 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
 
-class Grade(db.Model):
-    __tablename__ = 'grades'
+class CourseImage(db.Model):
+    __tablename__ = 'course_images'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    student_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('students.id')), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('courses.id')), nullable=False)
-    grade = db.Column(db.String(255), nullable=False)
+    url = db.Column(db.String(1500), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
-    students = db.relationship('Student', back_populates='grades')
-
-    courses = db.relationship('Course', back_populates='grades')
+    course = db.relationship('Course', back_populates='images')
 
     def to_dict(self):
         return {
             'id': self.id,
-            'student': self.user.to_dict(),
-            'course': self.course.to_dict(),
-            'grade': self.grade,
+            'image': self.url,
         }

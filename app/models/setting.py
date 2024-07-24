@@ -9,13 +9,17 @@ class Setting(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    image_id = db.Column(db.Integer, nullable=False, default=1)
+    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
+    image_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('profile_images.id')), nullable=False, default=1)
     theme = db.Column(db.String(6), nullable=False, default='light')
     role = db.Column(db.String(10), nullable=False, default='new')
     font_size = db.Column(db.String(3), nullable=False, default='20')
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
+
+    user = db.relationship('User', back_populates='settings')
+
+    images = db.relationship('ProfileImage', back_populates='settings')
 
     def to_dict(self):
         return {
