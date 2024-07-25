@@ -1,0 +1,26 @@
+footer {
+    background-color: var(--backgroud1);
+}
+
+footer>div>p.link {
+    margin-top: 20px;
+    font-size: x-large;
+}
+
+.footer-logo {
+    height: 100px;
+    width: 100px;
+    background-image: url(/logo.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+#social-button-container {
+    margin-right: 40px;
+}
+
+.footer-button {
+    margin-right: 40px;
+}

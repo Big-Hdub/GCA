@@ -1,19 +1,20 @@
-import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from 'react-icons/fa';
-import { thunkLogout } from "../../redux/session";
+import { useState, useEffect, useRef } from "react";
 import OpenModalMenuItem from "./OpenModalMenuItem";
-import LoginFormModal from "../LoginFormModal";
+import { thunkLogout } from "../../redux/session";
 import SignupFormModal from "../SignupFormModal";
+import LoginFormModal from "../LoginFormModal";
+import { FaUserCircle } from 'react-icons/fa';
+import './Profile.css';
 
-function ProfileButton() {
-  const dispatch = useDispatch();
+export default function ProfileButton({ icon }) {
+  const sessionUser = useSelector((store) => store.session.user);
   const [showMenu, setShowMenu] = useState(false);
-  const user = useSelector((store) => store.session.user);
+  const dispatch = useDispatch();
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    e.stopPropagation();
     setShowMenu(!showMenu);
   };
 
@@ -41,37 +42,37 @@ function ProfileButton() {
 
   return (
     <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
+      <button id="profile-button" onClick={toggleMenu}>
+        {icon ? { icon } : <FaUserCircle />}
       </button>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
+        <div className={"profile-dropdown"} ref={ulRef}>
+          {sessionUser ? (
+            <div>
+              <p>{sessionUser.username}</p>
+              <p>{sessionUser.email}</p>
+              <p>
                 <button onClick={logout}>Log Out</button>
-              </li>
-            </>
+              </p>
+            </div>
           ) : (
-            <>
+            <div className="flex column gap-15">
               <OpenModalMenuItem
+                main={true}
                 itemText="Log In"
                 onItemClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
               <OpenModalMenuItem
+                main={true}
                 itemText="Sign Up"
                 onItemClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-            </>
+            </div>
           )}
-        </ul>
+        </div>
       )}
     </>
   );
 }
-
-export default ProfileButton;
