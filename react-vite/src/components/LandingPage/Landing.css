@@ -5,6 +5,12 @@
     text-shadow: 2px 2px 2px white;
 }
 
+#header-logo {
+    border: solid black 3px;
+    box-shadow: 4px 4px 4px var(--backgroud1);
+    border-radius: 0 0 10px 0;
+}
+
 #farmer-logo {
     background-image: url(/GCFarmers.png);
     width: 400px;
@@ -49,9 +55,9 @@
 
 #landing-video-container {
     box-sizing: border-box;
-    padding: 5px;
-    background-color: var(--backgroud1);
     border-radius: 10px;
+    border: solid black 3px;
+    box-shadow: 4px 4px 4px var(--backgroud1);
 }
 
 #landing-video {

@@ -6,10 +6,12 @@ import SignupFormModal from "../SignupFormModal";
 import LoginFormModal from "../LoginFormModal";
 import { FaUserCircle } from 'react-icons/fa';
 import './Profile.css';
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileButton({ icon }) {
   const sessionUser = useSelector((store) => store.session.user);
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const ulRef = useRef();
 
@@ -36,7 +38,8 @@ export default function ProfileButton({ icon }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(thunkLogout());
+    dispatch(thunkLogout()).then(() =>
+      navigate('/'))
     closeMenu();
   };
 
@@ -61,13 +64,13 @@ export default function ProfileButton({ icon }) {
                 main={true}
                 itemText="Log In"
                 onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
+                modalComponent={<LoginFormModal navigate={() => navigate('/dashboard')} />}
               />
               <OpenModalMenuItem
                 main={true}
                 itemText="Sign Up"
                 onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
+                modalComponent={<SignupFormModal navigate={() => navigate('/dashboard')} />}
               />
             </div>
           )}

@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux"
 import Section1 from "./Section1"
 import Section2 from "./Section2"
 import Section3 from "./Section3"
@@ -6,12 +7,22 @@ import Section5 from "./Section5"
 import Header from "./Header"
 import Footer from "../Footer"
 import './Landing.css'
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 export default function LandingPage() {
+    const sessionUser = useSelector((store) => store.session.user);
+    const navigate = useNavigate();
 
-    return (
-        <div className='flex column landing'>
+    useEffect(() => {
+        if (sessionUser) {
+            navigate('/dashboard');
+        }
+    })
+
+    return (<>
+        {!sessionUser && <div className='flex column landing'>
             <Header />
             <main className="flex column">
                 <Section1 />
@@ -21,6 +32,7 @@ export default function LandingPage() {
                 <Section5 />
                 <Footer />
             </main>
-        </div>
+        </div>}
+    </>
     )
 }

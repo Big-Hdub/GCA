@@ -87,10 +87,25 @@
     color: white;
     text-shadow: 2px 2px 2px black;
     border-radius: 5px;
+    text-shadow: 2px 2px 2px black;
+}
+
+.button>a {
+    color: white;
+    text-decoration-line: none;
+    text-shadow: 2px 2px 2px black;
 }
 
 .button:hover {
     cursor: pointer;
     background-color: rgb(70, 112, 160);
     color: rgb(58, 110, 110)
+}
+
+.error {
+    color: rgb(194, 0, 0);
+}
+
+.minh100 {
+    min-height: 100vh;
 }

@@ -4,7 +4,7 @@ import { useModal } from "../../context/Modal";
 import { thunkSignup } from "../../redux/session";
 import "./SignupForm.css";
 
-function SignupFormModal() {
+function SignupFormModal({ navigate }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -40,6 +40,7 @@ function SignupFormModal() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
+      navigate();
       closeModal();
     }
   };
@@ -48,7 +49,7 @@ function SignupFormModal() {
     <div id="signup-modal"
       className="flex column gap-15 acenter">
       <div id="signup-form-logo"></div>
-      {errors.server && <p>{errors.server}</p>}
+      {errors.server && <p className="error">{errors.server}</p>}
       <form id="signup-modal-form"
         className="flex column gap-10" onSubmit={handleSubmit}>
         <label>
@@ -59,7 +60,7 @@ function SignupFormModal() {
           value={age}
           onChange={(e) => setAge(e.target.value)}
         />
-        {errors.age && <p>{errors.age}</p>}
+        {errors.age && <p className="error">{errors.age}</p>}
         <label>
           First name
         </label>
@@ -68,7 +69,7 @@ function SignupFormModal() {
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
-        {errors.first_name && <p>{errors.first_name}</p>}
+        {errors.first_name && <p className="error">{errors.first_name}</p>}
         <label>
           Last name
         </label>
@@ -77,7 +78,7 @@ function SignupFormModal() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-        {errors.last_name && <p>{errors.last_name}</p>}
+        {errors.last_name && <p className="error">{errors.last_name}</p>}
         <label>
           Email
         </label>
@@ -85,9 +86,8 @@ function SignupFormModal() {
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
         />
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="error">{errors.email}</p>}
         <label>
           Username
         </label>
@@ -95,9 +95,8 @@ function SignupFormModal() {
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
         />
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="error">{errors.username}</p>}
         <label>
           Password
         </label>
@@ -105,9 +104,8 @@ function SignupFormModal() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="error">{errors.password}</p>}
         <label>
           Confirm Password
         </label>
@@ -115,9 +113,8 @@ function SignupFormModal() {
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          required
         />
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
         <button className="button aselfend" type="submit">Sign Up</button>
       </form>
     </div>
