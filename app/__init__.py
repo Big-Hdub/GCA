@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, session, redirect
-from flask_wtf.csrf import CSRFProtect, generate_csrf
+from flask import Flask, request, redirect
+from flask_wtf.csrf import generate_csrf
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
-from .api.static_routes import static_routes
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from .seeds import seed_commands
@@ -22,26 +21,17 @@ login.login_view = 'auth.unauthorized'
 def load_user(id):
     return User.query.get(int(id))
 
-
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
-app.register_blueprint(static_routes, url_prefix='/api/static')
 db.init_app(app)
 Migrate(app, db)
-
-# Application Security
 CORS(app)
 
 
-# Since we are deploying with Docker and Flask,
-# we won't be using a buildpack when we deploy to Heroku.
-# Therefore, we need to make sure that in production any
-# request made over http is redirected to https.
-# Well.........
 @app.before_request
 def https_redirect():
     if os.environ.get('FLASK_ENV') == 'production':
@@ -83,6 +73,14 @@ def react_root(path):
     react builds in the production environment for favicon
     or index.html requests
     """
+    if path == 'logo.png':
+        return app.send_from_directory('public' 'logo.png')
+    if path == 'fields.jpg':
+        return app.send_from_directory('public' 'fields.jpg')
+    if path == 'GCFarmers.png':
+        return app.send_from_directory('public', 'GCFarmers.png')
+    if path == 'cross.jpg':
+        return app.send_from_directory('public' 'cross.jpg')
     if path == 'favicon.ico':
         return app.send_from_directory('public', 'favicon.ico')
     return app.send_static_file('index.html')
