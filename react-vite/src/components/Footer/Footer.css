@@ -17,19 +17,10 @@ footer>div>p.link {
     cursor: pointer;
 }
 
-.footer-buttons {
-    padding: 10px;
-    margin-right: 40px;
-    background-color: rgb(87, 128, 175);
-    color: white;
-    border-radius: 5px;
-}
-
-.footer-buttons:hover {
-    cursor: pointer;
-    background-color: rgb(70, 112, 160);
-}
-
 #social-button-container {
+    margin-right: 40px;
+}
+
+.footer-button {
     margin-right: 40px;
 }

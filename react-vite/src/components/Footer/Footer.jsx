@@ -11,8 +11,8 @@ export default function Footer() {
                 <p className="link">contact us</p>
             </div>
             <div id='social-button-container' className='flex acenter'>
-                <div><button className='footer-buttons'>Github</button></div>
-                <div><button className='footer-buttons'>Linkedin</button></div>
+                <div><button className='button footer-button'>Github</button></div>
+                <div><button className='button footer-button'>Linkedin</button></div>
             </div>
         </footer>
     )

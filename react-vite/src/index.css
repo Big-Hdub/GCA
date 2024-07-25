@@ -6,8 +6,16 @@
     margin: 0;
 }
 
+.gap-10 {
+    gap: 10px;
+}
+
 .gap-15 {
     gap: 15px;
+}
+
+.aselfstart {
+    align-self: start;
 }
 
 .acenter {
@@ -16,6 +24,10 @@
 
 .aselfcenter {
     align-self: center;
+}
+
+.aselfend {
+    align-self: end;
 }
 
 .aend {
@@ -67,4 +79,16 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top center;
+}
+
+.button {
+    padding: 10px;
+    background-color: rgb(87, 128, 175);
+    color: white;
+    border-radius: 5px;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: rgb(70, 112, 160);
 }
