@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 
-function LoginFormModal() {
+function LoginFormModal({ navigate }) {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +24,7 @@ function LoginFormModal() {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
+      navigate();
       closeModal();
     }
   };
@@ -44,7 +45,7 @@ function LoginFormModal() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="error">{errors.email}</p>}
         <label>
           Password
         </label>
@@ -54,7 +55,7 @@ function LoginFormModal() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="error">{errors.password}</p>}
         <button className="button aselfend" type="submit">Log In</button>
       </form>
     </div>
