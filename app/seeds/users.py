@@ -34,26 +34,29 @@ data=[
 def seed_users():
     default_image=ProfileImage(**image)
     db.session.add(default_image)
+    db.session.commit()
     for info in data:
         user = User(username=info['username'], email=info['email'], password=info['password'], age=info['age'], first_name=info['first_name'], last_name=info['last_name'])
+        db.session.add(user)
+        db.session.flush()
         setting = Setting(user_id=user.id)
         if 'theme' in info.keys():
             setting.theme=info['theme']
-        if info['role']=='admin':
-            setting.role='admin'
-        if info['role']=='teacher':
-            setting.role='teacher'
-        if info['role']=='parent':
-            setting.role='parent'
+        setting.role=info['role']
+        db.session.add(setting)
+
         if info['role']=='student':
-            setting.role='student'
             student = Student(user_id=user.id, grade_level=info['grade'])
             user.students.append(student)
+            db.session.add(student)
+            db.session.flush()
+
             parents = User.query.filter(User.last_name==user.last_name, User.id!=student.user_id)
             for parent in parents:
                 parent.children.append(student)
+
         user.settings.append(setting)
-        db.session.add(user)
+
     db.session.commit()
 
 def undo_users():
