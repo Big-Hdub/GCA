@@ -85,10 +85,12 @@
     padding: 10px;
     background-color: rgb(87, 128, 175);
     color: white;
+    text-shadow: 2px 2px 2px black;
     border-radius: 5px;
 }
 
 .button:hover {
     cursor: pointer;
     background-color: rgb(70, 112, 160);
+    color: rgb(58, 110, 110)
 }
