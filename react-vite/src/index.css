@@ -1,8 +1,70 @@
-/* TODO: Add sitewide styles */
+:root {
+    --backgroud1: rgb(45, 83, 96)
+}
+
+* {
+    margin: 0;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.acenter {
+    align-items: center;
+}
+
+.aselfcenter {
+    align-self: center;
+}
+
+.aend {
+    align-items: end;
+}
+
+.tend {
+    text-align: end;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.around {
+    justify-content: space-around;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.w100 {
+    width: 100vw;
+}
+
 .flex {
     display: flex;
 }
 
 .column {
     flex-direction: column;
+}
+
+.link {
+    cursor: pointer;
+    color: darkcyan;
+    text-shadow: 2px 2px 2px black;
+}
+
+.link:hover {
+    color: rgb(58, 110, 110)
+}
+
+.landing {
+    min-height: 100vh;
+    min-width: 100vw;
+    background-image: url(/fields.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
 }

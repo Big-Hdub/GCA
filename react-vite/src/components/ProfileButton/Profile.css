@@ -1,0 +1,28 @@
+#profile-button {
+  margin-right: 50px;
+  margin-top: 60px;
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+  padding: 0;
+  align-self: start;
+  background-color: rgb(53, 102, 104);
+  border: 4px solid var(--backgroud1);
+}
+
+#profile-button>svg {
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background-color: rgb(160, 211, 218);
+}
+
+.profile-dropdown {
+  position: absolute;
+  top: 160px;
+  right: 25px;
+  background-color: var(--backgroud1);
+  font-size: x-large;
+  color: white;
+  padding: 15px;
+}
