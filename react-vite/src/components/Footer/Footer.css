@@ -1,5 +1,10 @@
 footer {
     background-color: var(--backgroud1);
+    border-top: solid black 3px;
+    box-shadow: 0px 0px 12px var(--backgroud1);
+    position: relative;
+    width: 100vw;
+    bottom: 7px;
 }
 
 footer>div>p.link {

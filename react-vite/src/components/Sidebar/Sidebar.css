@@ -1,0 +1,30 @@
+#sidebar {
+    width: 220px;
+    background-color: var(--backgroud1);
+    padding-top: 25px;
+    box-sizing: border-box;
+    border-right: 3px solid black;
+    box-shadow: 4px 0px 4px var(--backgroud1);
+    position: relative;
+    top: -6px;
+}
+
+#sidebar>div>p.link {
+    color: white;
+}
+
+#sidebar>div>p.link:hover {
+    color: white;
+    color: aqua;
+}
+
+#sidebar-selection {
+    position: relative;
+    background-color: rgb(26, 58, 65, 50%);
+    padding: 10px 0;
+    z-index: 2;
+}
+
+.sidebar-not-selected {
+    padding: 10px 0;
+}
