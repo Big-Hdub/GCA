@@ -1,8 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import LandingPage from '../components/LandingPage';
-import Layout from './Layout';
 import Construction from '../components/Construction';
+import LandingPage from '../components/LandingPage';
 import Dashboard from '../components/Dashboard';
+import Settings from '../components/Settings';
+import Courses from '../components/Courses';
+import Account from '../components/Account';
+import Grades from '../components/Grades';
+import Layout from './Layout';
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +19,22 @@ export const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <Dashboard main={true} />
+      },
+      {
+        path: 'courses',
+        element: <Courses main={true} />
+      },
+      {
+        path: 'account',
+        element: <Account main={true} />
+      },
+      {
+        path: 'grades',
+        element: <Grades main={true} />
+      },
+      {
+        path: 'settings',
+        element: <Settings main={true} />
       },
       {
         path: 'about',

@@ -29,4 +29,5 @@
   border-radius: 5px;
   border: solid black 3px;
   box-shadow: 4px 4px 4px var(--backgroud1);
+  z-index: 15;
 }

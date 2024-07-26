@@ -1,9 +1,11 @@
 :root {
-    --backgroud1: rgb(45, 83, 96)
+    --backgroud1: rgb(45, 83, 96);
+    /* background-color: var(--backgroud1); */
 }
 
 * {
     margin: 0;
+    padding: 0;
 }
 
 .gap-10 {
@@ -12,6 +14,14 @@
 
 .gap-15 {
     gap: 15px;
+}
+
+.gap-25 {
+    gap: 25px;
+}
+
+.gap-60 {
+    gap: 60px
 }
 
 .aselfstart {
@@ -106,4 +116,20 @@
 
 .minh100 {
     min-height: 100vh;
+}
+
+.mleft-25 {
+    margin-left: 25px;
+}
+
+.theme-main-background {
+    background-color: rgb(205, 241, 235);
+}
+
+.margin-15 {
+    margin: 15px;
+}
+
+.margin-40 {
+    margin: 40px;
 }

@@ -4,10 +4,10 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Footer from "../Footer";
-import './Dashboard.css'
+import './Account.css'
 
 
-export default function Dashboard() {
+export default function Account() {
     const sessionUser = useSelector((store) => store.session.user);
     const navigate = useNavigate();
 
@@ -21,15 +21,15 @@ export default function Dashboard() {
             <div className='flex column between theme-main-background'>
                 <Header main={true} />
                 <main id="main-container" className="flex minh100 gap-60">
-                    <Sidebar selection='dashboard' />
-                    <div id="dashboard-container" className="flex gap-15">
+                    <Sidebar selection='account' />
+                    <div id="account-container" className="flex gap-15">
 
 
-                        <div id="dashboard-content" className="flex gap-15">
-                            <div className="dashboard-content-card"></div>
-                            <div className="dashboard-content-card"></div>
-                            <div className="dashboard-content-card"></div>
-                            <div className="dashboard-content-card"></div>
+                        <div id="account-content" className="flex gap-15">
+                            <div className="account-content-card"></div>
+                            <div className="account-content-card"></div>
+                            <div className="account-content-card"></div>
+                            <div className="account-content-card"></div>
                         </div>
                     </div>
                 </main>

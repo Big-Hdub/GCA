@@ -51,15 +51,15 @@ export default function ProfileButton({ icon }) {
       {showMenu && (
         <div className={"profile-dropdown"} ref={ulRef}>
           {sessionUser ? (
-            <div>
+            <div className="flex column gap-25 margin-15">
               <p>{sessionUser.username}</p>
               <p>{sessionUser.email}</p>
               <p>
-                <button onClick={logout}>Log Out</button>
+                <button className="button" onClick={logout}>Log Out</button>
               </p>
             </div>
           ) : (
-            <div className="flex column gap-15">
+            <div className="flex column gap-25 margin-15">
               <OpenModalMenuItem
                 main={true}
                 itemText="Log In"
