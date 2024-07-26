@@ -30,3 +30,10 @@ class Setting(db.Model):
             'role': self.role,
             'font_size': self.font_size
         }
+
+    def to_dict_session(self):
+        return {
+            'image': self.image.url,
+            'theme': self.theme,
+            'font_size': self.font_size
+        }

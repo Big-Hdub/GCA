@@ -1,6 +1,11 @@
 :root {
     --backgroud1: rgb(45, 83, 96);
-    /* background-color: var(--backgroud1); */
+    --light-theme1: rgb(205, 241, 235);
+    --light-theme2: rgba(180, 225, 217, 0.8);
+    --light-theme3: rgba(255, 255, 255, 0.2);
+    --dark-theme1: rgb(49, 49, 49);
+    --dark-theme2: rgb(79, 85, 84);
+    --dark-theme3: rgba(26, 58, 65, 0.57);
 }
 
 * {
@@ -18,6 +23,10 @@
 
 .gap-25 {
     gap: 25px;
+}
+
+.gap-40 {
+    gap: 40px;
 }
 
 .gap-60 {
@@ -132,4 +141,49 @@
 
 .margin-40 {
     margin: 40px;
+}
+
+.light1,
+.light2,
+.light3 {
+    border: solid black 3px;
+    box-shadow: 4px 4px 4px var(--backgroud1);
+}
+
+.light1 {
+    background-color: var(--light-theme1);
+}
+
+.light2 {
+    background-color: var(--light-theme2);
+}
+
+.light3 {
+    background-color: var(--light-theme3);
+}
+
+.dark {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 3px 3px 4px var(--backgroud1);
+}
+
+.dark1,
+.dark2,
+.dark3 {
+    border: solid rgba(51, 51, 53, 0.788) 3px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.712);
+}
+
+.dark1 {
+    background-color: var(--dark-theme1);
+}
+
+.dark2 {
+    background-color: var(--dark-theme2);
+}
+
+.dark3 {
+    background-color: var(--dark-theme3);
 }

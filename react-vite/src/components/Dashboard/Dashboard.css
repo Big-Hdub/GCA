@@ -1,14 +1,18 @@
 #dashboard-container {
-    background-color: var(--backgroud1);
-    margin-right: 4vw;
     width: 80%;
+}
+
+#dashboard-welcome {
+    margin-bottom: 40px;
+}
+
+#dashboard-cards-container {
+    width: 100%;
     justify-content: center;
     height: fit-content;
     position: relative;
     z-index: 4;
     border-radius: 15px;
-    border: solid black 3px;
-    box-shadow: 4px 4px 4px var(--backgroud1);
     margin-bottom: 40px;
 }
 
@@ -24,15 +28,31 @@
     gap: 40px;
 }
 
+#dashboard-cards-container,
+#dashboard-lessons-title,
+#dashboard-verse-container,
+#dashboard-welcome {
+    position: relative;
+    top: -150px;
+}
+
+#dashboard-verse-container {
+    width: 100%;
+    min-height: 150px;
+    border-radius: 15px;
+    padding: 40px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+}
+
 .dashboard-content-card {
     position: relative;
     width: 48%;
     height: 200px;
-    background-color: rgb(205, 241, 235);
     z-index: 6;
     border-radius: 15px;
-    border: solid black 3px;
-    box-shadow: 4px 4px 4px var(--backgroud1);
+
 }
 
 #main-container {
