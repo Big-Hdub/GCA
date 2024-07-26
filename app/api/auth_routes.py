@@ -4,6 +4,8 @@ from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 
+from app.models.setting import Setting
+
 auth_routes = Blueprint('auth', __name__)
 
 
@@ -13,7 +15,7 @@ def authenticate():
     Authenticates a user.
     """
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        return current_user.to_dict_session()
     return {'errors': {'message': 'Unauthorized'}}, 401
 
 
@@ -30,7 +32,7 @@ def login():
         # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        return user.to_dict_session()
     return form.errors, 401
 
 
@@ -60,10 +62,12 @@ def sign_up():
             email=form.data['email'],
             password=form.data['password']
         )
+        settings = Setting(user_id=user.id)
+        user.settings.append(settings)
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        return user.to_dict_session()
     return form.errors, 401
 
 

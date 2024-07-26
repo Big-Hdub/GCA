@@ -1,0 +1,40 @@
+#courses-container {
+    background-color: var(--backgroud1);
+    margin-right: 4vw;
+    width: 80%;
+    justify-content: center;
+    height: fit-content;
+    position: relative;
+    z-index: 4;
+    border-radius: 15px;
+    border: solid black 3px;
+    box-shadow: 4px 4px 4px var(--backgroud1);
+    margin-bottom: 40px;
+}
+
+#courses-content {
+    height: fit-content;
+    position: relative;
+    flex-wrap: wrap;
+    margin: 40px;
+    width: fit-content;
+    max-width: 100%;
+    z-index: 5;
+    flex: 15px;
+    gap: 40px;
+}
+
+.courses-content-card {
+    position: relative;
+    width: 48%;
+    height: 200px;
+    background-color: rgb(205, 241, 235);
+    z-index: 6;
+    border-radius: 15px;
+    border: solid black 3px;
+    box-shadow: 4px 4px 4px var(--backgroud1);
+}
+
+#main-container {
+    width: 100vw;
+}

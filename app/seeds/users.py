@@ -32,9 +32,11 @@ data=[
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
-    default_image=ProfileImage(**image)
-    db.session.add(default_image)
-    db.session.commit()
+    existingImage=ProfileImage.query.filter(ProfileImage.url==image['url'])
+    if not existingImage:
+        default_image=ProfileImage(**image)
+        db.session.add(default_image)
+        db.session.flush()
     for info in data:
         user = User(username=info['username'], email=info['email'], password=info['password'], age=info['age'], first_name=info['first_name'], last_name=info['last_name'])
         db.session.add(user)
@@ -44,19 +46,15 @@ def seed_users():
             setting.theme=info['theme']
         setting.role=info['role']
         db.session.add(setting)
-
         if info['role']=='student':
             student = Student(user_id=user.id, grade_level=info['grade'])
             user.students.append(student)
             db.session.add(student)
             db.session.flush()
-
             parents = User.query.filter(User.last_name==user.last_name, User.id!=student.user_id)
             for parent in parents:
                 parent.children.append(student)
-
         user.settings.append(setting)
-
     db.session.commit()
 
 def undo_users():
@@ -64,7 +62,5 @@ def undo_users():
         user = User.query.filter(User.username==info['username']).first()
         if user:
             db.session.delete(user)
-    delete_image = ProfileImage.query.filter(ProfileImage.url==image['url']).first()
-    if delete_image:
-        db.session.delete(delete_image)
+        db.session.flush()
     db.session.commit()

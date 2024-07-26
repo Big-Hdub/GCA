@@ -7,8 +7,11 @@
 
 #header-logo {
     border: solid black 3px;
-    box-shadow: 4px 4px 4px var(--backgroud1);
+    /* box-shadow: 4px 4px 4px var(--backgroud1); */
     border-radius: 0 0 10px 0;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
 }
 
 #farmer-logo {

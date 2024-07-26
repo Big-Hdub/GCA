@@ -1,9 +1,16 @@
 :root {
-    --backgroud1: rgb(45, 83, 96)
+    --backgroud1: rgb(45, 83, 96);
+    --light-theme1: rgb(205, 241, 235);
+    --light-theme2: rgba(180, 225, 217, 0.8);
+    --light-theme3: rgba(255, 255, 255, 0.2);
+    --dark-theme1: rgb(49, 49, 49);
+    --dark-theme2: rgb(79, 85, 84);
+    --dark-theme3: rgba(26, 58, 65, 0.57);
 }
 
 * {
     margin: 0;
+    padding: 0;
 }
 
 .gap-10 {
@@ -12,6 +19,18 @@
 
 .gap-15 {
     gap: 15px;
+}
+
+.gap-25 {
+    gap: 25px;
+}
+
+.gap-40 {
+    gap: 40px;
+}
+
+.gap-60 {
+    gap: 60px
 }
 
 .aselfstart {
@@ -85,6 +104,7 @@
     padding: 10px;
     background-color: rgb(87, 128, 175);
     color: white;
+    text-shadow: 2px 2px 2px black;
     border-radius: 5px;
     text-shadow: 2px 2px 2px black;
 }
@@ -98,6 +118,7 @@
 .button:hover {
     cursor: pointer;
     background-color: rgb(70, 112, 160);
+    color: rgb(58, 110, 110)
 }
 
 .error {
@@ -106,4 +127,73 @@
 
 .minh100 {
     min-height: 100vh;
+}
+
+.error {
+    color: rgb(194, 0, 0);
+}
+
+.minh100 {
+    min-height: 100vh;
+}
+
+.mleft-25 {
+    margin-left: 25px;
+}
+
+.theme-main-background {
+    background-color: rgb(205, 241, 235);
+}
+
+.margin-15 {
+    margin: 15px;
+}
+
+.margin-40 {
+    margin: 40px;
+}
+
+.light1,
+.light2,
+.light3 {
+    border: solid black 3px;
+    box-shadow: 4px 4px 4px var(--backgroud1);
+}
+
+.light1 {
+    background-color: var(--light-theme1);
+}
+
+.light2 {
+    background-color: var(--light-theme2);
+}
+
+.light3 {
+    background-color: var(--light-theme3);
+}
+
+.dark {
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 3px 3px 4px var(--backgroud1);
+}
+
+.dark1,
+.dark2,
+.dark3 {
+    border: solid rgba(51, 51, 53, 0.788) 3px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.712);
+}
+
+.dark1 {
+    background-color: var(--dark-theme1);
+}
+
+.dark2 {
+    background-color: var(--dark-theme2);
+}
+
+.dark3 {
+    background-color: var(--dark-theme3);
 }
