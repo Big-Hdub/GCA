@@ -30,7 +30,6 @@ data=[
     },
     ]
 
-# Adds a demo user, you can add other users here if you want
 def seed_users():
     existingImage=ProfileImage.query.filter(ProfileImage.url==image['url'])
     if not existingImage:

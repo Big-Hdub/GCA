@@ -7,6 +7,10 @@ footer {
     bottom: 7px;
 }
 
+.footer-fill {
+    position: static;
+}
+
 footer>div>p.link {
     margin-top: 20px;
     font-size: x-large;

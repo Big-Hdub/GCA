@@ -30,7 +30,9 @@ export default function LandingPage() {
                 <Section3 />
                 <Section4 />
                 <Section5 />
-                <Footer />
+                {/* <div id="footer-fill" className="flex column w100 background"> */}
+                <Footer landing={true} />
+                {/* </div> */}
             </main>
         </div>}
     </>

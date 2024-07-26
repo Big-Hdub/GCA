@@ -153,6 +153,10 @@
     margin: 40px;
 }
 
+.background {
+    background-color: var(--backgroud1);
+}
+
 .light1,
 .light2,
 .light3 {
