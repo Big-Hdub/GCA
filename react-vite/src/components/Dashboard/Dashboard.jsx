@@ -11,8 +11,6 @@ export default function Dashboard() {
     const sessionUser = useSelector((store) => store.session.user);
     const theme = useSelector((store) => store.session.user).settings.theme;
     const navigate = useNavigate();
-
-
     useEffect(() => {
         if (!sessionUser) {
             navigate('/');
