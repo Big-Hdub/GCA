@@ -33,7 +33,7 @@ class Course(db.Model):
 
     students = db.relationship('Student', secondary=StudentCourses, back_populates='courses')
 
-    curriculum = db.relationship('Curriculum', back_populates='course')
+    curriculum = db.relationship('Curriculum', back_populates='course', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
