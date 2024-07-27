@@ -30,7 +30,7 @@ export default function LandingPage() {
                 <Section3 />
                 <Section4 />
                 <Section5 />
-                <Footer />
+                <Footer landing={true} />
             </main>
         </div>}
     </>

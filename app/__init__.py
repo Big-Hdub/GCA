@@ -73,6 +73,22 @@ def react_root(path):
     react builds in the production environment for favicon
     or index.html requests
     """
+    if path == 'l1-math.png':
+        return app.send_from_directory('public' 'l1-math.png')
+    if path == 'mathlessons.png':
+        return app.send_from_directory('public' 'mathlessons.png')
+    if path == 'reading.png':
+        return app.send_from_directory('public' 'reading.png')
+    if path == 'bible.png':
+        return app.send_from_directory('public' 'bible.png')
+    if path == 'english.png':
+        return app.send_from_directory('public' 'english.png')
+    if path == 'geography.png':
+        return app.send_from_directory('public', 'geography.png')
+    if path == 'history.png':
+        return app.send_from_directory('public' 'history.png')
+    if path == 'math.png':
+        return app.send_from_directory('public', 'math.png')
     if path == 'logo.png':
         return app.send_from_directory('public' 'logo.png')
     if path == 'fields.jpg':

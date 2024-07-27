@@ -21,6 +21,8 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
+    courses = db.relationship('Course', back_populates='teacher', cascade='all, delete-orphan')
+
     settings = db.relationship('Setting', back_populates='user', cascade='all, delete-orphan')
 
     students = db.relationship('Student', back_populates='user', cascade='all, delete-orphan')

@@ -24,7 +24,7 @@ function LoginFormModal({ navigate }) {
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
-      navigate();
+      if (navigate) navigate();
       closeModal();
     }
   };

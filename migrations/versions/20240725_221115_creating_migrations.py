@@ -1,8 +1,8 @@
 """creating migrations
 
-Revision ID: 7528d8cfb501
+Revision ID: 8a3c2995fc30
 Revises:
-Create Date: 2024-07-24 08:32:36.836094
+Create Date: 2024-07-25 22:11:15.237922
 
 """
 from alembic import op
@@ -12,10 +12,8 @@ import os
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
-
-
 # revision identifiers, used by Alembic.
-revision = '7528d8cfb501'
+revision = '8a3c2995fc30'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,11 +41,12 @@ def upgrade():
 
     op.create_table('courses',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('teacher', sa.Integer(), nullable=False),
+    sa.Column('teacher_id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=255), nullable=False),
+    sa.Column('level', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
-    sa.ForeignKeyConstraint(['teacher'], ['users.id'], ),
+    sa.ForeignKeyConstraint(['teacher_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
 
@@ -56,16 +55,25 @@ def upgrade():
 
     op.create_table('course_images',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('course_id', sa.Integer(), nullable=False),
     sa.Column('url', sa.String(length=1500), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
-    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
 
     if environment == 'production':
         op.execute(f"ALTER TABLE course_images SET SCHEMA {SCHEMA};")
+
+    op.create_table('courses_images',
+    sa.Column('course_id', sa.Integer(), nullable=False),
+    sa.Column('image_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['course_id'], ['courses.id'], ),
+    sa.ForeignKeyConstraint(['image_id'], ['course_images.id'], ),
+    sa.PrimaryKeyConstraint('course_id', 'image_id')
+    )
+
+    if environment == 'production':
+        op.execute(f"ALTER TABLE courses_images SET SCHEMA {SCHEMA};")
 
     op.create_table('profile_images',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -84,6 +92,7 @@ def upgrade():
     sa.Column('grade_level', sa.String(length=20), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
 
@@ -201,6 +210,7 @@ def downgrade():
     op.drop_table('curriculums')
     op.drop_table('students')
     op.drop_table('profile_images')
+    op.drop_table('courses_images')
     op.drop_table('course_images')
     op.drop_table('courses')
     op.drop_table('users')

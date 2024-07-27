@@ -1,9 +1,17 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import './Footer.css'
+import { useEffect, useState } from 'react';
 
 
-export default function Footer() {
+export default function Footer({ landing }) {
+    const [footClass, setFootClass] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (landing) {
+            setFootClass('footer-fill')
+        }
+    }, [landing, footClass])
 
     const handleClick = (url) => {
         window.scroll(0, 0);
@@ -11,7 +19,7 @@ export default function Footer() {
     };
 
     return (
-        <footer className="flex between">
+        <footer className={`flex between ${footClass}`}>
             <div className="flex gap-15">
                 <div className="footer-logo" onClick={() => handleClick('/')}></div>
                 <p className="link" onClick={() => handleClick('/about')}>about</p>

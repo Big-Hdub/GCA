@@ -7,8 +7,6 @@ import Courses from '../components/Courses';
 import Account from '../components/Account';
 import Grades from '../components/Grades';
 import Layout from './Layout';
-import Construction from '../components/Construction';
-import Dashboard from '../components/Dashboard';
 
 export const router = createBrowserRouter([
   {
