@@ -13,7 +13,7 @@ export default function Dashboard() {
     const sessionUser = useSelector((store) => store.session.user);
     const theme = useSelector((store) => store.session.user)?.settings.theme;
     const role = useSelector((store) => store.session.user)?.settings.role;
-    const data = useSelector((store) => store.dash.dash);
+    const data = useSelector((store) => store.dash);
     const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function Dashboard() {
                                 <h2 id="dashboard-lessons-title" className="aselfstart">Lessons to complete today:</h2>
                                 <div id="dashboard-cards-container" className={`flex gap-15 ${theme}2`}>
                                     <div id="dashboard-content" className="flex gap-15">
-                                        {data?.map((lesson) => {
+                                        {data?.dash?.map((lesson) => {
                                             return (
                                                 <div key={`lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card ${theme}3`}>
                                                     <DashboardCard lesson={lesson} />
