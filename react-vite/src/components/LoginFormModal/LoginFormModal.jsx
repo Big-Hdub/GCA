@@ -13,21 +13,23 @@ function LoginFormModal({ navigate }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    login(email, password)
+  };
 
+  const login = async (email, password) => {
     const serverResponse = await dispatch(
       thunkLogin({
         email,
         password,
       })
     );
-
     if (serverResponse) {
       setErrors(serverResponse);
     } else {
       if (navigate) navigate();
       closeModal();
     }
-  };
+  }
 
   return (
     <div id="login-modal"
@@ -57,6 +59,12 @@ function LoginFormModal({ navigate }) {
         />
         {errors.password && <p className="error">{errors.password}</p>}
         <button className="button aselfend" type="submit">Log In</button>
+        <div id="demo-logins" className="flex wrap gap-15">
+          <div className="flex gap-15">Log in as:<p className="link" onClick={() => login('demoAdmin@aa.io', 'password')}>demoAdmin</p></div>
+          <div className="flex gap-15">Log in as:<p className="link" onClick={() => login('demoTeacher@aa.io', 'password')}>demoTeacher</p></div>
+          <div className="flex gap-15">Log in as:<p className="link" onClick={() => login('demoParent@aa.io', 'password')}>demoParent</p></div>
+          <div className="flex gap-15">Log in as:<p className="link" onClick={() => login('demoStudent@aa.io', 'password')}>demoStudent</p></div>
+        </div>
       </form>
     </div>
   );

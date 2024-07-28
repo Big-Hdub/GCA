@@ -35,5 +35,6 @@ class Setting(db.Model):
         return {
             'image': self.image.url,
             'theme': self.theme,
+            'role': self.role,
             'font_size': self.font_size
         }

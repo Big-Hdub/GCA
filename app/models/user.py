@@ -52,7 +52,7 @@ class User(db.Model, UserMixin):
     def to_dict_session(self):
         return {
             'id': self.id,
-            'name': self.first_name+' '+self.last_name,
+            'name': f'{self.first_name} {self.last_name}',
             'age': self.age,
             'username': self.username,
             'email': self.email,

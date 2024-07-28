@@ -3,8 +3,8 @@
     background-color: var(--backgroud1);
     padding-top: 25px;
     box-sizing: border-box;
-    border-right: 3px solid black;
-    box-shadow: 4px 0px 4px var(--backgroud1);
+    border-right: 1px solid black;
+    box-shadow: 3px 3px 6px black;
     position: relative;
     top: -6px;
     z-index: 0;

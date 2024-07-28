@@ -2,7 +2,7 @@ from app.models import db, User, Setting, ProfileImage, Student, environment, SC
 from sqlalchemy.sql import text
 
 
-image={'url': '/api/static/images/cross.jpg'}
+image={'url': '/cross.jpg'}
 data=[
     {
     'username':'Demoadmin', 'email':'demoAdmin@aa.io', 'password':'password', 'age':69, 'first_name':'Demo', 'last_name':'Admin', 'role':'admin', 'theme': 'dark'
