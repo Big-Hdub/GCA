@@ -12,6 +12,7 @@ class StudentCurriculum(db.Model):
     student_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('students.id')), nullable=False)
     curriculum_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('curriculums.id')), nullable=False, default=1)
     complete = db.Column(db.Boolean, nullable=False, default=False)
+    assigned = db.Column(db.Boolean, nullable=False, default=False)
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
@@ -22,7 +23,4 @@ class StudentCurriculum(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'teacher': self.user.to_dict(),
-            'image': self.image.url,
-            'title': self.title,
         }

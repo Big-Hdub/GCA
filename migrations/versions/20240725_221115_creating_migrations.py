@@ -174,6 +174,7 @@ def upgrade():
     sa.Column('student_id', sa.Integer(), nullable=False),
     sa.Column('curriculum_id', sa.Integer(), nullable=False),
     sa.Column('complete', sa.Boolean(), nullable=False),
+    sa.Column('assigned', sa.Boolean(), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=False),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['curriculum_id'], ['curriculums.id'], ),

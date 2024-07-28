@@ -16,6 +16,10 @@
     margin-bottom: 40px;
 }
 
+#dashboard-verse-container>p {
+    font-size: x-large;
+}
+
 #dashboard-content {
     height: fit-content;
     position: relative;

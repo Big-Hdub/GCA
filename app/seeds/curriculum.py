@@ -383,8 +383,14 @@ def seed_curriculums():
                 db.session.flush()
                 for course in courses:
                     if course:
-                        curriculum = Curriculum(course_id=course.id, lesson=lesson, title=title, text=text, type=type)
-                        db.session.commit()
+                        curriculum = Curriculum.query.filter(Curriculum.course_id==course.id, Curriculum.lesson==lesson, Curriculum.title==title).first()
+                        db.session.flush()
+                        if curriculum:
+                            pass
+                        else:
+                            curriculum = Curriculum(course_id=course.id, lesson=lesson, title=title, text=text, type=type)
+                            course.curriculum.append(curriculum)
+                            db.session.commit()
                         image = CurriculumImage.query.filter(CurriculumImage.curriculum_id==curriculum.id).first()
                         db.session.flush()
                         if image:
@@ -395,9 +401,20 @@ def seed_curriculums():
                             db.session.commit()
                         if lesson==1:
                             for student in students:
-                                StudentCurriculum(student_id=student.id, curriculum_id=curriculum.id, complete=False)
-                                student.curriculum.append(curriculum)
-                                db.session.commit()
+                                if int(course.level)==int(student.grade_level):
+                                    student_curriculum = StudentCurriculum(student_id=student.id, curriculum_id=curriculum.id, complete=False, assigned=True)
+                                    student.complete.append(student_curriculum)
+                                    db.session.commit()
+                                else:
+                                    pass
+                        else:
+                            for student in students:
+                                if not int(course.level)==int(student.grade_level):
+                                    student_curriculum = StudentCurriculum(student_id=student.id, curriculum_id=curriculum.id, complete=False, assigned=False)
+                                    student.complete.append(student_curriculum)
+                                    db.session.commit()
+                                else:
+                                    pass
     db.session.commit()
 
 

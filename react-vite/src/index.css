@@ -1,7 +1,7 @@
 :root {
     --backgroud1: rgb(45, 83, 96);
     --light-theme1: rgb(205, 241, 235);
-    --light-theme2: rgba(180, 225, 217, 0.8);
+    --light-theme2: rgba(180, 225, 217);
     --light-theme3: rgba(255, 255, 255, 0.2);
     --dark-theme1: rgb(49, 49, 49);
     --dark-theme2: rgb(79, 85, 84);
@@ -35,6 +35,14 @@ body {
 
 .gap-60 {
     gap: 60px
+}
+
+.h100 {
+    height: 100%;
+}
+
+.jcenter {
+    justify-content: center;
 }
 
 .aselfstart {
@@ -161,6 +169,14 @@ body {
     background-color: var(--backgroud1);
 }
 
+.light {
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 3px 3px 4px var(rgba(255, 255, 255, 0.671));
+}
+
+.default,
 .light1,
 .light2,
 .light3 {
@@ -204,4 +220,8 @@ body {
 
 .dark3 {
     background-color: var(--dark-theme3);
+}
+
+.wrap {
+    flex-wrap: wrap;
 }

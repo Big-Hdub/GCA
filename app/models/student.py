@@ -41,14 +41,13 @@ class Student(db.Model):
 
     complete = db.relationship('StudentCurriculum', back_populates='student', cascade='all, delete-orphan')
 
-    curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary='student_curriculums', back_populates='students')
-    if environment == "production":
-        curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='students')
+    curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary=add_prefix_for_prod('student_curriculums'), back_populates='students')
+    # if environment == "production":
+    #     curriculum = db.relationship('Curriculum', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='students')
 
-    def to_dict(self):
+    def to_dict_dash(self):
         return {
             'id': self.id,
-            'user': self.user.to_dict(),
-            'course': self.course_id,
-            'grade_level': self.grade_level
+            'grade_level': self.grade_level,
+            'lessons': [lesson.curriculum.to_dict_dash() for lesson in self.complete if lesson.complete==False]
         }
