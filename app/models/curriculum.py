@@ -27,13 +27,11 @@ class Curriculum(db.Model):
     # if environment == "production":
     #     students = db.relationship('Student', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='curriculum')
 
-    def to_dict_dash(self):
+    def to_dict_student_dash(self):
         return {
             'id': self.id,
             'course': self.course.title,
-            'image': [image.to_dict() for image in self.images],
             'lesson': self.lesson,
             'title': self.title,
-            'text': self.text,
             'type': self.type,
         }

@@ -95,8 +95,8 @@ body {
 
 .link {
     cursor: pointer;
-    color: darkcyan;
-    text-shadow: 2px 2px 2px black;
+    color: rgb(0, 139, 139);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.651);
 }
 
 .link:hover {
@@ -153,8 +153,16 @@ body {
     margin-left: 25px;
 }
 
+.mbotton-15 {
+    margin-bottom: 15px;
+}
+
 .theme-main-background {
     background-color: rgb(205, 241, 235);
+}
+
+.padding-15 {
+    padding: 15px;
 }
 
 .margin-15 {
@@ -200,7 +208,7 @@ body {
     color: rgba(255, 255, 255, 0.75);
     font-weight: bold;
     font-style: italic;
-    text-shadow: 3px 3px 4px var(--backgroud1);
+    text-shadow: 3px 3px 4px var(black);
 }
 
 .dark1,
@@ -224,4 +232,20 @@ body {
 
 .wrap {
     flex-wrap: wrap;
+}
+
+.font-16 {
+    font-size: 16px;
+}
+
+.font-20 {
+    font-size: 20px;
+}
+
+.font-24 {
+    font-size: 24px;
+}
+
+.font-32 {
+    font-size: 32px;
 }
