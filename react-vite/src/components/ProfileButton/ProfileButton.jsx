@@ -4,12 +4,12 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import { thunkLogout } from "../../redux/session";
 import SignupFormModal from "../SignupFormModal";
 import LoginFormModal from "../LoginFormModal";
-import { FaUserCircle } from 'react-icons/fa';
-import './Profile.css';
 import { useNavigate } from "react-router-dom";
+import './Profile.css';
 
-export default function ProfileButton({ icon }) {
+export default function ProfileButton() {
   const sessionUser = useSelector((store) => store.session.user);
+  const url = useSelector((store) => store.session.user)?.settings.image;
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,20 +46,20 @@ export default function ProfileButton({ icon }) {
   return (
     <>
       <button id="profile-button" onClick={toggleMenu}>
-        {icon ? { icon } : <FaUserCircle />}
+        {url ? <img src={url} className={`${sessionUser.settings.theme}3`} /> : <img src='/cross.jpg' className='default' />}
       </button>
       {showMenu && (
-        <div className={"profile-dropdown"} ref={ulRef}>
+        <div className={`profile-dropdown ${sessionUser ? sessionUser.settings.theme : 'light '}2`} ref={ulRef}>
           {sessionUser ? (
             <div className="flex column gap-25 margin-15">
-              <p>{sessionUser.username}</p>
-              <p>{sessionUser.email}</p>
-              <p>
+              <p className={`${sessionUser.settings.theme}`}>{sessionUser.username}</p>
+              <p className={`${sessionUser.settings.theme}`}>{sessionUser.email}</p>
+              <p className={`${sessionUser.settings.theme}`}>
                 <button className="button" onClick={logout}>Log Out</button>
               </p>
             </div>
           ) : (
-            <div className="flex column gap-25 margin-15">
+            <div className={`flex column gap-25 margin-15`}>
               <OpenModalMenuItem
                 main={true}
                 itemText="Log In"

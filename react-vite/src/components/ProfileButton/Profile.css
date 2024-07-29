@@ -6,9 +6,18 @@
   border-radius: 40px;
   padding: 0;
   align-self: start;
-  background-color: rgb(53, 102, 104);
-  border: solid black 3px;
-  box-shadow: 4px 4px 4px var(--backgroud1);
+  /* background-color: rgb(53, 102, 104); */
+}
+
+#profile-button>img {
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+}
+
+#profile-button>img:hover {
+  transform: scale(1.25, 1.25);
+  transition-duration: 1s;
 }
 
 #profile-button>svg {

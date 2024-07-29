@@ -2,7 +2,7 @@ from app.models import db, User, Setting, ProfileImage, Student, environment, SC
 from sqlalchemy.sql import text
 
 
-image={'url': '/api/static/images/cross.jpg'}
+image={'url': '/cross.jpg'}
 data=[
     {
     'username':'Demoadmin', 'email':'demoAdmin@aa.io', 'password':'password', 'age':69, 'first_name':'Demo', 'last_name':'Admin', 'role':'admin', 'theme': 'dark'
@@ -30,10 +30,11 @@ data=[
     },
     ]
 
-# Adds a demo user, you can add other users here if you want
 def seed_users():
-    existingImage=ProfileImage.query.filter(ProfileImage.url==image['url'])
-    if not existingImage:
+    existingImage=ProfileImage.query.filter(ProfileImage.url==image['url']).first()
+    if existingImage:
+        pass
+    else:
         default_image=ProfileImage(**image)
         db.session.add(default_image)
         db.session.flush()

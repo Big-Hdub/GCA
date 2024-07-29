@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, request
 from flask_login import login_required
-from app.models import User
+from app.models import User, Setting, db
 
 user_routes = Blueprint('users', __name__)
 
@@ -22,4 +22,20 @@ def user(id):
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
+    return user.to_dict()
+
+
+@user_routes.route('/<int:id>/settings', methods=['PUT'])
+@login_required
+def user_settings(id):
+    """
+    Update a users settings
+    """
+    user = User.query.filter(User.id==id).first()
+    if user:
+        if request.json['theme']:
+            user.settings[0].theme='dark' if user.settings[0].theme=='light' else 'light'
+        if request.json['font']:
+            user.settings[0].font_size = int(request.json['font'])
+        db.session.commit()
     return user.to_dict_session()

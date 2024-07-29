@@ -6,3 +6,5 @@ __pycache__/
 .vscode/
 instance
 dev.db
+temp
+node_modules
