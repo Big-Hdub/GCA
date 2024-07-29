@@ -8,6 +8,7 @@ subjects = [['Math', 6], ['Math', 5], ['English', 6], ['English', 5], ['Reading'
 def seed_courses():
     for url in courseUrls.values():
         image = CourseImage.query.filter(CourseImage.url==url).first()
+        db.session.flush()
         if image:
             pass
         else:
@@ -15,21 +16,22 @@ def seed_courses():
             db.session.add(image)
             db.session.commit()
     teacher=User.query.filter(User.username=='Demoteacher').first()
+    db.session.flush()
     if teacher:
         for [subject, grade] in subjects:
             course = Course(title=subject, level=grade, teacher_id=teacher.id)
             teacher.courses.append(course)
             db.session.commit()
-            db.session.flush()
             image = CourseImage.query.filter(CourseImage.url==courseUrls[subject]).first()
+            db.session.flush()
             if image:
                 image.courses.append(course)
                 db.session.commit()
-            db.session.flush()
             students = Student.query.filter(Student.grade_level==grade)
+            db.session.flush()
             for student in students:
                 student.courses.append(course)
-                db.session.flush()
+                db.session.commit()
                 grade = Grade(student_id=student.id, course_id=course.id, grade='0')
                 student.grades.append(grade)
                 db.session.commit()
