@@ -16,9 +16,9 @@
     margin-bottom: 40px;
 }
 
-#dashboard-verse-container>p {
+/* #dashboard-verse-container>p {
     font-size: x-large;
-}
+} */
 
 #dashboard-content {
     height: fit-content;
@@ -32,6 +32,7 @@
     gap: 40px;
 }
 
+h2.student-names,
 #dashboard-cards-container,
 #dashboard-lessons-title,
 #dashboard-verse-container,
@@ -53,7 +54,7 @@
 .dashboard-content-card {
     position: relative;
     width: 48%;
-    height: 200px;
+    height: fit-content;
     z-index: 6;
     border-radius: 15px;
 
