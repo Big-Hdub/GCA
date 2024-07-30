@@ -27,7 +27,7 @@ def seed_courses():
             if image:
                 image.courses.append(course)
                 db.session.commit()
-            students = Student.query.filter(Student.grade_level==grade)
+            students = Student.query.filter(Student.grade_level==grade).all()
             db.session.flush()
             for student in students:
                 student.courses.append(course)
