@@ -33,6 +33,7 @@ def seed_courses():
                 student.courses.append(course)
                 db.session.commit()
                 grade = Grade(student_id=student.id, course_id=course.id, grade='0')
+                db.session.flush()
                 student.grades.append(grade)
                 db.session.commit()
     db.session.commit()
