@@ -32,6 +32,7 @@ data=[
 
 def seed_users():
     existingImage=ProfileImage.query.filter(ProfileImage.url==image['url']).first()
+    db.session.flush()
     if existingImage:
         pass
     else:

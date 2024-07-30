@@ -401,7 +401,7 @@ def seed_curriculums():
                             db.session.commit()
                         if lesson==1:
                             for student in students:
-                                if int(course.level)==int(student.grade_level):
+                                if course.level==student.grade_level:
                                     student_curriculum = StudentCurriculum(student_id=student.id, curriculum_id=curriculum.id, complete=False, assigned=True)
                                     student.complete.append(student_curriculum)
                                     db.session.commit()
