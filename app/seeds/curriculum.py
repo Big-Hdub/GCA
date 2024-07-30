@@ -379,7 +379,7 @@ def seed_curriculums():
             if curriculum:
                 pass
             else:
-                courses = Course.query.filter(Course.title==subject)
+                courses = Course.query.filter(Course.title==subject).all()
                 db.session.flush()
                 for course in courses:
                     if course:
