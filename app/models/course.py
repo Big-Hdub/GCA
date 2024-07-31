@@ -35,10 +35,12 @@ class Course(db.Model):
 
     curriculum = db.relationship('Curriculum', back_populates='course', cascade='all, delete-orphan')
 
-    def to_dict(self):
+    def to_dict_courses(self):
         return {
             'id': self.id,
-            'teacher': self.user.to_dict(),
-            'image': self.image.to_dict(),
+            'teacher': self.teacher.to_dict_courses(),
+            'image': [image.url for image in self.images][0],
             'title': self.title,
+            'level': self.level,
+            'current-grade': self.grades[0].grade,
         }

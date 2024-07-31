@@ -1,16 +1,13 @@
-import {
-  legacy_createStore as createStore,
-  applyMiddleware,
-  compose,
-  combineReducers,
-} from "redux";
-import thunk from "redux-thunk";
+import { legacy_createStore as createStore, applyMiddleware, compose, combineReducers } from "redux";
 import sessionReducer from "./session";
+import coursesReducer from "./course";
 import dashReducer from "./dash";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  dash: dashReducer
+  courses: coursesReducer,
+  dash: dashReducer,
 });
 
 let enhancer;
