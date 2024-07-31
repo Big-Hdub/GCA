@@ -58,3 +58,9 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'settings': self.settings[0].to_dict_session()
         }
+
+    def to_dict_courses(self):
+        return {
+            'name': self.first_name+' '+self.last_name,
+            'email': self.email
+        }

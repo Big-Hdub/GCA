@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect
 from flask_wtf.csrf import generate_csrf
+
+from .api.course_routes import courses_routes
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.dash_routes import dash_routes
@@ -26,6 +28,7 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
+app.register_blueprint(courses_routes, url_prefix='/api/courses')
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(dash_routes, url_prefix='/api/dash')

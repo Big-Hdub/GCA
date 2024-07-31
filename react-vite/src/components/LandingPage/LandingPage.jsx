@@ -1,4 +1,8 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { removeCourses } from "../../redux/course"
+import { useNavigate } from "react-router-dom"
+import { removeDash } from "../../redux/dash"
+import { useEffect } from "react"
 import Section1 from "./Section1"
 import Section2 from "./Section2"
 import Section3 from "./Section3"
@@ -7,19 +11,27 @@ import Section5 from "./Section5"
 import Header from "./Header"
 import Footer from "../Footer"
 import './Landing.css'
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 
 
 export default function LandingPage() {
     const sessionUser = useSelector((store) => store.session.user);
+    const courses = useSelector((store) => store.courses.courses);
+    const dash = useSelector((store) => store.dash.dash);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         if (sessionUser) {
             navigate('/dashboard');
+        } else {
+            if (dash) {
+                dispatch(removeDash())
+            }
+            if (courses) {
+                dispatch(removeCourses())
+            }
         }
-    })
+    }, [dispatch, navigate, sessionUser, dash, courses])
 
     return (<>
         {!sessionUser && <div className='flex column landing'>

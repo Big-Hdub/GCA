@@ -24,8 +24,6 @@ class Curriculum(db.Model):
     complete = db.relationship('StudentCurriculum', back_populates='curriculum', cascade='all, delete-orphan')
 
     students = db.relationship('Student', overlaps='curriculum,complete,student', secondary=add_prefix_for_prod('student_curriculums'), back_populates='curriculum')
-    # if environment == "production":
-    #     students = db.relationship('Student', overlaps='curriculum,complete,student', secondary=f'{SCHEMA}.student_curriculums', back_populates='curriculum')
 
     def to_dict_student_dash(self):
         return {
