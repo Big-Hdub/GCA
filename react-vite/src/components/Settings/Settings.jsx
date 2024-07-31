@@ -40,13 +40,13 @@ export default function Settings() {
     useEffect(() => {
         if (!sessionUser) {
             navigate('/');
-        }
-        else {
+        } else {
             setIsLoaded(true)
         }
     }, [navigate, sessionUser])
+
     return (<>
-        {isLoaded && fontSize &&
+        {isLoaded && sessionUser && fontSize &&
             <div>
                 <div className={`flex column between ${theme}1`}>
                     <Header main={true} />

@@ -1,5 +1,5 @@
+import { removeDash, thunkGetDash } from "../../redux/dash";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGetDash } from "../../redux/dash";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DashboardCard from "./DashboardCard";
@@ -10,8 +10,8 @@ import './Dashboard.css'
 
 
 export default function Dashboard() {
-    const theme = useSelector((store) => store.session.user)?.settings.theme;
     const font = useSelector((store) => store.session.user)?.settings.font_size;
+    const theme = useSelector((store) => store.session.user)?.settings.theme;
     const role = useSelector((store) => store.session.user)?.settings.role;
     const sessionUser = useSelector((store) => store.session.user);
     const data = useSelector((store) => store.dash.dash);
@@ -22,8 +22,9 @@ export default function Dashboard() {
     useEffect(() => {
         if (!sessionUser) {
             navigate('/');
+            dispatch(removeDash())
         }
-    }, [navigate, theme, sessionUser])
+    }, [dispatch, navigate, theme, sessionUser])
 
     useEffect(() => {
         const loadDash = async () => {

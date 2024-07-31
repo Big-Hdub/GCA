@@ -53,6 +53,10 @@ body {
     align-items: center;
 }
 
+.tselfstart {
+    text-align: start;
+}
+
 .aselfcenter {
     align-self: center;
 }
@@ -75,10 +79,6 @@ body {
 
 .around {
     justify-content: space-around;
-}
-
-.between {
-    justify-content: space-between;
 }
 
 .w100 {
@@ -133,9 +133,6 @@ body {
     color: rgb(58, 110, 110)
 }
 
-.error {
-    color: rgb(194, 0, 0);
-}
 
 .minh100 {
     min-height: 100vh;
@@ -143,10 +140,6 @@ body {
 
 .error {
     color: rgb(194, 0, 0);
-}
-
-.minh100 {
-    min-height: 100vh;
 }
 
 .mleft-25 {
@@ -248,4 +241,8 @@ body {
 
 .font-32 {
     font-size: 32px;
+}
+
+.no-dec {
+    text-decoration-line: none;
 }
