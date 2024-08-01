@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import User, Student, db
 
-account_routes = Blueprint('data', __name__)
+account_routes = Blueprint('account', __name__)
 
 
 @account_routes.route('', methods=['GET'])

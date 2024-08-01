@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
-import './Account.css'
+import './Account.css';
 
 
 export default function Account() {
@@ -35,41 +35,41 @@ export default function Account() {
 
     useEffect(() => {
         dispatch(thunkGetAccount())
-    }, [isLoaded, dispatch])
+    }, [dispatch])
 
     useEffect(() => {
         if (data) {
             if (data.student) {
-                setAge(data.student.age)
-                setName(data.student.name.split(' ')[0])
-                setEmail(data.student.email)
-                setUser(data.student.username)
-                setIsLoaded(true)
+                setName(data.student.name.split(' ')[0]);
+                setUser(data.student.username);
+                setEmail(data.student.email);
+                setAge(data.student.age);
+                setIsLoaded(true);
             } else if (data.parent) {
-                setAge(data.parent.age)
-                setName(data.parent.name.split(' ')[0])
-                setEmail(data.parent.email)
-                setUser(data.parent.username)
-                setIsLoaded(true)
+                setName(data.parent.name.split(' ')[0]);
+                setUser(data.parent.username);
+                setEmail(data.parent.email);
+                setAge(data.parent.age);
+                setIsLoaded(true);
             }
         }
     }, [data])
 
     const handleSave = async () => {
-        setErrors({})
+        setErrors({});
         const info = {};
-        let numErrors = 0
-        const errors = {}
+        let numErrors = 0;
+        const errors = {};
         if (newPassword !== confirm) {
-            errors.confirm = 'new password and confirm password must match.'
+            errors.confirm = 'new password and confirm password must match.';
             numErrors++;
         }
         if ((newPassword === confirm) && confirm.length > 0 && confirm.length < 8) {
-            errors.newpassword = 'password must have at least 8 characters.'
+            errors.newpassword = 'password must have at least 8 characters.';
             numErrors++;
         }
         if (numErrors > 0) {
-            setErrors(errors)
+            setErrors(errors);
         } else {
             if (confirm.length > 7) {
                 info.newPassword = confirm;
@@ -77,24 +77,24 @@ export default function Account() {
             }
             if (data.student) {
                 if (name !== data.student.name.split(' ')[0]) info.firstName = name;
-                if (age !== data.student.age) info.age = age;
-                if (email !== data.student.email) info.email = email;
                 if (user !== data.student.username) info.username = user;
+                if (email !== data.student.email) info.email = email;
+                if (age !== data.student.age) info.age = age;
             } else if (data.parent) {
                 if (name !== data.parent.name.split(' ')[0]) info.firstName = name;
-                if (age !== data.parent.age) info.age = age;
-                if (email !== data.parent.email) info.email = email;
                 if (user !== data.parent.username) info.username = user;
+                if (email !== data.parent.email) info.email = email;
+                if (age !== data.parent.age) info.age = age;
             }
             const response = await dispatch(thunkUpdateAccount(JSON.stringify(info)));
             if (response.errors) {
-                setErrors(response.errors)
+                setErrors(response.errors);
             }
         }
-    }
+    };
 
     const change = (func) => {
-        setErrors({})
+        setErrors({});
         func();
     }
 
@@ -200,5 +200,5 @@ export default function Account() {
             <Footer />
         </div>}
     </>
-    )
+    );
 }

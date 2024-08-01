@@ -89,6 +89,10 @@ body {
     width: 100vw;
 }
 
+.w500 {
+    width: 500px;
+}
+
 .flex {
     display: flex;
 }

@@ -1,5 +1,5 @@
-const SET_ACCOUNTS = 'data/setAccounts';
-const REMOVE_ACCOUNTS = 'data/removeAccounts';
+const SET_ACCOUNTS = 'account/setAccounts';
+const REMOVE_ACCOUNTS = 'account/removeAccounts';
 
 const setAccounts = (accounts) => ({
     type: SET_ACCOUNTS,
