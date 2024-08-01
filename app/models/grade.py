@@ -21,8 +21,8 @@ class Grade(db.Model):
 
     def to_dict(self):
         return {
+            **self.courses.to_dict(),
             'id': self.id,
-            'student': self.user.to_dict(),
-            'course': self.course.to_dict(),
             'grade': self.grade,
+            'completion': [[complete.to_dict() for complete in curriculum.complete] for curriculum in self.courses.curriculum]
         }

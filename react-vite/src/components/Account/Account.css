@@ -1,14 +1,13 @@
 #account-container {
-    background-color: var(--backgroud1);
-    margin-right: 4vw;
-    width: 80%;
     justify-content: center;
     height: fit-content;
     position: relative;
+    box-sizing: border-box;
+    position: relative;
+    top: -75px;
+    left: 40px;
     z-index: 4;
     border-radius: 15px;
-    border: solid black 3px;
-    box-shadow: 4px 4px 4px var(--backgroud1);
     margin-bottom: 40px;
 }
 
