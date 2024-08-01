@@ -1,12 +1,16 @@
 import { legacy_createStore as createStore, applyMiddleware, compose, combineReducers } from "redux";
+import accountsReducer from "./account";
 import sessionReducer from "./session";
 import coursesReducer from "./course";
+import gradesReducer from "./grade";
 import dashReducer from "./dash";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
+  account: accountsReducer,
   session: sessionReducer,
   courses: coursesReducer,
+  grades: gradesReducer,
   dash: dashReducer,
 });
 

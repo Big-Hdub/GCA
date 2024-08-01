@@ -24,7 +24,7 @@ export default function Courses() {
             navigate('/');
             dispatch(removeCourses())
         }
-    })
+    }, [navigate, dispatch, sessionUser])
 
     useEffect(() => {
         const loadDash = async () => {
@@ -53,18 +53,21 @@ export default function Courses() {
                             </>}
                             {role === 'parent' && <>
                                 {data?.map(({ student, courses }) => {
-                                    return (<div key={`child:${student?.id}`} className="flex column gap-40">
-                                        <p className="aselfstart">{student.name}</p>
-                                        <div className={`flex wrap gap-40 acenter`}>
-                                            {
-                                                courses.map((course) => {
-                                                    return (
-                                                        <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                                            <CourseCard course={course} font={font} theme={theme} />
-                                                        </div>)
-                                                })
-                                            }
-                                        </div></div>
+                                    return (
+                                        <div key={`child:${student?.id}`} className="flex column gap-40">
+                                            <p className="aselfstart">{student.name}</p>
+                                            <div className={`flex wrap gap-40 acenter`}>
+                                                {
+                                                    courses.map((course) => {
+                                                        return (
+                                                            <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                                <CourseCard course={course} font={font} theme={theme} />
+                                                            </div>
+                                                        )
+                                                    })
+                                                }
+                                            </div>
+                                        </div>
                                     )
                                 })}
                             </>}

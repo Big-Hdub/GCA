@@ -23,4 +23,6 @@ class StudentCurriculum(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
+            'complete': self.complete,
+            'assigned': self.assigned,
         }
