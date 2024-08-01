@@ -1,11 +1,12 @@
-from flask import Blueprint, jsonify
+from crypt import methods
+from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
-from app.models import User, Student
+from app.models import User, Student, db
 
 account_routes = Blueprint('data', __name__)
 
 
-@account_routes.route('')
+@account_routes.route('', methods=['GET'])
 @login_required
 def account():
     """
@@ -25,4 +26,24 @@ def update_account():
     """
     Update account info
     """
+    data = request.get_json(force=True, cache=True)
     user = User.query.get(current_user.id)
+    if 'firstName' in data:
+        user.first_name = data['firstName']
+        db.session.commit()
+    if 'age' in data:
+        user.age = data['age']
+        db.session.commit()
+    if 'username' in data:
+        user.username = data['username']
+        db.session.commit()
+    if 'email' in data:
+        user.email = data['email']
+        db.session.commit()
+    if 'password' in data:
+        if user.check_password(data['password']):
+            user.password = data['newPassword']
+            db.session.commit()
+        else:
+            return {'password': 'invalid password'}
+    return {'message':'working route and method'}

@@ -28,7 +28,7 @@ export const thunkUpdateAccount = (data) => async (dispatch) => {
     const response = await fetch("/api/account", {
         method: "PUT",
         header: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
+        body: data
     });
     if (response.ok) {
         const data = await response.json();
