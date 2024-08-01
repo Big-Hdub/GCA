@@ -55,7 +55,7 @@ export default function Account() {
         }
     }, [data])
 
-    const handleSave = () => {
+    const handleSave = async () => {
         setErrors({})
         const info = {};
         let numErrors = 0
@@ -86,7 +86,10 @@ export default function Account() {
                 if (email !== data.parent.email) info.email = email;
                 if (user !== data.parent.username) info.username = user;
             }
-            dispatch(thunkUpdateAccount(JSON.stringify(info)));
+            const response = await dispatch(thunkUpdateAccount(JSON.stringify(info)));
+            if (response.errors) {
+                setErrors(response.errors)
+            }
         }
     }
 
@@ -169,6 +172,7 @@ export default function Account() {
                                 onChange={(e) => change(() => setPassword(e.target.value))}
                             />
                         </div>
+                        {errors.password && <p className={`error font-20`}>{errors.password}</p>}
                         <div className="flex gap-15 acenter">
                             <p>New password:</p>
                             <input type="password"

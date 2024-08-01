@@ -45,5 +45,5 @@ def update_account():
             user.password = data['newPassword']
             db.session.commit()
         else:
-            return {'password': 'invalid password'}
+            return {'errors': {'password': 'invalid password'}}, 401
     return {'message':'working route and method'}
