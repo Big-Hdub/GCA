@@ -45,6 +45,10 @@ body {
     justify-content: center;
 }
 
+.jselfend {
+    justify-self: end;
+}
+
 .aselfstart {
     align-self: start;
 }
@@ -140,6 +144,7 @@ body {
 
 .error {
     color: rgb(194, 0, 0);
+    text-shadow: 2px 2px 2px black;
 }
 
 .mleft-25 {
@@ -156,6 +161,10 @@ body {
 
 .padding-15 {
     padding: 15px;
+}
+
+.padding-40 {
+    padding: 40px;
 }
 
 .margin-15 {
@@ -245,4 +254,13 @@ body {
 
 .no-dec {
     text-decoration-line: none;
+}
+
+.rad-10 {
+    border-radius: 10px;
+}
+
+input {
+    padding: 10px;
+    box-sizing: border-box;
 }

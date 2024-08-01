@@ -24,7 +24,7 @@ export default function Courses() {
             navigate('/');
             dispatch(removeCourses())
         }
-    })
+    }, [navigate, dispatch, sessionUser])
 
     useEffect(() => {
         const loadDash = async () => {
