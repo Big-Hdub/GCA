@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeAccounts } from "../../redux/account";
 import { removeCourses } from "../../redux/course";
+import { removeGrades } from "../../redux/grade";
 import { useNavigate } from "react-router-dom";
 import { removeDash } from "../../redux/dash";
 import { useEffect } from "react";
@@ -18,6 +19,7 @@ export default function LandingPage() {
     const sessionUser = useSelector((store) => store.session.user);
     const courses = useSelector((store) => store.courses.courses);
     const account = useSelector((store) => store.account.data);
+    const grades = useSelector((store) => store.grades.data);
     const dash = useSelector((store) => store.dash.dash);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -35,8 +37,11 @@ export default function LandingPage() {
             if (account) {
                 dispatch(removeAccounts());
             }
+            if (grades) {
+                dispatch(removeGrades());
+            }
         }
-    }, [dispatch, navigate, sessionUser, dash, courses, account]);
+    }, [dispatch, navigate, sessionUser, dash, courses, account, grades]);
 
     return (<>
         {!sessionUser && <div className='flex column landing'>

@@ -98,107 +98,107 @@ export default function Account() {
         func();
     }
 
-    return (<>
-        {isLoaded && <div>
+    return (
+        <div>
             <div className={`flex column between ${theme}1`}>
                 <Header main={true} />
                 <main id="main-container" className="flex minh100 gap-60">
                     <Sidebar selection='account' />
                     <div id="account-container" className={`flex column gap-25 aend padding-40 ${theme} font-${font} ${theme}2`}>
-                        {role === 'student' && <p className="aselfstart">Welcome {data?.student.name},</p>}
-                        {role === 'parent' && <p className="aselfstart">Welcome {data?.parent.name},</p>}
-                        <p className="aselfstart">Change account details below.</p>
-                        <div className="flex gap-15 acenter">
-                            <p>Name:</p>
-                            <input type="text"
-                                className={`${theme}3 ${theme} rad-10`}
-                                value={name}
-                                onChange={(e) => change(() => setName(e.target.value))}
-                                required
-                            />
-                        </div>
-                        <div className="flex gap-15 acenter">
-                            <p>Age:</p>
-                            <input type="number"
-                                className={`${theme}3 ${theme} rad-10`}
-                                value={age}
-                                onChange={(e) => change(() => setAge(e.target.value))}
-                                required
-                            />
-                        </div>
-                        <div className="flex gap-15 acenter">
-                            <p>User name:</p>
-                            <input type="text"
-                                className={`${theme}3 ${theme} rad-10`}
-                                value={user}
-                                onChange={(e) => change(() => setUser(e.target.value))}
-                                required
-                            />
-                        </div>
-                        <div className="flex gap-15 acenter">
-                            <p>Email:</p>
-                            <input type="text"
-                                className={`${theme}3 ${theme} rad-10`}
-                                value={email}
-                                onChange={(e) => change(() => setEmail(e.target.value))}
-                                required
-                            />
-                        </div>
-                        {role === 'student' && <div className="flex gap-15">
-                            <p>Parents:</p>
-                            {data.parents.length === 1 ?
-                                <p>{data.parents[0].name}</p> :
-                                <div className="flex column gap-10">
-                                    <p>{data.parents[0].name}</p>
-                                    <p>{data.parents[1].name}</p>
-                                </div>}
-                        </div>}
-                        {role === 'parent' && <div className="flex gap-15">
-                            <p>{data.children.length === 1 ? 'Child:' : 'Children:'}</p>
-                            {data.children.length === 1 ?
-                                <p>{data.children[0].name}</p> :
-                                <div className="flex column gap-10">
-                                    {data.children.map((child) => (<p key={`child:${child.id}`}>{child.name}</p>))}
-                                </div>
-                            }
-                        </div>}
-                        <p className="aselfstart">Update your password?</p>
-                        <div className="flex gap-15 acenter">
-                            <p>Current password:</p>
-                            <input type="password"
-                                className={`${theme}3 ${theme} rad-10`}
-                                placeholder="password"
-                                value={password}
-                                onChange={(e) => change(() => setPassword(e.target.value))}
-                            />
-                        </div>
-                        {errors.password && <p className={`error font-20`}>{errors.password}</p>}
-                        <div className="flex gap-15 acenter">
-                            <p>New password:</p>
-                            <input type="password"
-                                className={`${theme}3 ${theme} rad-10`}
-                                placeholder="new password"
-                                value={newPassword}
-                                onChange={(e) => change(() => setNewPassword(e.target.value))}
-                            />
-                        </div>
-                        {errors.newpassword && <p className={`error font-20`}>{errors.newpassword}</p>}
-                        <div className="flex gap-15 acenter">
-                            <p>Confirm password:</p>
-                            <input type="password"
-                                className={`${theme}3 ${theme} rad-10`}
-                                placeholder="confirm password"
-                                value={confirm}
-                                onChange={(e) => change(() => setConfirm(e.target.value))}
-                            />
-                        </div>
-                        {errors.confirm && <p className={`error font-20`}>{errors.confirm}</p>}
-                        <button className="button" onClick={handleSave}>Save changes</button>
+                        {isLoaded && <>
+                            {role === 'student' && <p className="aselfstart">Welcome {data?.student.name},</p>}
+                            {role === 'parent' && <p className="aselfstart">Welcome {data?.parent.name},</p>}
+                            <p className="aselfstart">Change account details below.</p>
+                            <div className="flex gap-15 acenter">
+                                <p>Name:</p>
+                                <input type="text"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    value={name}
+                                    onChange={(e) => change(() => setName(e.target.value))}
+                                    required
+                                />
+                            </div>
+                            <div className="flex gap-15 acenter">
+                                <p>Age:</p>
+                                <input type="number"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    value={age}
+                                    onChange={(e) => change(() => setAge(e.target.value))}
+                                    required
+                                />
+                            </div>
+                            <div className="flex gap-15 acenter">
+                                <p>User name:</p>
+                                <input type="text"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    value={user}
+                                    onChange={(e) => change(() => setUser(e.target.value))}
+                                    required
+                                />
+                            </div>
+                            <div className="flex gap-15 acenter">
+                                <p>Email:</p>
+                                <input type="text"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    value={email}
+                                    onChange={(e) => change(() => setEmail(e.target.value))}
+                                    required
+                                />
+                            </div>
+                            {role === 'student' && <div className="flex gap-15">
+                                <p>Parents:</p>
+                                {data.parents.length === 1 ?
+                                    <p>{data.parents[0].name}</p> :
+                                    <div className="flex column gap-10">
+                                        <p>{data.parents[0].name}</p>
+                                        <p>{data.parents[1].name}</p>
+                                    </div>}
+                            </div>}
+                            {role === 'parent' && <div className="flex gap-15">
+                                <p>{data.children.length === 1 ? 'Child:' : 'Children:'}</p>
+                                {data.children.length === 1 ?
+                                    <p>{data.children[0].name}</p> :
+                                    <div className="flex column gap-10">
+                                        {data.children.map((child) => (<p key={`child:${child.id}`}>{child.name}</p>))}
+                                    </div>
+                                }
+                            </div>}
+                            <p className="aselfstart">Update your password?</p>
+                            <div className="flex gap-15 acenter">
+                                <p>Current password:</p>
+                                <input type="password"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    placeholder="password"
+                                    value={password}
+                                    onChange={(e) => change(() => setPassword(e.target.value))}
+                                />
+                            </div>
+                            {errors.password && <p className={`error font-20`}>{errors.password}</p>}
+                            <div className="flex gap-15 acenter">
+                                <p>New password:</p>
+                                <input type="password"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    placeholder="new password"
+                                    value={newPassword}
+                                    onChange={(e) => change(() => setNewPassword(e.target.value))}
+                                />
+                            </div>
+                            {errors.newpassword && <p className={`error font-20`}>{errors.newpassword}</p>}
+                            <div className="flex gap-15 acenter">
+                                <p>Confirm password:</p>
+                                <input type="password"
+                                    className={`${theme}3 ${theme} rad-10`}
+                                    placeholder="confirm password"
+                                    value={confirm}
+                                    onChange={(e) => change(() => setConfirm(e.target.value))}
+                                />
+                            </div>
+                            {errors.confirm && <p className={`error font-20`}>{errors.confirm}</p>}
+                            <button className="button" onClick={handleSave}>Save changes</button>
+                        </>}
                     </div>
                 </main>
-            </div>
+            </div >
             <Footer />
-        </div>}
-    </>
-    );
+        </div>);
 }
