@@ -1,4 +1,4 @@
-import { removeGrades, thunkGetGrade } from "../../redux/grade";
+import { thunkGetGrade } from "../../redux/grade";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -25,9 +25,13 @@ export default function Grades() {
     })
 
     useEffect(() => {
-        dispatch(thunkGetGrade())
-            .then(() => setIsLoaded(true))
-    }, [dispatch])
+        if (!data) {
+            dispatch(thunkGetGrade())
+                .then(() => setIsLoaded(true))
+        } else if (data) {
+            setIsLoaded(true)
+        }
+    }, [dispatch, data])
 
     return (
         <div>

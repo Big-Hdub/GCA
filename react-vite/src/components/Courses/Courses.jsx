@@ -27,50 +27,57 @@ export default function Courses() {
     }, [navigate, dispatch, sessionUser])
 
     useEffect(() => {
-        const loadDash = async () => {
-            await dispatch(thunkGetCourses())
-                .then(setIsLoaded(true))
+        if (!data) {
+            const loadDash = async () => {
+                await dispatch(thunkGetCourses())
+                    .then(setIsLoaded(true))
+            }
+            loadDash()
+        } else if (data) {
+            setIsLoaded(true)
         }
-        loadDash()
-    }, [dispatch])
+    }, [dispatch, data])
 
     return (<>
-        {isLoaded &&
+        {sessionUser &&
             <div>
                 <div className={`flex column between ${theme}1`}>
                     <Header main={true} />
                     <main id="main-container" className="flex minh100 gap-60">
                         <Sidebar selection='courses' />
                         <div id="courses-container" className={`flex wrap gap-40 acenter ${theme} font-${font} ${theme}2`}>
-                            {role === 'student' && <>
-                                {data?.map(course => {
-                                    return (
-                                        <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                            <CourseCard course={course} font={font} theme={theme} />
-                                        </div>
-                                    )
-                                })}
-                            </>}
-                            {role === 'parent' && <>
-                                {data?.map(({ student, courses }) => {
-                                    return (
-                                        <div key={`child:${student?.id}`} className="flex column gap-40">
-                                            <p className="aselfstart">{student.name}</p>
-                                            <div className={`flex wrap gap-40 acenter`}>
-                                                {
-                                                    courses.map((course) => {
-                                                        return (
-                                                            <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                                                <CourseCard course={course} font={font} theme={theme} />
-                                                            </div>
-                                                        )
-                                                    })
-                                                }
+                            {isLoaded && <>
+                                {role === 'student' && <>
+                                    {data?.map(course => {
+                                        return (
+                                            <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                <CourseCard course={course} font={font} theme={theme} />
                                             </div>
-                                        </div>
-                                    )
-                                })}
-                            </>}
+                                        )
+                                    })}
+                                </>}
+                                {role === 'parent' && <>
+                                    {data?.map(({ student, courses }) => {
+                                        return (
+                                            <div key={`child:${student?.id}`} className="flex column gap-40">
+                                                <p className="aselfstart">{student.name}</p>
+                                                <div className={`flex wrap gap-40 acenter`}>
+                                                    {
+                                                        courses.map((course) => {
+                                                            return (
+                                                                <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                                    <CourseCard course={course} font={font} theme={theme} />
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
+                                </>}
+                            </>
+                            }
                         </div>
                     </main>
                 </div >
