@@ -21,7 +21,6 @@ export default function Grades() {
     useEffect(() => {
         if (!sessionUser) {
             navigate('/');
-            dispatch(removeGrades())
         }
     })
 
@@ -32,11 +31,11 @@ export default function Grades() {
 
     return (
         <div>
-            {isLoaded && data && <>
-                <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className="flex minh100 gap-60">
-                        <Sidebar selection='grades' />
+            <div className={`flex column between ${theme}1`}>
+                <Header main={true} />
+                <main id="main-container" className="flex minh100 gap-60">
+                    <Sidebar selection='grades' />
+                    {isLoaded && data && <>
                         <div id="grades-container" className={`flex column gap-25 astart padding-40 ${theme} font-${font} ${theme}2`}>
                             <div className="flex column gap-15">
                                 {role === 'student' && data.map((grade) => {
@@ -44,7 +43,7 @@ export default function Grades() {
                                         <div key={`grade:${grade.id}`} className="flex gap-40">
                                             <div className="flex between gap-10 w500">
                                                 <p>{grade.title}:</p>
-                                                <p>{grade.completion.filter(lesson => lesson[0].complete).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
+                                                <p>{grade.completion.filter(lesson => lesson[0].complete && lesson[0].assigned).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
                                             </div>
                                             <div className="flex gap-15">
                                                 <p>Current grade:</p>
@@ -55,10 +54,10 @@ export default function Grades() {
                                 })}
                             </div>
                         </div>
-                    </main>
-                </div>
-                <Footer />
-            </>}
+                    </>}
+                </main>
+            </div>
+            <Footer />
         </div>
     )
 }
