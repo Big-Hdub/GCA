@@ -18,6 +18,10 @@
     color: aqua;
 }
 
+#sidebar>div>div>p.sidebar-title {
+    color: white;
+}
+
 #sidebar-selection {
     position: relative;
     background-color: rgb(26, 58, 65, 50%);

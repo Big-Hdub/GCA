@@ -1,3 +1,4 @@
+import CourseDetails from '../components/CourseDetails';
 import { createBrowserRouter } from 'react-router-dom';
 import Construction from '../components/Construction';
 import LandingPage from '../components/LandingPage';
@@ -22,7 +23,16 @@ export const router = createBrowserRouter([
       },
       {
         path: 'courses',
-        element: <Courses main={true} />
+        children: [
+          {
+            path: '',
+            element: <Courses main={true} />,
+          },
+          {
+            path: ':courseId',
+            element: <CourseDetails />
+          }
+        ]
       },
       {
         path: 'account',
@@ -54,7 +64,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '*',
-        element: <h1>404 page not found</h1>
+        element: <Construction error='404 Page not found' />
       }
     ],
   },

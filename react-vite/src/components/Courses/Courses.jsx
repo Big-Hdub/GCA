@@ -27,63 +27,60 @@ export default function Courses() {
     }, [navigate, dispatch, sessionUser])
 
     useEffect(() => {
-        if (!data) {
-            const loadDash = async () => {
-                await dispatch(thunkGetCourses())
-                    .then(setIsLoaded(true))
-            }
-            loadDash()
-        } else if (data) {
-            setIsLoaded(true)
+        const loadDash = async () => {
+            await dispatch(thunkGetCourses())
+                .then(setIsLoaded(true))
         }
-    }, [dispatch, data])
+        loadDash()
+    }, [dispatch])
 
-    return (<>
-        {sessionUser &&
-            <div>
-                <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className="flex minh100 gap-60">
-                        <Sidebar selection='courses' />
-                        <div id="courses-container" className={`flex wrap gap-40 acenter ${theme} font-${font} ${theme}2`}>
-                            {isLoaded && <>
-                                {role === 'student' && <>
-                                    {data?.map(course => {
-                                        return (
-                                            <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                                <CourseCard course={course} font={font} theme={theme} />
-                                            </div>
-                                        )
-                                    })}
-                                </>}
-                                {role === 'parent' && <>
-                                    {data?.map(({ student, courses }) => {
-                                        return (
-                                            <div key={`child:${student?.id}`} className="flex column gap-40">
-                                                <p className="aselfstart">{student.name}</p>
-                                                <div className={`flex wrap gap-40 acenter`}>
-                                                    {
-                                                        courses.map((course) => {
-                                                            return (
-                                                                <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                                                    <CourseCard course={course} font={font} theme={theme} />
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
+    return (
+        <>
+            {sessionUser &&
+                <div>
+                    <div className={`flex column between ${theme}1`}>
+                        <Header main={true} />
+                        <main id="main-container" className="flex minh100 gap-60">
+                            <Sidebar selection='courses' />
+                            <div id="courses-container" className={`flex wrap gap-40 acenter ${theme} font-${font} ${theme}2`}>
+                                {isLoaded && data && data.length && <>
+                                    {role === 'student' && <>
+                                        {data?.map(course => {
+                                            return (
+                                                <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                    <CourseCard course={course} font={font} theme={theme} />
                                                 </div>
-                                            </div>
-                                        )
-                                    })}
-                                </>}
-                            </>
-                            }
-                        </div>
-                    </main>
+                                            )
+                                        })}
+                                    </>}
+                                    {role === 'parent' && <>
+                                        {data?.map(({ student, courses }) => {
+                                            return (
+                                                <div key={`child:${student?.id}`} className="flex column gap-40">
+                                                    <p className="aselfstart">{student.name}</p>
+                                                    <div className={`flex wrap gap-40 acenter`}>
+                                                        {
+                                                            courses.map((course) => {
+                                                                return (
+                                                                    <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                                        <CourseCard course={course} font={font} theme={theme} />
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </>}
+                                </>
+                                }
+                            </div>
+                        </main>
+                    </div >
+                    <Footer />
                 </div >
-                <Footer />
-            </div >
-        }
-    </>
+            }
+        </>
     )
 }
