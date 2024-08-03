@@ -24,6 +24,20 @@ export const thunkGetCourses = () => async (dispatch) => {
     }
 }
 
+export const thunkGetCourseById = (courseId) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${courseId}`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setCourses(data));
+        return data;
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: "Something went wrong. Please try again" };
+    }
+}
+
 const initialState = { courses: null };
 
 function coursesReducer(state = initialState, action) {
@@ -34,9 +48,7 @@ function coursesReducer(state = initialState, action) {
             return newState;
         }
         case REMOVE_COURSES: {
-            const newState = structuredClone(state);
-            newState.courses = null;
-            return newState;
+            return { courses: null };
         }
         default:
             return state;

@@ -25,6 +25,17 @@ class Curriculum(db.Model):
 
     students = db.relationship('Student', overlaps='curriculum,complete,student', secondary=add_prefix_for_prod('student_curriculums'), back_populates='curriculum')
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'lesson': self.lesson,
+            'title': self.title,
+            'type': self.type,
+            'text': self.text,
+            'assigned': self.complete[0].assigned,
+            'complete': self.complete[0].complete
+        }
+
     def to_dict_student_dash(self):
         return {
             'id': self.id,

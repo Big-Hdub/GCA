@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
+import { removeCourses } from '../../redux/course';
+import { useDispatch } from 'react-redux';
 
-export default function Sidebar({ selection }) {
+export default function Sidebar({ selection, course }) {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleClick = (url) => {
+    const handleClick = async (url, func) => {
+        if (func) await func();
         window.scroll(0, 0);
         navigate(url)
     }
@@ -34,9 +38,16 @@ export default function Sidebar({ selection }) {
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
                 </div>
-                <div id="sidebar-selection">
-                    <p className="sidebar-links link mleft-25">Courses</p>
-                </div>
+                {course ?
+                    <div className="sidebar-not-selected flex column gap-25">
+                        <p onClick={() => handleClick('/courses', async () => await dispatch(removeCourses()))} className="sidebar-links link mleft-25">Courses</p>
+                        <div id='sidebar-selection'>
+                            <p className="sidebar-title mleft-50">{course}</p>
+                        </div>
+                    </div> :
+                    <div id="sidebar-selection">
+                        <p className="sidebar-links link mleft-25">Courses</p>
+                    </div>}
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/account')} className="sidebar-links link mleft-25">Account</p>
                 </div>
