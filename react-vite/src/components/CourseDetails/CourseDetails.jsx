@@ -10,7 +10,6 @@ import './CourseDetails.css'
 export default function CourseDetails() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
     const theme = useSelector((store) => store.session.user)?.settings.theme;
-    // const role = useSelector((store) => store.session.user)?.settings.role;
     const sessionUser = useSelector((store) => store.session.user);
     const data = useSelector((store) => store.courses.courses);
     const [isLoaded, setIsLoaded] = useState();
@@ -52,7 +51,6 @@ export default function CourseDetails() {
                                         </div>
                                     )
                                 })}
-
                             </div>
                         </>}
                     </main>
