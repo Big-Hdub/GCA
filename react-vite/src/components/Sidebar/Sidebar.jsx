@@ -2,12 +2,21 @@ import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 import { removeCourses } from '../../redux/course';
 import { useDispatch } from 'react-redux';
+import { removeLessons } from '../../redux/lesson';
 
 export default function Sidebar({ selection, course, lesson, lessons }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const handleClick = async (url, func) => {
+        if (func) await func();
+        window.scroll(0, 0);
+        navigate(url)
+    }
+
+    const handleClickLessons = async (url, func) => {
+        dispatch(removeLessons);
+        dispatch(removeCourses);
         if (func) await func();
         window.scroll(0, 0);
         navigate(url)
@@ -62,12 +71,12 @@ export default function Sidebar({ selection, course, lesson, lessons }) {
         {selection === 'lesson' &&
             <div id="sidebar" className="flex column gap-10">
                 <div className='sidebar-not-selected'>
-                    <p onClick={() => handleClick('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
+                    <p onClick={() => handleClickLessons('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
                 </div>
                 <div className="sidebar-not-selected flex column gap-25">
-                    <p onClick={() => handleClick('/courses', async () => await dispatch(removeCourses()))} className="sidebar-links link mleft-25">Courses</p>
+                    <p onClick={() => handleClickLessons('/courses', async () => await dispatch(removeCourses()))} className="sidebar-links link mleft-25">Courses</p>
                     <div className='sidebar-not-selected flex column gap-10'>
-                        <p onClick={() => handleClick(`/courses/${course.id}`)} className="sidebar-links link mleft-50">{course.title}</p>
+                        <p onClick={() => handleClickLessons(`/courses/${course.id}`)} className="sidebar-links link mleft-50">{course.title}</p>
                         {lessons.filter((lesson) => lesson.assigned).map((lessonInfo) => {
                             return (lessonInfo.id === lesson ?
                                 <div key={`lesson:${lessonInfo.id}`} id='sidebar-selection'>
@@ -75,7 +84,7 @@ export default function Sidebar({ selection, course, lesson, lessons }) {
                                 </div>
                                 :
                                 <div key={`lesson:${lessonInfo.id}`} className="sidebar-not-selected">
-                                    <p onClick={() => handleClick(`/lessons/${lessonInfo.id}`)} className="sidebar-links link mleft-75">{lessonInfo.title}</p>
+                                    <p onClick={() => handleClickLessons(`/lessons/${lessonInfo.id}`)} className="sidebar-links link mleft-75">{lessonInfo.title}</p>
                                 </div>
                             )
                         })

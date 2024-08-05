@@ -29,12 +29,12 @@ export default function Dashboard() {
     }, [dispatch, navigate, theme, sessionUser])
 
     useEffect(() => {
+        dispatch(removeCourses);
+        dispatch(removeLessons);
         if (!data) {
             const loadDash = async () => {
                 await dispatch(thunkGetDash())
                     .then(setIsLoaded(true));
-                dispatch(removeCourses);
-                dispatch(removeLessons);
             }
             loadDash()
         } else if (data) {
