@@ -20,17 +20,17 @@ export default function CourseDetails() {
     useEffect(() => {
         if (!sessionUser) {
             navigate('/');
-            dispatch(removeCourses())
+            dispatch(removeCourses());
         }
-    }, [navigate, dispatch, sessionUser])
+    }, [navigate, dispatch, sessionUser]);
 
     useEffect(() => {
         const loadDash = async () => {
             await dispatch(thunkGetCourseById(+courseId))
-                .then(setIsLoaded(true))
+                .then(setIsLoaded(true));
         }
-        loadDash()
-    }, [dispatch, courseId])
+        loadDash();
+    }, [dispatch, courseId]);
 
     return (<>
         {sessionUser &&
