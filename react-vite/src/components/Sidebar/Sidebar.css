@@ -10,15 +10,15 @@
     z-index: 0;
 }
 
-#sidebar>div>p.link {
+p.link {
     color: white;
 }
 
-#sidebar>div>p.link:hover {
+p.link:hover {
     color: aqua;
 }
 
-#sidebar>div>div>p.sidebar-title {
+p.sidebar-title {
     color: white;
 }
 

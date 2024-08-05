@@ -41,10 +41,8 @@ export default function LessonDetails() {
                     <Header main={true} />
                     <main id="main-container" className="flex minh100 gap-60">
                         {isLoaded && lesson && course && <>
-                            <Sidebar selection='courses' course={course.title} lesson={lesson.id} lessons={course.lessons} />
+                            <Sidebar selection='lesson' course={course.course} lesson={+lessonId} lessons={course.lessons} />
                             <div id="lesson-container" className={`flex column gap-40 ${theme} font-${font} ${theme}2`}>
-                                <h1>{lesson.title}</h1>
-                                {/* <p>{lesson.text}</p> */}
                                 <RenderMarkdown text={lesson.text} />
                             </div>
                         </>}
