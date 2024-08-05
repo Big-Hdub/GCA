@@ -45,7 +45,7 @@ export default function Grades() {
                                 {role === 'student' && data.map((grade) => {
                                     return (
                                         <div key={`grade:${grade.id}`} className="flex gap-40">
-                                            <div className="flex between gap-10 w500">
+                                            <div className="flex between gap-10 w575">
                                                 <p>{grade.title}:</p>
                                                 <p>{grade.completion.filter(lesson => lesson[0].complete && lesson[0].assigned).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
                                             </div>

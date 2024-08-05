@@ -8,6 +8,7 @@ import Courses from '../components/Courses';
 import Account from '../components/Account';
 import Grades from '../components/Grades';
 import Layout from './Layout';
+import LessonDetails from '../components/LessonDetails/LessonDetails';
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
             element: <CourseDetails />
           }
         ]
+      },
+      {
+        path: 'lessons/:lessonId',
+        element: <LessonDetails />
       },
       {
         path: 'account',
