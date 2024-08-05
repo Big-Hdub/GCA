@@ -1,5 +1,7 @@
 import { removeDash, thunkGetDash } from "../../redux/dash";
 import { useDispatch, useSelector } from "react-redux";
+import { removeCourses } from "../../redux/course";
+import { removeLessons } from "../../redux/lesson";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DashboardCard from "./DashboardCard";
@@ -31,6 +33,8 @@ export default function Dashboard() {
             const loadDash = async () => {
                 await dispatch(thunkGetDash())
                     .then(setIsLoaded(true));
+                dispatch(removeCourses);
+                dispatch(removeLessons);
             }
             loadDash()
         } else if (data) {

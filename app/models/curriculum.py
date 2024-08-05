@@ -44,3 +44,15 @@ class Curriculum(db.Model):
             'title': self.title,
             'type': self.type,
         }
+
+    def to_dict_details(self):
+        return {
+            'id': self.id,
+            'course': self.course_id,
+            'lesson': self.lesson,
+            'title': self.title,
+            'type': self.type,
+            'text': self.text,
+            'assigned': self.complete[0].assigned,
+            'complete': self.complete[0].complete
+        }

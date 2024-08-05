@@ -3,6 +3,8 @@
     height: fit-content;
     position: relative;
     z-index: 4;
+    width: fit-content;
+    max-width: 75%;
     border-radius: 15px;
     margin-bottom: 40px;
 }

@@ -20,17 +20,23 @@ export default function CourseDetails() {
     useEffect(() => {
         if (!sessionUser) {
             navigate('/');
-            dispatch(removeCourses())
+            dispatch(removeCourses());
+            window.scroll(0, 0);
         }
-    }, [navigate, dispatch, sessionUser])
+    }, [navigate, dispatch, sessionUser]);
 
     useEffect(() => {
         const loadDash = async () => {
             await dispatch(thunkGetCourseById(+courseId))
-                .then(setIsLoaded(true))
+                .then(setIsLoaded(true));
         }
-        loadDash()
-    }, [dispatch, courseId])
+        loadDash();
+    }, [dispatch, courseId]);
+
+    const clickLesson = (url) => {
+        window.scroll(0, 0);
+        navigate(url);
+    }
 
     return (<>
         {sessionUser &&
@@ -45,7 +51,7 @@ export default function CourseDetails() {
                                 {data.lessons.filter((lesson) => lesson.assigned).map((lesson) => {
                                     return (
                                         <div key={`lesson:${lesson.id}`} className="flex gap-25">
-                                            <p className={`link`} onClick={() => navigate(`/lessons/${lesson.id}`)}>{lesson.title}</p>
+                                            <p className={`link`} onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
                                             <p>{lesson.type}</p>
                                             <p>{lesson.complete ? "Completed" : "Not complete"}</p>
                                         </div>
