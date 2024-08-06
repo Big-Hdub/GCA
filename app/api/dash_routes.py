@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint
 from flask_login import current_user, login_required
-from app.models import User, Student
+from app.models import User
 
 dash_routes = Blueprint('dashs', __name__)
 
