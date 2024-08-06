@@ -12,19 +12,23 @@ export const removeLessons = () => ({
     type: REMOVE_LESSONS
 });
 
-// export const thunkGetLessons = () => async (dispatch) => {
-//     const response = await fetch("/api/lessons");
-//     if (response.ok) {
-//         const data = await response.json();
-//         dispatch(setLessons(data));
-//         return data;
-//     } else if (response.status < 500) {
-//         const errorMessages = await response.json();
-//         return errorMessages;
-//     } else {
-//         return { server: "Something went wrong. Please try again" };
-//     }
-// }
+export const thunkCompleteLesson = (lessonId) => async (dispatch) => {
+    const response = await fetch(`/api/lessons/${lessonId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ complete: true })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setLessons(data));
+        return data;
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: "Something went wrong. Please try again" };
+    }
+}
 
 export const thunkGetLessonById = (lessonId) => async (dispatch) => {
     const response = await fetch(`/api/lessons/${lessonId}`);

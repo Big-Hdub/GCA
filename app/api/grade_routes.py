@@ -1,7 +1,6 @@
-from crypt import methods
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
 from flask_login import current_user, login_required
-from app.models import User, Student, db
+from app.models import User
 
 grade_routes = Blueprint('grades', __name__)
 

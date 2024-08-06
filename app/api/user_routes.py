@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import login_required
-from app.models import User, Setting, db
+from app.models import User, db
 
 user_routes = Blueprint('users', __name__)
 

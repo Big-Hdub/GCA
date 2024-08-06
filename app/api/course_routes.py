@@ -1,7 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
 from flask_login import current_user, login_required
-from app.models import User, Course, StudentCurriculum, Curriculum
-from app.models.student import Student
+from app.models import User, Course, Curriculum
 
 courses_routes = Blueprint('courses', __name__)
 
