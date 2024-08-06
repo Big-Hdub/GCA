@@ -1,12 +1,12 @@
-import { removeLessons, thunkGetLessonById } from "../../redux/lesson";
+import { removeLessons, thunkCompleteLesson, thunkGetLessonById } from "../../redux/lesson";
 import { useNavigate, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
+import RenderMarkdown from "../RenderMarkdown";
 import { useEffect, useState } from "react";
 import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './LessonDetails.css'
-import RenderMarkdown from "../RenderMarkdown/RenderMarkdown";
 
 export default function LessonDetails() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
@@ -44,6 +44,7 @@ export default function LessonDetails() {
                             <Sidebar selection='lesson' course={course.course} lesson={+lessonId} lessons={course.lessons} />
                             <div id="lesson-container" className={`flex column gap-40 ${theme} font-${font} ${theme}2`}>
                                 <RenderMarkdown text={lesson.text} />
+                                {lesson.complete ? <p className="aselfend">Complete</p> : <button onClick={() => dispatch(thunkCompleteLesson(+lessonId))} className="button wfit aselfend">Mark as complete</button>}
                             </div>
                         </>}
                     </main>

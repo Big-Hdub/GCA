@@ -93,6 +93,10 @@ body {
     width: 575px;
 }
 
+.wfit {
+    width: fit-content;
+}
+
 .flex {
     display: flex;
 }
