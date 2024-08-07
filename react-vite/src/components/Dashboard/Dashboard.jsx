@@ -94,7 +94,39 @@ export default function Dashboard() {
                                                         </div>
                                                     </div>
                                                 </>}
-                                            </div>)
+                                            </div>
+                                        )
+                                    })}
+                                </>}
+                                {role === 'teacher' && <>
+                                    <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to your {data?.courses.length > 1 ? 'students' : 'student'}:</h2>
+                                    {data && data.courses && data.courses.map((course) => {
+                                        return (
+                                            <div className="flex column wp100" key={`course:${course.id}`}>
+                                                <p className="course-names">Course: {course.title} {course.level}</p>
+                                                {course.students.map(({ student, lessons }) => {
+                                                    return (
+                                                        <div className="flex column wp100" key={`child:${student?.id}`}>
+                                                            {lessons && <>
+                                                                <h2 className="student-names mbotton-15 aselfstart">{student?.name}</h2>
+                                                                <div className={`dashboard-cards-container flex gap-15 ${theme}2`}>
+                                                                    <div className="dashboard-content between acenter flex gap-15">
+                                                                        {lessons?.filter(lesson => lesson[2].course === course.title).map((lessonData) => {
+                                                                            const [complete, assigned, lesson] = [...lessonData]
+                                                                            return (
+                                                                                <div key={`teacher:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card ${theme}3`}>
+                                                                                    <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} teacher={true} assigned={assigned} />
+                                                                                </div>
+                                                                            )
+                                                                        })}
+                                                                    </div>
+                                                                </div>
+                                                            </>}
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        )
                                     })}
                                 </>}
                             </div>

@@ -73,6 +73,15 @@ export default function Courses() {
                                             )
                                         })}
                                     </>}
+                                    {role === 'teacher' && <>
+                                        {data?.map(course => {
+                                            return (
+                                                <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                    <CourseCard course={course} font={font} theme={theme} />
+                                                </div>
+                                            )
+                                        })}
+                                    </>}
                                 </>
                                 }
                             </div>

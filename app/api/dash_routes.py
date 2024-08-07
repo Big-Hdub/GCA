@@ -24,3 +24,5 @@ def dashs():
                         for lesson in child.complete
                         if (lesson.assigned==True)], }
                 for child in user.children]
+    if user.settings[0].role=='teacher':
+        return user.to_dict_teacher_dash()

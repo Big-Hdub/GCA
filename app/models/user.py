@@ -64,3 +64,8 @@ class User(db.Model, UserMixin):
             'name': self.first_name+' '+self.last_name,
             'email': self.email
         }
+
+    def to_dict_teacher_dash(self):
+        return {
+            'courses': [course.to_dict_teacher() for course in self.courses],
+            }

@@ -1,4 +1,6 @@
 import { thunkGetCourseById } from "./course";
+import { thunkGetGrade } from "./grade";
+import { thunkGetDash } from "./dash";
 
 const SET_LESSONS = 'lessons/setLessons';
 const REMOVE_LESSONS = 'lessons/removeLessons';
@@ -21,6 +23,8 @@ export const thunkCompleteLesson = (lessonId) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(setLessons(data));
+        dispatch(thunkGetGrade());
+        dispatch(thunkGetDash());
         return data;
     } else if (response.status < 500) {
         const errorMessages = await response.json();
@@ -35,7 +39,7 @@ export const thunkGetLessonById = (lessonId) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(setLessons(data));
-        dispatch(thunkGetCourseById(data.course))
+        dispatch(thunkGetCourseById(data.course));
         return data;
     } else if (response.status < 500) {
         const errorMessages = await response.json();

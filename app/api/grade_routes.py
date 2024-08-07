@@ -15,6 +15,6 @@ def account():
     if user.settings[0].role=='student':
         return { 'grades': [grade.to_dict() for grade in user.students[0].grades]}
 
-    # if user.settings[0].role=='parent':
-    #     return {'children': [child.user.to_dict() for child in user.children],
-    #             'parent': user.to_dict()}
+    if user.settings[0].role=='parent':
+        return {'children': [{'child': child.user.to_dict(), 'complete': [grade.to_dict() for grade in child.grades]} for child in user.children],
+                'parent': user.to_dict()}
