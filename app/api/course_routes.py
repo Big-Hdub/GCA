@@ -22,6 +22,9 @@ def courses():
                             for course in child.courses]}
                             for child in user.children]
 
+    if user.settings[0].role=='teacher':
+        return [course.to_dict_courses() for course in user.courses]
+
 @courses_routes.route('/<int:course_id>')
 @login_required
 def course(course_id):
@@ -30,13 +33,11 @@ def course(course_id):
     """
     user = User.query.get(current_user.id)
 
-    if user.settings[0].role=='student':
+    if user.settings[0].role=='student' or user.settings[0].role=='parent':
         course = Course.query.get(course_id)
         curriculum = Curriculum.query.filter(Curriculum.course_id == course.id).all()
         return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict() for lesson in curriculum]}
 
-    # if user.settings[0].role=='parent':
-    #     return [{'student': child.user.to_dict(),
-    #             'courses': [course.to_dict_courses()
-    #                         for course in child.courses]}
-    #                         for child in user.children]
+    course = Course.query.get(course_id)
+    curriculum = Curriculum.query.filter(Curriculum.course_id == course.id).all()
+    return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict() for lesson in curriculum]}

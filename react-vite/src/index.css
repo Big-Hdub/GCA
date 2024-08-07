@@ -89,6 +89,10 @@ body {
     width: 100vw;
 }
 
+.wp100 {
+    width: 100%;
+}
+
 .w575 {
     width: 575px;
 }

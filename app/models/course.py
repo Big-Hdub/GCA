@@ -53,3 +53,16 @@ class Course(db.Model):
             'level': self.level,
             'current-grade': self.grades[0].grade,
         }
+
+    def to_dict_teacher(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'level': self.level,
+            'students': [{'student': student.user.to_dict(),
+                        'lessons': [[lesson.complete,
+                                    lesson.assigned,
+                                    lesson.curriculum.to_dict_student_dash()]
+                        for lesson in student.complete] }
+                        for student in self.students]
+        }
