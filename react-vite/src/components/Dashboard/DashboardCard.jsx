@@ -1,7 +1,10 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"
+import { thunkAssignLesson } from "../../redux/lesson";
 
-export default function DashboardCard({ lesson, complete, font, theme, teacher, assigned }) {
+export default function DashboardCard({ lesson, complete, font, theme, teacher, assigned, student }) {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const clickLesson = (url) => {
         window.scroll(0, 0);
@@ -22,7 +25,7 @@ export default function DashboardCard({ lesson, complete, font, theme, teacher, 
             <div className={`flex wrap gap-15 acenter padding-15 font-${font} ${theme}`}>
                 <p className="link" onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
                 <p>{complete ? 'complete' : 'not complete'}</p>
-                {assigned ? <p>assigned</p> : <p className="link">assign</p>}
+                {assigned ? <p>assigned</p> : <p className="link" onClick={() => dispatch(thunkAssignLesson(lesson.id, student))}>assign</p>}
             </div>}
     </>)
 }

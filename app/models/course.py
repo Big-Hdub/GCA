@@ -63,6 +63,7 @@ class Course(db.Model):
                         'lessons': [[lesson.complete,
                                     lesson.assigned,
                                     lesson.curriculum.to_dict_student_dash()]
-                        for lesson in student.complete] }
+                        for lesson in student.complete
+                        if lesson.curriculum.course_id == self.id] }
                         for student in self.students]
         }

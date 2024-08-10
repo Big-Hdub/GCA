@@ -13,7 +13,7 @@ def dashs():
     """
     user = User.query.get(current_user.id)
     if user.settings[0].role=='student':
-        return [lesson.curriculum.to_dict_student_dash()
+        return [lesson.to_dict_student_dash()
                 for lesson in user.students[0].complete
                 if (lesson.complete==False and lesson.assigned==True)]
     if user.settings[0].role=='parent':

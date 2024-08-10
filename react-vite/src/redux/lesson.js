@@ -49,6 +49,24 @@ export const thunkGetLessonById = (lessonId) => async (dispatch) => {
     }
 }
 
+export const thunkAssignLesson = (lessonId, studentId) => async (dispatch) => {
+    const response = await fetch(`/api/lessons/${lessonId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ student: studentId })
+    });
+    if (response.ok) {
+        dispatch(thunkGetDash());
+        const data = await response.json();
+        return data;
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages;
+    } else {
+        return { server: "Something went wrong. Please try again" };
+    }
+}
+
 const initialState = { lessons: null };
 
 function lessonsReducer(state = initialState, action) {

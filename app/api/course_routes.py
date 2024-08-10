@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask_login import current_user, login_required
-from app.models import User, Course, Curriculum
+from app.models import User, Course, Curriculum, db
+from app.models.student_curriculum import StudentCurriculum
 
 courses_routes = Blueprint('courses', __name__)
 
@@ -35,9 +36,10 @@ def course(course_id):
 
     if user.settings[0].role=='student' or user.settings[0].role=='parent':
         course = Course.query.get(course_id)
-        curriculum = Curriculum.query.filter(Curriculum.course_id == course.id).all()
-        return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict() for lesson in curriculum]}
-
+        db.session.flush()
+        lessons = StudentCurriculum.query.filter(StudentCurriculum.student_id == user.students[0].id).all()
+        lessons = [lesson.to_dict_student_dash() for lesson in lessons]
+        return {'course': course.to_dict_courses(), 'lessons': [lesson for lesson in lessons if lesson['courseId']==course_id]}
     course = Course.query.get(course_id)
-    curriculum = Curriculum.query.filter(Curriculum.course_id == course.id).all()
+    curriculum = Curriculum.query.filter(Curriculum.course_id == course.id)
     return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict() for lesson in curriculum]}

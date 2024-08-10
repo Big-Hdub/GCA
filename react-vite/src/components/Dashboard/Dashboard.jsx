@@ -111,11 +111,11 @@ export default function Dashboard() {
                                                                 <h2 className="student-names mbotton-15 aselfstart">{student?.name}</h2>
                                                                 <div className={`dashboard-cards-container flex gap-15 ${theme}2`}>
                                                                     <div className="dashboard-content between acenter flex gap-15">
-                                                                        {lessons?.filter(lesson => lesson[2].course === course.title).map((lessonData) => {
+                                                                        {lessons?.map((lessonData) => {
                                                                             const [complete, assigned, lesson] = [...lessonData]
                                                                             return (
                                                                                 <div key={`teacher:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card ${theme}3`}>
-                                                                                    <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} teacher={true} assigned={assigned} />
+                                                                                    <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} teacher={true} assigned={assigned} student={student.id} />
                                                                                 </div>
                                                                             )
                                                                         })}

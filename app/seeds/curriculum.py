@@ -409,7 +409,7 @@ def seed_curriculums():
                                     pass
                         else:
                             for student in students:
-                                if not course.level==student.grade_level:
+                                if course.level==student.grade_level:
                                     student_curriculum = StudentCurriculum(student_id=student.id, curriculum_id=curriculum.id, complete=False, assigned=False)
                                     student.complete.append(student_curriculum)
                                     db.session.commit()
