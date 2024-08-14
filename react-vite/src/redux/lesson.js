@@ -14,12 +14,24 @@ export const removeLessons = () => ({
     type: REMOVE_LESSONS
 });
 
-export const thunkCompleteLesson = (lessonId) => async (dispatch) => {
-    const response = await fetch(`/api/lessons/${lessonId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ complete: true })
-    });
+export const thunkCompleteLesson = (lessonId, child = undefined) => async (dispatch) => {
+    let response;
+    if (child) {
+        response = await fetch(`/api/lessons/${lessonId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                complete: true,
+                child
+            })
+        });
+    } else {
+        response = await fetch(`/api/lessons/${lessonId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ complete: true })
+        });
+    }
     if (response.ok) {
         const data = await response.json();
         dispatch(setLessons(data));
@@ -39,7 +51,8 @@ export const thunkGetLessonById = (lessonId) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(setLessons(data));
-        dispatch(thunkGetCourseById(data.course));
+        if (data.course) dispatch(thunkGetCourseById(data.course));
+        else if (data.children[0][0]) dispatch(thunkGetCourseById(data.children[0][0]?.course));
         return data;
     } else if (response.status < 500) {
         const errorMessages = await response.json();

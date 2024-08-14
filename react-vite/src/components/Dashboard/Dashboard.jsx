@@ -86,8 +86,8 @@ export default function Dashboard() {
                                                             {lessons?.map((lessonData) => {
                                                                 const [complete, lesson] = [...lessonData]
                                                                 return (
-                                                                    <div key={`parent:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card ${theme}3`}>
-                                                                        <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} />
+                                                                    <div key={`parent:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card`}>
+                                                                        <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} parent={true} />
                                                                     </div>
                                                                 )
                                                             })}
@@ -114,7 +114,7 @@ export default function Dashboard() {
                                                                         {lessons?.map((lessonData) => {
                                                                             const [complete, assigned, lesson] = [...lessonData]
                                                                             return (
-                                                                                <div key={`teacher:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card ${theme}3`}>
+                                                                                <div key={`teacher:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card`}>
                                                                                     <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} teacher={true} assigned={assigned} student={student.id} />
                                                                                 </div>
                                                                             )

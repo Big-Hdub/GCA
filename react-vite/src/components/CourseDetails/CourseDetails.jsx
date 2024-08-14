@@ -10,6 +10,7 @@ import './CourseDetails.css'
 export default function CourseDetails() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
     const theme = useSelector((store) => store.session.user)?.settings.theme;
+    const role = useSelector((store) => store.session.user)?.settings.role;
     const sessionUser = useSelector((store) => store.session.user);
     const data = useSelector((store) => store.courses.courses);
     const [isLoaded, setIsLoaded] = useState();
@@ -47,16 +48,30 @@ export default function CourseDetails() {
                         {isLoaded && data?.course && <>
                             <Sidebar selection='courses' course={data.course.title} />
                             <div id="course-container" className={`flex column gap-40 ${theme} font-${font} ${theme}2`}>
-                                <h1>Assignments for {data.course.title}</h1>
-                                {data.lessons.filter((lesson) => lesson.assigned).map((lesson) => {
-                                    return (
-                                        <div key={`lesson:${lesson.id}`} className="flex gap-25">
-                                            <p className={`link`} onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
-                                            <p>{lesson.type}</p>
-                                            <p>{lesson.complete ? "Completed" : "Not complete"}</p>
-                                        </div>
-                                    )
-                                })}
+                                {role == 'student' && <>
+                                    <h1>Assignments for {data.course.title}</h1>
+                                    {data.lessons.filter((lesson) => lesson.assigned).map((lesson) => {
+                                        return (
+                                            <div key={`lesson:${lesson.id}`} className="flex gap-25">
+                                                <p className={`link`} onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
+                                                <p>{lesson.type}</p>
+                                                <p>{lesson.complete ? "Completed" : "Not complete"}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </>}
+                                {role == 'teacher' && <>
+                                    <h1>Lessons for {data.course.title} level: {data.course.level}</h1>
+                                    {data.lessons.map((lesson) => {
+                                        return (
+                                            <div key={`lesson:${lesson.id}`} className="flex gap-25">
+                                                <p className={`link`} onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
+                                                <p>{lesson.type}</p>
+                                            </div>
+                                        )
+                                    })}
+                                    <button className="button aselfend">Add lesson</button>
+                                </>}
                             </div>
                         </>}
                     </main>

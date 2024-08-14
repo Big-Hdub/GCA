@@ -1,3 +1,5 @@
+from flask_login import current_user
+from app.models.user import User
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 
@@ -55,4 +57,32 @@ class Curriculum(db.Model):
             'text': self.text,
             'assigned': self.complete[0].assigned,
             'complete': self.complete[0].complete
+        }
+
+    def to_dict_parent(self):
+        user = User.query.get(current_user.id)
+        children = user.children
+        return {'children': [[lesson.to_dict_parent_details() for lesson in child.curriculum if lesson.id==self.id] for child in children]}
+
+    def to_dict_parent_details(self):
+        return {
+            'id': self.id,
+            'student': self.students[0].user.to_dict(),
+            'course': self.course_id,
+            'lesson': self.lesson,
+            'title': self.title,
+            'type': self.type,
+            'text': self.text,
+            'assigned': self.complete[0].assigned,
+            'complete': self.complete[0].complete
+        }
+
+    def to_dict_teacher_details(self):
+        return {
+            'id': self.id,
+            'course': self.course.title,
+            'lesson': self.lesson,
+            'title': self.title,
+            'type': self.type,
+            'text': self.text,
         }

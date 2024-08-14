@@ -34,12 +34,13 @@ def course(course_id):
     """
     user = User.query.get(current_user.id)
 
-    if user.settings[0].role=='student' or user.settings[0].role=='parent':
+    if user.settings[0].role=='student':
         course = Course.query.get(course_id)
         db.session.flush()
         lessons = StudentCurriculum.query.filter(StudentCurriculum.student_id == user.students[0].id).all()
         lessons = [lesson.to_dict_student_dash() for lesson in lessons]
         return {'course': course.to_dict_courses(), 'lessons': [lesson for lesson in lessons if lesson['courseId']==course_id]}
-    course = Course.query.get(course_id)
-    curriculum = Curriculum.query.filter(Curriculum.course_id == course.id)
-    return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict() for lesson in curriculum]}
+    else:
+        course = Course.query.get(course_id)
+        curriculum = Curriculum.query.filter(Curriculum.course_id == course.id)
+        return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict_teacher_details() for lesson in curriculum]}
