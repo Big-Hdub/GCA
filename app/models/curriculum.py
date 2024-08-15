@@ -1,4 +1,6 @@
 from flask_login import current_user
+from app.models.student import Student
+from app.models.student_curriculum import StudentCurriculum
 from app.models.user import User
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
@@ -48,6 +50,9 @@ class Curriculum(db.Model):
         }
 
     def to_dict_details(self):
+        student=Student.query.filter(Student.user_id==current_user.id).first()
+        complete=StudentCurriculum.query.filter(StudentCurriculum.student_id==student.id, StudentCurriculum.curriculum_id==self.id).first()
+        print(self.id)
         return {
             'id': self.id,
             'course': self.course_id,
@@ -55,8 +60,8 @@ class Curriculum(db.Model):
             'title': self.title,
             'type': self.type,
             'text': self.text,
-            'assigned': self.complete[0].assigned,
-            'complete': self.complete[0].complete
+            'assigned': complete.assigned,
+            'complete': complete.complete
         }
 
     def to_dict_parent(self):
@@ -80,7 +85,7 @@ class Curriculum(db.Model):
     def to_dict_teacher_details(self):
         return {
             'id': self.id,
-            'course': self.course.title,
+            'course': self.course_id,
             'lesson': self.lesson,
             'title': self.title,
             'type': self.type,

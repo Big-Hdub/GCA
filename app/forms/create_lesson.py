@@ -1,6 +1,6 @@
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField
+from wtforms import StringField
 from wtforms.validators import DataRequired, ValidationError
 from app.models import User
 
@@ -10,8 +10,12 @@ def validate_user(form, field):
     if not (user or user.settings[0].role=='teacher' or user.settings[0].role=='admin'):
         raise ValidationError('Not authorized to do this.')
 
+def validate_type(form, field):
+    print(field.data)
+    if not field.data in ['lesson', 'quiz']:
+        raise ValidationError('type needs to be either lesson or quiz')
 
-class CreateCourse(FlaskForm):
+class CreateLesson(FlaskForm):
     title = StringField('title', validators=[DataRequired(), validate_user])
-    level = IntegerField('level', validators=[DataRequired()])
-    url = StringField('url', validators=[DataRequired()])
+    text = StringField('text', validators=[DataRequired()])
+    type = StringField('type', validators=[DataRequired(), validate_type])

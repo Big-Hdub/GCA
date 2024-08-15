@@ -28,11 +28,11 @@ export default function LessonDetails() {
     }, [navigate, dispatch, sessionUser]);
 
     useEffect(() => {
-        const loadDash = async () => {
+        const loadLesson = async () => {
             await dispatch(thunkGetLessonById(+lessonId))
                 .then(setIsLoaded(true));
         }
-        loadDash();
+        loadLesson();
     }, [dispatch, lessonId]);
 
     return (<>
@@ -65,6 +65,13 @@ export default function LessonDetails() {
                                         })}
                                     </div>
                                 </>}
+                            </>}
+                            {role === 'teacher' && <>
+                                <Sidebar selection='lesson' course={course.course} lesson={+lessonId} lessons={course.lessons} teacher={true} />
+                                <div id="lesson-container" className={`flex column gap-40 ${theme} font-${font} ${theme}2`}>
+                                    <RenderMarkdown text={lesson.text} />
+
+                                </div>
                             </>}
                         </>}
                     </main>

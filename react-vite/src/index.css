@@ -129,7 +129,7 @@ body {
 }
 
 .button {
-    padding: 10px;
+    padding: 8px;
     background-color: rgb(87, 128, 175);
     color: white;
     text-shadow: 2px 2px 2px black;
@@ -149,9 +149,20 @@ body {
     color: rgb(58, 110, 110)
 }
 
+.button.red {
+    background-color: red;
+}
+
+.button.red:hover {
+    background-color: rgb(228, 0, 0);
+}
 
 .minh100 {
     min-height: 100vh;
+}
+
+.minh100px {
+    min-height: 100px;
 }
 
 .error {
@@ -283,4 +294,17 @@ body {
 input {
     padding: 10px;
     box-sizing: border-box;
+}
+
+#lesson-container {
+    width: 80%;
+}
+
+#lesson-container ol,
+#lesson-container ul {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
 }

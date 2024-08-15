@@ -29,7 +29,7 @@ class StudentCurriculum(db.Model):
 
     def to_dict_student_dash(self):
         return {
-            'id': self.id,
+            'id': self.curriculum_id,
             'complete': self.complete,
             'assigned': self.assigned,
             'courseId': self.curriculum.course.id,

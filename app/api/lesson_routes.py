@@ -21,7 +21,7 @@ def lesson(lesson_id):
     if user.settings[0].role=='parent' and lesson:
         return lesson.to_dict_parent()
     if user.settings[0].role=='teacher' and lesson:
-        pass
+        return lesson.to_dict_teacher_details()
 
 
 @lessons_routes.route('/<int:lesson_id>', methods=["POST"])

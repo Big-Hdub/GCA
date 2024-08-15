@@ -1,11 +1,11 @@
-import { thunkCreateCourse } from "../../redux/course";
+import { thunkCreateCourse, thunkEditCourse } from "../../redux/course";
 import { useModal } from "../../context/Modal";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 import "./CreateCourse.css";
 
 
-function CreateCourseModal() {
+function CreateCourseModal({ course }) {
     const dispatch = useDispatch();
     const [title, setTitle] = useState("");
     const [level, setLevel] = useState("");
@@ -13,16 +13,36 @@ function CreateCourseModal() {
     const [errors, setErrors] = useState({});
     const { closeModal } = useModal();
 
+    useEffect(() => {
+        if (course) {
+            setTitle(course.title)
+            setLevel(course.level)
+            setUrl(course.image)
+        }
+    }, [course])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrors({});
 
-        const serverResponse = await dispatch(
-            thunkCreateCourse({
-                title,
-                level,
-                url
-            })
-        );
+        let serverResponse = false;
+        if (course) {
+            serverResponse = await dispatch(
+                thunkEditCourse(course.id, {
+                    title,
+                    level,
+                    url
+                })
+            )
+        } else {
+            serverResponse = await dispatch(
+                thunkCreateCourse({
+                    title,
+                    level,
+                    url
+                })
+            );
+        }
 
         if (serverResponse) {
             setErrors(serverResponse);
@@ -65,7 +85,7 @@ function CreateCourseModal() {
                     onChange={(e) => setUrl(e.target.value)}
                 />
                 {errors.url && <p className="error">{errors.url}</p>}
-                <button className="button aselfend" type="submit">Create</button>
+                <button className="button aselfend" type="submit">{course ? 'Update' : 'Create'}</button>
             </form>
         </div>
     );

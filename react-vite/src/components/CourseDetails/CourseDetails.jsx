@@ -6,6 +6,9 @@ import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './CourseDetails.css'
+import OpenModalButton from "../OpenModalButton";
+import ConfirmModal from "../ConfirmModal";
+import CreateCourseModal from "../CreateCourseModal";
 
 export default function CourseDetails() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
@@ -47,7 +50,7 @@ export default function CourseDetails() {
                     <main id="main-container" className="flex minh100 gap-60">
                         {isLoaded && data?.course && <>
                             <Sidebar selection='courses' course={data.course.title} />
-                            <div id="course-container" className={`flex column gap-40 ${theme} font-${font} ${theme}2`}>
+                            <div id="course-container" className={`flex column gap-25 ${theme} font-${font} ${theme}2`}>
                                 {role == 'student' && <>
                                     <h1>Assignments for {data.course.title}</h1>
                                     {data.lessons.filter((lesson) => lesson.assigned).map((lesson) => {
@@ -64,13 +67,17 @@ export default function CourseDetails() {
                                     <h1>Lessons for {data.course.title} level: {data.course.level}</h1>
                                     {data.lessons.map((lesson) => {
                                         return (
-                                            <div key={`lesson:${lesson.id}`} className="flex gap-25">
+                                            <div key={`lesson:${lesson.id}`} className="flex gap-15">
                                                 <p className={`link`} onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
                                                 <p>{lesson.type}</p>
                                             </div>
                                         )
                                     })}
-                                    <button className="button aselfend">Add lesson</button>
+                                    <div className="aselfend flex gap-15">
+                                        <button className="button" onClick={() => navigate(`/courses/${courseId}/lessons/new`)}>Add lesson</button>
+                                        <OpenModalButton modalComponent={<CreateCourseModal course={data.course} />} buttonText={'Update course'} />
+                                        <OpenModalButton modalComponent={<ConfirmModal theme={theme} navigate={() => navigate('/courses')} courseId={+courseId} />} buttonText={'Delete course'} red={true} />
+                                    </div>
                                 </>}
                             </div>
                         </>}

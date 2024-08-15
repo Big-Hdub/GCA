@@ -54,6 +54,29 @@ export const thunkCreateCourse = (courseData) => async (dispatch) => {
     }
 }
 
+export const thunkDeleteCourse = (courseId) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${courseId}`, {
+        method: "DELETE"
+    });
+    if (response.ok) {
+        dispatch(removeCourses())
+        return { message: "Deleted Successfully" }
+    }
+    else return { error: "Unable to delete course" };
+}
+
+export const thunkEditCourse = (courseId, courseData) => async (dispatch) => {
+    const response = await fetch(`/api/courses/${courseId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(courseData)
+    });
+    if (response.ok) {
+        dispatch(thunkGetCourseById(courseId));
+    }
+    else return { error: "Unable to edit course" };
+}
+
 const initialState = { courses: null };
 
 function coursesReducer(state = initialState, action) {
