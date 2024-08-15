@@ -38,6 +38,22 @@ export const thunkGetCourseById = (courseId) => async (dispatch) => {
     }
 }
 
+export const thunkCreateCourse = (courseData) => async (dispatch) => {
+    const response = await fetch("/api/courses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(courseData)
+    });
+    if (response.ok) {
+        dispatch(thunkGetCourses());
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages
+    } else {
+        return { server: "Something went wrong. Please try again" }
+    }
+}
+
 const initialState = { courses: null };
 
 function coursesReducer(state = initialState, action) {

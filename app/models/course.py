@@ -54,6 +54,15 @@ class Course(db.Model):
             'current-grade': self.grades[0].grade,
         }
 
+    def to_dict_courses_teacher(self):
+        return {
+            'id': self.id,
+            'teacher': self.teacher.to_dict_courses(),
+            'image': [image.url for image in self.images][0],
+            'title': self.title,
+            'level': self.level,
+        }
+
     def to_dict_teacher(self):
         return {
             'id': self.id,

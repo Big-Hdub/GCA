@@ -1,6 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_login import current_user, login_required
+from app.forms.create_course import CreateCourse
 from app.models import User, Course, Curriculum, db
+from app.models.course_image import CourseImage
 from app.models.student_curriculum import StudentCurriculum
 
 courses_routes = Blueprint('courses', __name__)
@@ -24,7 +26,7 @@ def courses():
                             for child in user.children]
 
     if user.settings[0].role=='teacher':
-        return [course.to_dict_courses() for course in user.courses]
+        return [course.to_dict_courses_teacher() for course in user.courses]
 
 @courses_routes.route('/<int:course_id>')
 @login_required
@@ -40,7 +42,47 @@ def course(course_id):
         lessons = StudentCurriculum.query.filter(StudentCurriculum.student_id == user.students[0].id).all()
         lessons = [lesson.to_dict_student_dash() for lesson in lessons]
         return {'course': course.to_dict_courses(), 'lessons': [lesson for lesson in lessons if lesson['courseId']==course_id]}
+    if user.settings[0].role=='teacher':
+        course = Course.query.get(course_id)
+        curriculum = Curriculum.query.filter(Curriculum.course_id == course.id)
+        return {'course': course.to_dict_courses_teacher(), 'lessons': [lesson.to_dict_teacher_details() for lesson in curriculum]}
     else:
         course = Course.query.get(course_id)
         curriculum = Curriculum.query.filter(Curriculum.course_id == course.id)
         return {'course': course.to_dict_courses(), 'lessons': [lesson.to_dict_teacher_details() for lesson in curriculum]}
+
+@courses_routes.route('', methods=['POST'])
+@login_required
+def create_course():
+    """
+    Create a new Course
+    """
+    form = CreateCourse()
+    user = User.query.get(current_user.id)
+    form['csrf_token'].data=request.cookies['csrf_token']
+    if form.validate_on_submit():
+        course=Course.query.filter(Course.title==form.data['title'], Course.level==form.data['level']).first()
+        if course:
+            return {'server': 'Course Already exists.'}
+        course = Course(
+            teacher_id=user.id,
+            title=form.data['title'],
+            level=form.data['level']
+        )
+        if 'url' in form.data:
+            image=CourseImage.query.filter(CourseImage.url==form.data['url']).first()
+            if image:
+                course.images.append(image)
+            else:
+                image = CourseImage(
+                    url=form.data['url']
+                )
+                course.images.append(image)
+        else:
+            image = CourseImage(url='/math.png')
+            course.images.append(image)
+        db.session.add(course)
+        db.session.commit()
+        return course.to_dict()
+    else:
+        return form.errors, 401
