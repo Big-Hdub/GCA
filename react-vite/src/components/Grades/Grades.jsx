@@ -77,7 +77,44 @@ export default function Grades() {
                                         </div>
                                     )
                                 })}
+                                {/* {role === 'teacher' && data.courses.map(({ course, students }) => {
+                                    return (
+                                        <div className="flex column gap-15" key={`course:${course.id}`}>
+                                            <div className="flex gap-15 between">
+                                                <p>Subject: {course.title}</p>
+                                                <p>grade: {course.level}</p>
+                                            </div>
+                                            {students.map(({ complete, student }) => {
+                                                return (
+                                                    <div className="flex wrap gap-25" key={`student:${student.id}`}>
+                                                        <p>{student.name}</p>
+                                                        <div key={`complete:${complete[0].id}`}>
+                                                            {complete.filter((i) => i.title === course.title && i.level === course.level).map(({ completion, grade }) => {
+                                                                return <p key={`${completion[0][0].id}`}>{completion.filter((i) => i.complete).length}/{completion.length}{completion[0][0].id} grade: {grade}</p>
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })} */}
+                                {/* <p>{child.child.name}</p>
+                                            {child.complete.map((grade) => {
+                                                return (
+                                                    <div key={`grade:${grade.id}`} className="flex gap-40">
+                                                        <div className="flex between gap-10 w575">
+                                                            <p>{grade.title}:</p>
+                                                            <p>{grade.completion.filter(lesson => lesson[0].complete && lesson[0].assigned).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
+                                                        </div>
+                                                        <div className="flex gap-15">
+                                                            <p>Current grade:</p>
+                                                            <p>{grade.grade === '0' ? 'Not graded yet' : grade.grade}</p>
+                                                        </div>
+                                                    </div>
+                                                )
+                                            })} */}
                             </div>
+                            {/* )
+                                })} */}
+                            {/* </div> */}
                         </div>
                     </>}
                 </main>

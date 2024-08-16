@@ -191,4 +191,4 @@ def create_lesson(course_id):
         else:
             return form.errors, 401
     else:
-        return jsonify({ 'message': 'Unauthorized' }), 401
+        return jsonify({ 'server': 'Unauthorized' }), 401
