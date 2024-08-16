@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
+from app.forms.create_lesson import CreateLesson
 from app.models import Curriculum, User, db
 from app.models.student import Student
 from app.models.student_curriculum import StudentCurriculum
@@ -66,16 +67,23 @@ def edit_lesson(lesson_id):
             db.session.commit()
             return lesson.curriculum.to_dict_details()
     if user.settings[0].role=='teacher':
-        lesson=Curriculum.query.get(lesson_id)
-        db.session.flush()
-        if 'title' in data:
-            lesson.title=data['title']
-        if 'text' in data:
-            lesson.text=data['text']
-        if 'type' in data:
-            lesson.type=data['type']
-        db.session.commit()
-        return lesson.to_dict_teacher_details()
+        form=CreateLesson()
+        form['csrf_token'].data=request.cookies['csrf_token']
+        if form.validate_on_submit():
+            lesson=Curriculum.query.get(lesson_id)
+            db.session.flush()
+            if 'title' in data:
+                lesson.title=data['title']
+            if 'text' in data:
+                lesson.text=data['text']
+            if 'type' in data:
+                lesson.type=data['type']
+            db.session.commit()
+            return lesson.to_dict_teacher_details()
+        else:
+            return form.errors, 401
+    else:
+        return jsonify({ 'message': 'Unauthorized' }), 401
 
 @lessons_routes.route('/<int:lesson_id>', methods=["DELETE"])
 @login_required

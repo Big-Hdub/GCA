@@ -132,7 +132,7 @@ export default function LessonForm({ edit }) {
                                         className={`minh100px padding-15 ${theme}1 ${theme}`}
                                         onChange={(e) => setText(e.target.value)}
                                     />
-                                    {errors.level && <p className="error">{errors.level}</p>}
+                                    {errors.text && <p className="error">{errors.text}</p>}
                                     <label>
                                         Lesson type:
                                     </label>
@@ -147,7 +147,7 @@ export default function LessonForm({ edit }) {
                                             <option value="quiz" className="w575">Quiz</option>
                                         </select>
                                     </div>
-                                    {errors.url && <p className="error">{errors.url}</p>}
+                                    {errors.type && <p className="error">{errors.type}</p>}
                                     <button className="button aselfend" type="submit">{lessonId ? 'Update lesson' : 'Create lesson'}</button>
                                 </form>
                             </div>

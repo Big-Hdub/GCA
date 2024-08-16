@@ -87,9 +87,12 @@ export const thunkDeleteLesson = (lessonId) => async (dispatch) => {
     });
     if (response.ok) {
         dispatch(removeLessons())
+        dispatch(thunkGetDash());
         return { message: "Deleted Successfully" }
-    }
-    else return { error: "Unable to delete lesson" };
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages
+    } else return { error: "Unable to delete lesson" };
 }
 
 export const thunkEditLesson = (lessonId, lessonData) => async (dispatch) => {
@@ -100,8 +103,11 @@ export const thunkEditLesson = (lessonId, lessonData) => async (dispatch) => {
     });
     if (response.ok) {
         dispatch(thunkGetCourseById(lessonId));
-    }
-    else return { error: "Unable to edit lesson" };
+        dispatch(thunkGetDash());
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages
+    } else return { error: "Unable to edit lesson" };
 }
 
 export const thunkAssignLesson = (lessonId, studentId) => async (dispatch) => {

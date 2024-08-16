@@ -1,3 +1,5 @@
+import { thunkGetDash } from "./dash";
+
 const SET_COURSES = 'courses/setCourses';
 const REMOVE_COURSES = 'courses/removeCourses';
 
@@ -46,6 +48,7 @@ export const thunkCreateCourse = (courseData) => async (dispatch) => {
     });
     if (response.ok) {
         dispatch(thunkGetCourses());
+        dispatch(thunkGetDash());
     } else if (response.status < 500) {
         const errorMessages = await response.json();
         return errorMessages
@@ -59,7 +62,8 @@ export const thunkDeleteCourse = (courseId) => async (dispatch) => {
         method: "DELETE"
     });
     if (response.ok) {
-        dispatch(removeCourses())
+        dispatch(removeCourses());
+        dispatch(thunkGetDash());
         return { message: "Deleted Successfully" }
     }
     else return { error: "Unable to delete course" };
@@ -73,8 +77,10 @@ export const thunkEditCourse = (courseId, courseData) => async (dispatch) => {
     });
     if (response.ok) {
         dispatch(thunkGetCourseById(courseId));
+    } else {
+        const data = response.json();
+        return data
     }
-    else return { error: "Unable to edit course" };
 }
 
 const initialState = { courses: null };
