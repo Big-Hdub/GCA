@@ -72,6 +72,7 @@ export const thunkCreateLesson = (courseId, lessonData) => async (dispatch) => {
         const data = await response.json();
         dispatch(thunkGetLessonById(data.id));
         dispatch(thunkGetDash());
+        return data;
     } else if (response.status < 500) {
         const errorMessages = await response.json();
         return errorMessages

@@ -70,7 +70,10 @@ export default function LessonForm({ edit }) {
                 })
             );
         }
-        if (serverResponse) {
+        if (serverResponse?.id) {
+            navigate(`/lessons/${serverResponse.id}`);
+            window.scroll(0, 0);
+        } else if (serverResponse) {
             setErrors(serverResponse);
         } else if (lessonId) {
             navigate(`/lessons/${lessonId}`);
