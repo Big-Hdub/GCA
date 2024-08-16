@@ -4,7 +4,7 @@ import { removeCourses } from '../../redux/course';
 import { useDispatch } from 'react-redux';
 import { removeLessons } from '../../redux/lesson';
 
-export default function Sidebar({ selection, course, lesson, lessons }) {
+export default function Sidebar({ selection, course, lesson, lessons, teacher }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -68,7 +68,7 @@ export default function Sidebar({ selection, course, lesson, lessons }) {
                 </div>
             </div>
         }
-        {selection === 'lesson' &&
+        {(selection === 'lesson' && !teacher) &&
             <div id="sidebar" className="flex column gap-10">
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClickLessons('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
@@ -89,6 +89,72 @@ export default function Sidebar({ selection, course, lesson, lessons }) {
                             )
                         })
                         }
+                    </div>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/account')} className="sidebar-links link mleft-25">Account</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/grades')} className="sidebar-links link mleft-25">Grades</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
+                </div>
+            </div>
+        }
+        {(selection === 'lesson' && teacher) &&
+            <div id="sidebar" className="flex column gap-10">
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClickLessons('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
+                </div>
+                <div className="sidebar-not-selected flex column gap-25">
+                    <p onClick={() => handleClickLessons('/courses', async () => await dispatch(removeCourses()))} className="sidebar-links link mleft-25">Courses</p>
+                    <div className='sidebar-not-selected flex column gap-10'>
+                        <p onClick={() => handleClickLessons(`/courses/${course.id}`)} className="sidebar-links link mleft-50">{course.title}</p>
+                        {lessons.map((lessonInfo) => {
+                            return (lessonInfo.id === lesson ?
+                                <div key={`lesson:${lessonInfo.id}`} id='sidebar-selection'>
+                                    <p className="sidebar-title mleft-75">{lessonInfo.title}</p>
+                                </div>
+                                :
+                                <div key={`lesson:${lessonInfo.id}`} className="sidebar-not-selected">
+                                    <p onClick={() => handleClickLessons(`/lessons/${lessonInfo.id}`)} className="sidebar-links link mleft-75">{lessonInfo.title}</p>
+                                </div>
+                            )
+                        })
+                        }
+                    </div>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/account')} className="sidebar-links link mleft-25">Account</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/grades')} className="sidebar-links link mleft-25">Grades</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
+                </div>
+            </div>
+        }
+        {selection === 'newLesson' &&
+            <div id="sidebar" className="flex column gap-10">
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClickLessons('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
+                </div>
+                <div className="sidebar-not-selected flex column gap-25">
+                    <p onClick={() => handleClickLessons('/courses', async () => await dispatch(removeCourses()))} className="sidebar-links link mleft-25">Courses</p>
+                    <div className='sidebar-not-selected flex column gap-10'>
+                        <p onClick={() => handleClickLessons(`/courses/${course.id}`)} className="sidebar-links link mleft-50">{course.title}</p>
+                        {lessons.map((lessonInfo) => {
+                            return (
+                                <div key={`lesson:${lessonInfo.id}`} className="sidebar-not-selected">
+                                    <p onClick={() => handleClickLessons(`/lessons/${lessonInfo.id}`)} className="sidebar-links link mleft-75">{lessonInfo.title}</p>
+                                </div>
+                            )
+                        })}
+                        <div id="sidebar-selection">
+                            <p className="sidebar-links link mleft-75">New Lesson</p>
+                        </div>
                     </div>
                 </div>
                 <div className='sidebar-not-selected'>

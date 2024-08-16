@@ -1,5 +1,7 @@
 import { removeCourses, thunkGetCourses } from "../../redux/course";
 import { useDispatch, useSelector } from "react-redux";
+import CreateCourseModal from "../CreateCourseModal";
+import OpenModalButton from "../OpenModalButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../LandingPage/Header";
@@ -73,15 +75,19 @@ export default function Courses() {
                                             )
                                         })}
                                     </>}
-                                    {role === 'teacher' && <>
-                                        {data?.map(course => {
-                                            return (
-                                                <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                                    <CourseCard course={course} font={font} theme={theme} />
-                                                </div>
-                                            )
-                                        })}
-                                    </>}
+                                    {role === 'teacher' && <div className={`flex column gap-25`}>
+                                        <OpenModalButton modalComponent={<CreateCourseModal />} buttonText={'Create course'} />
+                                        <div className={`flex wrap gap-40 acenter ${theme} font-${font}`}>
+                                            {data?.map(course => {
+                                                return (
+                                                    <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                        <CourseCard course={course} font={font} theme={theme} />
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                        <OpenModalButton modalComponent={<CreateCourseModal />} buttonText={'Create course'} />
+                                    </div>}
                                 </>
                                 }
                             </div>

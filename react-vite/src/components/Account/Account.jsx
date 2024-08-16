@@ -51,6 +51,12 @@ export default function Account() {
                 setEmail(data.parent.email);
                 setAge(data.parent.age);
                 setIsLoaded(true);
+            } else if (data.teacher) {
+                setName(data.teacher.name.split(' ')[0]);
+                setUser(data.teacher.username);
+                setEmail(data.teacher.email);
+                setAge(data.teacher.age);
+                setIsLoaded(true);
             }
         }
     }, [data])
@@ -85,6 +91,11 @@ export default function Account() {
                 if (user !== data.parent.username) info.username = user;
                 if (email !== data.parent.email) info.email = email;
                 if (age !== data.parent.age) info.age = age;
+            } else if (data.teacher) {
+                if (name !== data.teacher.name.split(' ')[0]) info.firstName = name;
+                if (user !== data.teacher.username) info.username = user;
+                if (email !== data.teacher.email) info.email = email;
+                if (age !== data.teacher.age) info.age = age;
             }
             const response = await dispatch(thunkUpdateAccount(JSON.stringify(info)));
             if (response.errors) {
@@ -108,6 +119,7 @@ export default function Account() {
                         {isLoaded && <>
                             {role === 'student' && <p className="aselfstart">Welcome {data?.student.name},</p>}
                             {role === 'parent' && <p className="aselfstart">Welcome {data?.parent.name},</p>}
+                            {role === 'teacher' && <p className="aselfstart">Welcome {data?.teacher.name},</p>}
                             <p className="aselfstart">Change account details below.</p>
                             <div className="flex gap-15 acenter">
                                 <p>Name:</p>
