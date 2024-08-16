@@ -9,9 +9,7 @@ mathLessonData = [
         'lesson': 1,
         'title': 'Introduction to Algebra',
         'text': '''
-# Introduction to Algebra
-
-Algebra is the part of mathematics in which letters and symbols are used to represent numbers and quantities in formulas and equations.
+## Algebra is the part of mathematics in which letters and symbols are used to represent numbers and quantities in formulas and equations.
 
 ## Basic Concepts
 - **Variables**: Symbols used to represent numbers.
@@ -30,9 +28,7 @@ Here, \(x\) is the variable, and \(3\) and \(5\) are constants.
         'lesson': 2,
         'title': 'Solving Linear Equations',
         'text': '''
-# Solving Linear Equations
-
-A linear equation is an equation between two variables that gives a straight line when plotted on a graph.
+## A linear equation is an equation between two variables that gives a straight line when plotted on a graph.
 
 ## Steps to Solve
 1. **Simplify both sides of the equation**: Combine like terms.
@@ -51,8 +47,6 @@ Solve for \(x\) in the equation: \(2x + 3 = 7\)
         'lesson': 3,
         'title': 'Quiz on Algebra Basics',
         'text': '''
-# Quiz on Algebra Basics
-
 1. What is the value of \(x\) in the equation \(4x - 5 = 11\)?
     - A) 2
     - B) 4
@@ -78,9 +72,7 @@ Solve for \(x\) in the equation: \(2x + 3 = 7\)
         'lesson': 4,
         'title': 'Introduction to Geometry',
         'text': '''
-# Introduction to Geometry
-
-Geometry is the branch of mathematics concerned with the properties and relations of points, lines, surfaces, and solids.
+## Geometry is the branch of mathematics concerned with the properties and relations of points, lines, surfaces, and solids.
 
 ## Basic Concepts
 - **Point**: A location in space.
@@ -99,8 +91,6 @@ Here, \(A\), \(B\), and \(C\) are points, and the sides of the triangle are line
         'lesson': 5,
         'title': 'Quiz on Geometry Basics',
         'text': '''
-# Quiz on Geometry Basics
-
 1. Which of the following is a point?
     - A) A location with no dimensions
     - B) A straight one-dimensional figure
@@ -128,9 +118,7 @@ englishLessonData = [
         'lesson': 1,
         'title': 'Introduction to Grammar',
         'text': '''
-# Introduction to Grammar
-
-Grammar is the set of structural rules that govern the composition of clauses, phrases, and words in any given natural language.
+## Grammar is the set of structural rules that govern the composition of clauses, phrases, and words in any given natural language.
 
 ## Basic Concepts
 - **Nouns**: Words that represent people, places, or things.
@@ -151,8 +139,6 @@ Consider the sentence: "The quick brown fox jumps over the lazy dog."
         'lesson': 2,
         'title': 'Quiz on Basic Grammar',
         'text': '''
-# Quiz on Basic Grammar
-
 1. Identify the noun in the sentence: "The cat slept on the mat."
     - A) slept
     - B) on
@@ -180,9 +166,7 @@ readingLessonData = [
         'lesson': 1,
         'title': 'Understanding Themes',
         'text': '''
-# Understanding Themes
-
-Themes are the central topics or ideas explored in a text.
+## Themes are the central topics or ideas explored in a text.
 
 ## Identifying Themes
 - Look for recurring subjects or ideas.
@@ -199,8 +183,6 @@ In "To Kill a Mockingbird," themes include racial injustice and moral growth.
         'lesson': 2,
         'title': 'Quiz on Themes',
         'text': '''
-# Quiz on Themes
-
 1. Which of the following could be a theme in a story about a boy who learns to be brave?
     - A) Friendship
     - B) Bravery
@@ -228,9 +210,7 @@ geographyLessonData = [
         'lesson': 1,
         'title': 'Introduction to Maps',
         'text': '''
-# Introduction to Maps
-
-Maps are visual representations of an area that show geographic features, boundaries, and significant landmarks.
+## Maps are visual representations of an area that show geographic features, boundaries, and significant landmarks.
 
 ## Types of Maps
 - **Political Maps**: Show countries, states, and cities.
@@ -247,8 +227,6 @@ A physical map of the United States shows the Rocky Mountains and the Mississipp
         'lesson': 2,
         'title': 'Quiz on Maps',
         'text': '''
-# Quiz on Maps
-
 1. What type of map would you use to find the capital cities of countries?
     - A) Physical map
     - B) Political map
@@ -276,9 +254,7 @@ historyLessonData = [
         'lesson': 1,
         'title': 'Introduction to Ancient Civilizations',
         'text': '''
-# Introduction to Ancient Civilizations
-
-Ancient civilizations are societies that developed complex structures and cultural achievements in ancient times.
+## Ancient civilizations are societies that developed complex structures and cultural achievements in ancient times.
 
 ## Notable Ancient Civilizations
 - **Mesopotamia**: Known as the "Cradle of Civilization."
@@ -295,8 +271,6 @@ The ancient Egyptians built the Pyramids of Giza as tombs for their pharaohs.
         'lesson': 2,
         'title': 'Quiz on Ancient Civilizations',
         'text': '''
-# Quiz on Ancient Civilizations
-
 1. Which ancient civilization is known as the "Cradle of Civilization"?
     - A) Ancient Egypt
     - B) Ancient Greece
@@ -324,9 +298,7 @@ bibleStudyLessonData = [
         'lesson': 1,
         'title': 'Introduction to the Bible',
         'text': '''
-# Introduction to the Bible
-
-The Bible is a collection of sacred texts or scriptures.
+## The Bible is a collection of sacred texts or scriptures.
 
 ## Structure of the Bible
 - **Old Testament**: Contains books like Genesis, Exodus, and Psalms.
@@ -342,8 +314,6 @@ The book of Genesis in the Old Testament describes the creation of the world.
         'lesson': 2,
         'title': 'Quiz on the Bible',
         'text': '''
-# Quiz on the Bible
-
 1. What are the two main sections of the Bible?
     - A) Genesis and Exodus
     - B) Psalms and Proverbs

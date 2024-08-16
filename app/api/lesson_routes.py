@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 from app.models import Curriculum, User, db
 from app.models.student import Student
@@ -42,25 +42,54 @@ def assign_lesson(lesson_id):
 
 @lessons_routes.route('/<int:lesson_id>', methods=["PUT"])
 @login_required
-def complete_lesson(lesson_id):
+def edit_lesson(lesson_id):
     """
-    Change status of a lesson to complete
+    Edit a lesson
     """
+    user = User.query.get(current_user.id)
     data = request.get_json(force=True, cache=True)
-    if data['complete']==True and 'child' in data:
-        student = Student.query.filter(Student.user_id==data['child']).first()
+    if user.settings[0].role=='student':
+        if 'complete' in data and data['complete']==True and 'child' in data:
+            student = Student.query.filter(Student.user_id==data['child']).first()
+            db.session.flush()
+            lesson = StudentCurriculum.query.filter(StudentCurriculum.curriculum_id==lesson_id, StudentCurriculum.student_id==student.id).first()
+            if lesson:
+                lesson.complete=True
+                db.session.commit()
+                return lesson.curriculum.to_dict_parent()
+            else:
+                return {'error': 'Unable to mark as complete.'}
         db.session.flush()
-        lesson = StudentCurriculum.query.filter(StudentCurriculum.curriculum_id==lesson_id, StudentCurriculum.student_id==student.id).first()
-        if lesson:
+        lesson = StudentCurriculum.query.filter(StudentCurriculum.curriculum_id==lesson_id, StudentCurriculum.student_id==user.students[0].id).first()
+        if lesson and data['complete']==True:
             lesson.complete=True
             db.session.commit()
-            return lesson.curriculum.to_dict_parent()
-        else:
-            return {'error': 'Unable to mark as complete.'}
-    user = User.query.get(current_user.id)
-    db.session.flush()
-    lesson = StudentCurriculum.query.filter(StudentCurriculum.curriculum_id==lesson_id, StudentCurriculum.student_id==user.students[0].id).first()
-    if lesson and data['complete']==True:
-        lesson.complete=True
+            return lesson.curriculum.to_dict_details()
+    if user.settings[0].role=='teacher':
+        lesson=Curriculum.query.get(lesson_id)
+        db.session.flush()
+        if 'title' in data:
+            lesson.title=data['title']
+        if 'text' in data:
+            lesson.text=data['text']
+        if 'type' in data:
+            lesson.type=data['type']
         db.session.commit()
-        return lesson.curriculum.to_dict_details()
+        return lesson.to_dict_teacher_details()
+
+@lessons_routes.route('/<int:lesson_id>', methods=["DELETE"])
+@login_required
+def delete_lesson(lesson_id):
+    """
+    Delete a lesson
+    """
+    user = User.query.get(current_user.id)
+    if user.settings[0].role=='teacher':
+        lesson=Curriculum.query.get(lesson_id)
+        if lesson:
+            db.session.delete(lesson)
+            db.session.commit()
+            return jsonify()({ 'message': 'Successfully deleted' })
+        else:
+            return jsonify({ 'message': 'Lesson not found'}), 404
+    return jsonify({ 'message': 'Unauthorized' }), 401

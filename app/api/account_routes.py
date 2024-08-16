@@ -19,6 +19,9 @@ def account():
         return {'children': [child.user.to_dict() for child in user.children],
                 'parent': user.to_dict()}
 
+    if user.settings[0].role=='teacher':
+        return { 'teacher': user.to_dict() }
+
 @account_routes.route('', methods=['PUT'])
 @login_required
 def update_account():

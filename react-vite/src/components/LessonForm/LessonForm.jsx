@@ -6,21 +6,22 @@ import { useEffect, useState } from "react";
 import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
-import { thunkCreateLesson, thunkEditLesson } from "../../redux/lesson";
+import { thunkCreateLesson, thunkEditLesson, thunkGetLessonById } from "../../redux/lesson";
 import './LessonForm.css'
 
-export default function LessonForm({ lesson }) {
+export default function LessonForm({ edit }) {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
     const theme = useSelector((store) => store.session.user)?.settings.theme;
     const role = useSelector((store) => store.session.user)?.settings.role;
     const sessionUser = useSelector((store) => store.session.user);
+    const lesson = useSelector((store) => store.lessons.lessons);
     const course = useSelector((store) => store.courses.courses);
     const [isLoaded, setIsLoaded] = useState();
     const [title, setTitle] = useState('');
-    const [text, setText] = useState(' ');
+    const [text, setText] = useState('');
     const [type, setType] = useState('');
     const [errors, setErrors] = useState({});
-    const { courseId } = useParams();
+    const { courseId, lessonId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -32,19 +33,29 @@ export default function LessonForm({ lesson }) {
 
     useEffect(() => {
         const loadCourse = async () => {
-            await dispatch(thunkGetCourseById(+courseId))
-                .then(setIsLoaded(true))
+            if (lessonId && title === '' && text === '' && type === '') {
+                if (lesson) {
+                    setTitle(lesson.title);
+                    setText(lesson.text);
+                    setType(lesson.type);
+                } else {
+                    await dispatch(thunkGetLessonById(lessonId))
+                }
+            } else if (!isLoaded) {
+                await dispatch(thunkGetCourseById(+courseId))
+                    .then(setIsLoaded(true));
+            }
         }
         loadCourse();
-    }, [dispatch, courseId])
+    }, [dispatch, courseId, lessonId, title, text, type, isLoaded, lesson])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({})
         let serverResponse = false;
-        if (lesson) {
+        if (lessonId) {
             serverResponse = await dispatch(
-                thunkEditLesson(+courseId, {
+                thunkEditLesson(+lessonId, {
                     title,
                     text,
                     type
@@ -61,8 +72,9 @@ export default function LessonForm({ lesson }) {
         }
         if (serverResponse) {
             setErrors(serverResponse);
-        } else {
-            navigate(`/courses/${courseId}`);
+        } else if (lessonId) {
+            navigate(`/lessons/${lessonId}`);
+            window.scroll(0, 0);
         }
     }
 
@@ -86,11 +98,11 @@ export default function LessonForm({ lesson }) {
                 <div className={`flex column between ${theme}1`}>
                     <Header main={true} />
                     <main id="main-container" className="flex minh100 gap-60">
-                        <Sidebar selection='newLesson' course={course.course} lessons={course.lessons} />
+                        {edit ? <Sidebar selection='lesson' lesson={+lessonId} course={course.course} lessons={course.lessons} teacher={true} /> : <Sidebar selection='newLesson' course={course.course} lessons={course.lessons} />}
                         {isLoaded && course?.course?.title && <>
                             <div id="lesson-container" className={`flex column wp100 gap-40 ${theme} font-${font} ${theme}2`}>
                                 <form id="create-lesson-form"
-                                    className="flex column gap-10" onSubmit={handleSubmit}>
+                                    className="flex column gap-15" onSubmit={handleSubmit}>
                                     <label>
                                         Title:
                                     </label>
@@ -108,7 +120,7 @@ export default function LessonForm({ lesson }) {
                                         <RenderMarkdown text={text} />
                                     </div>
                                     <label>
-                                        Lesson:
+                                        Enter your markdown here:
                                     </label>
                                     <textarea
                                         type="text"
@@ -133,7 +145,7 @@ export default function LessonForm({ lesson }) {
                                         </select>
                                     </div>
                                     {errors.url && <p className="error">{errors.url}</p>}
-                                    <button className="button aselfend" type="submit">{lesson ? 'Update lesson' : 'Create lesson'}</button>
+                                    <button className="button aselfend" type="submit">{lessonId ? 'Update lesson' : 'Create lesson'}</button>
                                 </form>
                             </div>
                         </>}

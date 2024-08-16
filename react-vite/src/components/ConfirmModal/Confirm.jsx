@@ -1,16 +1,21 @@
 import { useModal } from "../../context/Modal";
 import { thunkDeleteCourse } from "../../redux/course";
 import { useDispatch } from "react-redux";
+import { thunkDeleteLesson } from "../../redux/lesson";
 
 
-function ConfirmModal({ theme, navigate, courseId }) {
+function ConfirmModal({ theme, navigate, courseId, lessonId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleClick = async (e, confirmDelete = false) => {
         e.preventDefault();
-        if (confirmDelete) {
+        if (confirmDelete && courseId) {
             await dispatch(thunkDeleteCourse(courseId));
+            navigate();
+            window.scroll(0, 0);
+        } else if (confirmDelete && lessonId) {
+            await dispatch(thunkDeleteLesson(lessonId));
             navigate();
             window.scroll(0, 0);
         }
