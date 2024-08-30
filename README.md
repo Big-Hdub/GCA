@@ -29,12 +29,7 @@ Garden City Academy is an online school platform that is modeled after a K-12 sc
 
 https://gca-qap8.onrender.com
 
-## Setup Instructions for Local Use
-
-### Prerequisites
-- Node.js
-
-### Steps to Launch the Application Locally
+## Steps to Launch the Application Locally
 
 1. **Clone the GitHub repository**
 
