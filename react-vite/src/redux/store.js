@@ -4,6 +4,7 @@ import sessionReducer from "./session";
 import coursesReducer from "./course";
 import lessonsReducer from "./lesson";
 import gradesReducer from "./grade";
+import adminReducer from "./admin";
 import dashReducer from "./dash";
 import thunk from "redux-thunk";
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   session: sessionReducer,
   courses: coursesReducer,
   grades: gradesReducer,
+  admin: adminReducer,
   dash: dashReducer,
 });
 

@@ -57,6 +57,12 @@ export default function Account() {
                 setEmail(data.teacher.email);
                 setAge(data.teacher.age);
                 setIsLoaded(true);
+            } else if (data.admin) {
+                setName(data.admin.name.split(' ')[0]);
+                setUser(data.admin.username);
+                setEmail(data.admin.email);
+                setAge(data.admin.age);
+                setIsLoaded(true);
             }
         }
     }, [data])

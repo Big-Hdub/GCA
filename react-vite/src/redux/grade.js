@@ -24,23 +24,23 @@ export const thunkGetGrade = () => async (dispatch) => {
     }
 }
 
-// export const thunkUpdateGrade = (data) => async (dispatch) => {
-//     const response = await fetch("/api/grade", {
-//         method: "PUT",
-//         header: { "Content-Type": "application/json" },
-//         body: data
-//     });
-//     if (response.ok) {
-//         const data = await response.json();
-//         dispatch(thunkGetGrade());
-//         return data;
-//     } else if (response.status < 500) {
-//         const errorMessages = await response.json();
-//         return errorMessages
-//     } else {
-//         return { server: "Something went wrong. Please try again" }
-//     }
-// }
+export const thunkUpdateGrade = (data, id) => async (dispatch) => {
+    const response = await fetch(`/api/grades/${id}`, {
+        method: "PUT",
+        header: { "Content-Type": "application/json" },
+        body: data
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(thunkGetGrade());
+        return data;
+    } else if (response.status < 500) {
+        const errorMessages = await response.json();
+        return errorMessages
+    } else {
+        return { server: "Something went wrong. Please try again" }
+    }
+}
 
 const initialState = { data: null };
 

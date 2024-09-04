@@ -1,14 +1,13 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import User
-from app.models.course import Course
+from app.models import User, db, Course, Grade
 
 grade_routes = Blueprint('grades', __name__)
 
 
 @grade_routes.route('', methods=['GET'])
 @login_required
-def account():
+def grades():
     """
     Query for all grade info by user type and returns it as a dictionary
     """
@@ -23,3 +22,22 @@ def account():
     if user.settings[0].role=='teacher':
         courses = Course.query.filter(Course.teacher_id==user.id).all()
         return {'courses': [{ 'course': course.to_dict(), 'students': [{'student': student.user.to_dict(), 'complete': [grade.to_dict() for grade in student.grades]} for student in course.students]} for course in courses]}
+
+    if user.settings[0].role=='admin':
+        courses = Course.query.all()
+        return {'courses': [{ 'course': course.to_dict(), 'students': [{'student': student.user.to_dict(), 'complete': [grade.to_dict() for grade in student.grades]} for student in course.students]} for course in courses]}
+
+@grade_routes.route('/<int:grade_id>', methods=['PUT'])
+@login_required
+def update_grade(grade_id):
+    """
+    Update grade for student
+    """
+    data = request.get_json(force=True, cache=True)
+    grade = Grade.query.get(grade_id)
+    if grade:
+        grade.grade=data['grade']
+        db.session.commit()
+        return grade.to_dict()
+    else:
+        return {'message': 'Grade not found'}, 404

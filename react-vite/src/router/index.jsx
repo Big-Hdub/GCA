@@ -10,6 +10,7 @@ import Grades from '../components/Grades';
 import Layout from './Layout';
 import LessonDetails from '../components/LessonDetails';
 import LessonForm from '../components/LessonForm';
+import Administration from '../components/Administration';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: '',
         element: <LandingPage />,
+      },
+      {
+        path: 'administration',
+        element: <Administration main={true} />
       },
       {
         path: 'dashboard',

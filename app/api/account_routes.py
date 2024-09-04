@@ -22,6 +22,9 @@ def account():
     if user.settings[0].role=='teacher':
         return { 'teacher': user.to_dict() }
 
+    if user.settings[0].role=='admin':
+        return { 'admin': user.to_dict() }
+
 @account_routes.route('', methods=['PUT'])
 @login_required
 def update_account():

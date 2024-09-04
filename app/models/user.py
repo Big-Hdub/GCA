@@ -69,3 +69,14 @@ class User(db.Model, UserMixin):
         return {
             'courses': [course.to_dict_teacher() for course in self.courses],
             }
+
+    def to_dict_admin_student(self):
+        return {
+            'id': self.id,
+            'name': self.first_name+' '+self.last_name,
+            'age': self.age,
+            'username': self.username,
+            'email': self.email,
+            'gradeLevel': self.students[0].grade_level,
+            **self.students[0].to_dict_admin()
+        }
