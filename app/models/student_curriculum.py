@@ -25,6 +25,7 @@ class StudentCurriculum(db.Model):
             'id': self.id,
             'complete': self.complete,
             'assigned': self.assigned,
+            'course': self.curriculum.course.id
         }
 
     def to_dict_student_dash(self):

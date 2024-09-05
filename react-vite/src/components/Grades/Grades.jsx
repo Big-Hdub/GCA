@@ -1,9 +1,10 @@
-import { thunkGetGrade } from "../../redux/grade";
 import { useDispatch, useSelector } from "react-redux";
+import { thunkGetGrade } from "../../redux/grade";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
+import GradeEdit from "./GradeEdit";
 import Footer from "../Footer";
 import './Grades.css';
 
@@ -25,13 +26,10 @@ export default function Grades() {
     })
 
     useEffect(() => {
-        if (!data) {
-            dispatch(thunkGetGrade())
-                .then(() => setIsLoaded(true))
-        } else if (data) {
-            setIsLoaded(true)
-        }
-    }, [dispatch, data])
+        dispatch(thunkGetGrade())
+            .then(() => setIsLoaded(true))
+        setIsLoaded(true)
+    }, [dispatch])
 
     return (
         <div>
@@ -39,37 +37,37 @@ export default function Grades() {
                 <Header main={true} />
                 <main id="main-container" className="flex minh100 gap-60">
                     <Sidebar selection='grades' />
-                    {isLoaded && data && <>
+                    {isLoaded && data &&
                         <div id="grades-container" className={`flex column gap-25 astart padding-40 ${theme} font-${font} ${theme}2`}>
-                            <div className="flex column gap-15">
-                                {role === 'student' && data.grades.map((grade) => {
+                            <div className="flex column gap-40">
+                                {role === 'student' && data.grades.map(({ grade, title, id, course }) => {
                                     return (
-                                        <div key={`grade:${grade.id}`} className="flex gap-40">
+                                        <div key={`grade:${id}`} className="flex gap-40">
                                             <div className="flex between gap-10 w575">
-                                                <p>{grade.title}:</p>
-                                                <p>{grade.completion.filter(lesson => lesson[0].complete && lesson[0].assigned).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
+                                                <p>{title}:</p>
+                                                <p>{data.complete.filter(lesson => lesson.complete && lesson.course === course).length} / {data.complete.filter(lesson => lesson.assigned && lesson.course === course).length} assignments completed</p>
                                             </div>
                                             <div className="flex gap-15">
                                                 <p>Current grade:</p>
-                                                <p>{grade.grade === '0' ? 'Not graded yet' : grade.grade}</p>
+                                                <p>{grade === '0' ? 'Not graded yet' : grade}</p>
                                             </div>
                                         </div>
                                     )
                                 })}
-                                {role === 'parent' && data.children.map((child) => {
+                                {role === 'parent' && data.children.map(({ child, complete, grades }) => {
                                     return (
-                                        <div className="flex column gap-15" key={`child:${child.child.id}`}>
-                                            <p>{child.child.name}</p>
-                                            {child.complete.map((grade) => {
+                                        <div className="flex column gap-15" key={`child:${child.id}`}>
+                                            <p>{child.name}</p>
+                                            {grades.map(({ grade, title, id, course }) => {
                                                 return (
-                                                    <div key={`grade:${grade.id}`} className="flex gap-40">
+                                                    <div key={`grade:${id}`} className="flex gap-40">
                                                         <div className="flex between gap-10 w575">
-                                                            <p>{grade.title}:</p>
-                                                            <p>{grade.completion.filter(lesson => lesson[0].complete && lesson[0].assigned).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
+                                                            <p>{title}:</p>
+                                                            <p>{complete.filter(lesson => lesson.complete && lesson.course === course).length} / {complete.filter(lesson => lesson.assigned && lesson.course === course).length} assignments completed</p>
                                                         </div>
                                                         <div className="flex gap-15">
                                                             <p>Current grade:</p>
-                                                            <p>{grade.grade === '0' ? 'Not graded yet' : grade.grade}</p>
+                                                            <p>{grade === '0' ? 'Not graded yet' : grade}</p>
                                                         </div>
                                                     </div>
                                                 )
@@ -77,46 +75,35 @@ export default function Grades() {
                                         </div>
                                     )
                                 })}
-                                {/* {role === 'teacher' && data.courses.map(({ course, students }) => {
+                                {(role === 'teacher' || role === 'admin') && data.courses.map(({ course, students }) => {
                                     return (
                                         <div className="flex column gap-15" key={`course:${course.id}`}>
                                             <div className="flex gap-15 between">
                                                 <p>Subject: {course.title}</p>
-                                                <p>grade: {course.level}</p>
+                                                <p>Level: {course.level}</p>
                                             </div>
-                                            {students.map(({ complete, student }) => {
-                                                return (
-                                                    <div className="flex wrap gap-25" key={`student:${student.id}`}>
-                                                        <p>{student.name}</p>
-                                                        <div key={`complete:${complete[0].id}`}>
-                                                            {complete.filter((i) => i.title === course.title && i.level === course.level).map(({ completion, grade }) => {
-                                                                return <p key={`${completion[0][0].id}`}>{completion.filter((i) => i.complete).length}/{completion.length}{completion[0][0].id} grade: {grade}</p>
-                                                            })}
+                                            <div className={`flex column gap-10 padding-15 ${theme}3`}>
+                                                {students.map(({ complete, grade, student }) => {
+                                                    return (
+                                                        <div className="flex wrap between gap-25 acenter" key={`student:${student.id}`}>
+                                                            <p>{student.name}</p>
+                                                            <div className="flex gap-60 acenter">
+                                                                <p>Lessons: {complete.filter((i) => i.complete).length} complete / {complete.filter((i) => i.assigned === true).length} assigned</p>
+                                                                <p>current grade: {grade[0].grade}</p>
+                                                                <div className="flex gap-15 acenter">
+                                                                    <GradeEdit grade={grade[0].grade} gradeId={grade[0].id} />
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )
-                                            })} */}
-                                {/* <p>{child.child.name}</p>
-                                            {child.complete.map((grade) => {
-                                                return (
-                                                    <div key={`grade:${grade.id}`} className="flex gap-40">
-                                                        <div className="flex between gap-10 w575">
-                                                            <p>{grade.title}:</p>
-                                                            <p>{grade.completion.filter(lesson => lesson[0].complete && lesson[0].assigned).length} / {grade.completion.filter(lesson => lesson[0].assigned).length} assignments completed</p>
-                                                        </div>
-                                                        <div className="flex gap-15">
-                                                            <p>Current grade:</p>
-                                                            <p>{grade.grade === '0' ? 'Not graded yet' : grade.grade}</p>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })} */}
+                                                    )
+                                                })}
+                                            </div>
+                                        </div>
+                                    )
+                                })}
                             </div>
-                            {/* )
-                                })} */}
-                            {/* </div> */}
                         </div>
-                    </>}
+                    }
                 </main>
             </div>
             <Footer />

@@ -93,6 +93,18 @@ body {
     width: 100%;
 }
 
+.w37px {
+    width: 40px;
+}
+
+.w134px {
+    width: 134px;
+}
+
+.w300px {
+    width: 300px;
+}
+
 .w575 {
     width: 575px;
 }
@@ -307,4 +319,8 @@ input {
     flex-direction: column;
     gap: 10px;
     padding: 10px 0;
+}
+
+.selpad10 {
+    padding: 0 10px 0 10px;
 }

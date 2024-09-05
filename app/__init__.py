@@ -1,3 +1,5 @@
+from .api.student_routes import students_routes
+from .api.admin_routes import admin_routes
 from .api.lesson_routes import lessons_routes
 from .api.account_routes import account_routes
 from .api.course_routes import courses_routes
@@ -30,10 +32,12 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
+app.register_blueprint(students_routes, url_prefix='/api/students')
 app.register_blueprint(lessons_routes, url_prefix='/api/lessons')
 app.register_blueprint(courses_routes, url_prefix='/api/courses')
 app.register_blueprint(account_routes, url_prefix='/api/account')
 app.register_blueprint(grade_routes, url_prefix='/api/grades')
+app.register_blueprint(admin_routes, url_prefix='/api/admin')
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(dash_routes, url_prefix='/api/dash')

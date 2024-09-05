@@ -6,6 +6,8 @@ import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './Account.css';
+import OpenModalButton from "../OpenModalButton";
+import SignupFormModal from "../SignupFormModal";
 
 
 export default function Account() {
@@ -56,6 +58,12 @@ export default function Account() {
                 setUser(data.teacher.username);
                 setEmail(data.teacher.email);
                 setAge(data.teacher.age);
+                setIsLoaded(true);
+            } else if (data.admin) {
+                setName(data.admin.name.split(' ')[0]);
+                setUser(data.admin.username);
+                setEmail(data.admin.email);
+                setAge(data.admin.age);
                 setIsLoaded(true);
             }
         }
@@ -166,14 +174,21 @@ export default function Account() {
                                         <p>{data.parents[1].name}</p>
                                     </div>}
                             </div>}
-                            {role === 'parent' && <div className="flex gap-15">
-                                <p>{data.children.length === 1 ? 'Child:' : 'Children:'}</p>
-                                {data.children.length === 1 ?
-                                    <p>{data.children[0].name}</p> :
-                                    <div className="flex column gap-10">
-                                        {data.children.map((child) => (<p key={`child:${child.id}`}>{child.name}</p>))}
-                                    </div>
-                                }
+                            {role === 'parent' && <div className="flex column aend gap-10">
+                                <div className="flex gap-15">
+                                    {data.children.length > 0 && <>
+                                        <p>{data.children.length === 1 ? 'Child:' : 'Children:'}</p>
+                                        <div className="flex column gap-10">
+                                            {data.children.length > 0 && data.children.map((child) => {
+                                                return (<div key={`child:${child.id}`} className="flex gap-15 acenter between">
+                                                    <p>{child.name}</p>
+                                                </div>)
+                                            })}
+                                        </div>
+                                    </>}
+                                </div>
+                                <p>Children enrolled: {data.children.length}</p>
+                                <OpenModalButton modalComponent={<SignupFormModal createStudent={true} />} buttonText={'add child'} />
                             </div>}
                             <p className="aselfstart">Update your password?</p>
                             <div className="flex gap-15 acenter">

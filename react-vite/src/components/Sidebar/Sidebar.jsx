@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 import { removeCourses } from '../../redux/course';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeLessons } from '../../redux/lesson';
 
 export default function Sidebar({ selection, course, lesson, lessons, teacher }) {
+    const role = useSelector((store) => store.session.user)?.settings.role;
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -40,6 +41,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {selection === 'courses' &&
@@ -66,6 +71,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {(selection === 'lesson' && !teacher) &&
@@ -100,6 +109,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {(selection === 'lesson' && teacher) &&
@@ -134,6 +147,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {selection === 'newLesson' &&
@@ -166,6 +183,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {selection === 'account' &&
@@ -185,6 +206,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {selection === 'grades' &&
@@ -204,6 +229,10 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div className='sidebar-not-selected'>
                     <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
         {selection === 'settings' &&
@@ -223,8 +252,34 @@ export default function Sidebar({ selection, course, lesson, lessons, teacher })
                 <div id="sidebar-selection">
                     <p className="sidebar-links link mleft-25">Settings</p>
                 </div>
+                {role === 'admin' &&
+                    <div className='sidebar-not-selected'>
+                        <p onClick={() => handleClick('/administration')} className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
             </div>
         }
-    </>
-    )
+        {selection === 'administration' &&
+            <div id="sidebar" className="flex column gap-10">
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/dashboard')} className="sidebar-links link mleft-25">Dashboard</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/courses')} className="sidebar-links link mleft-25">Courses</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/account')} className="sidebar-links link mleft-25">Account</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/grades')} className="sidebar-links link mleft-25">Grades</p>
+                </div>
+                <div className='sidebar-not-selected'>
+                    <p onClick={() => handleClick('/settings')} className="sidebar-links link mleft-25">Settings</p>
+                </div>
+                {role === 'admin' &&
+                    <div id="sidebar-selection">
+                        <p className="sidebar-links link mleft-25">Administration</p>
+                    </div>}
+            </div>
+        }
+    </>)
 }

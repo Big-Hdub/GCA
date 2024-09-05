@@ -11,7 +11,7 @@ class Grade(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     student_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('students.id')), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('courses.id')), nullable=False)
-    grade = db.Column(db.String(255), nullable=False)
+    grade = db.Column(db.String(255), nullable=False, default='0')
     created_at = db.Column(db.DateTime, nullable=False, default=func.now())
     updated_at = db.Column(db.DateTime, nullable=False, default=func.now())
 
@@ -21,8 +21,9 @@ class Grade(db.Model):
 
     def to_dict(self):
         return {
-            **self.courses.to_dict(),
             'id': self.id,
+            'title': self.courses.title,
+            'level': self.courses.level,
             'grade': self.grade,
-            'completion': [[complete.to_dict() for complete in curriculum.complete] for curriculum in self.courses.curriculum]
+            'course': self.course_id
         }

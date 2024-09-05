@@ -55,7 +55,7 @@ export default function Courses() {
                                             )
                                         })}
                                     </>}
-                                    {role === 'parent' && <>
+                                    {role === 'parent' && <div className="flex column">
                                         {data?.map(({ student, courses }) => {
                                             return (
                                                 <div key={`child:${student?.id}`} className="flex column gap-40">
@@ -74,7 +74,7 @@ export default function Courses() {
                                                 </div>
                                             )
                                         })}
-                                    </>}
+                                    </div>}
                                     {role === 'teacher' && <div className={`flex column gap-25`}>
                                         <OpenModalButton modalComponent={<CreateCourseModal />} buttonText={'Create course'} />
                                         <div className={`flex wrap gap-40 acenter ${theme} font-${font}`}>

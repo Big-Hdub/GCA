@@ -49,3 +49,8 @@ class Student(db.Model):
             'grade_level': self.grade_level,
             'lessons': [lesson.curriculum.to_dict_dash() for lesson in self.complete if lesson.complete==False]
         }
+
+    def to_dict_admin(self):
+        return {
+            'courses': [course.to_dict() for course in self.courses]
+        }

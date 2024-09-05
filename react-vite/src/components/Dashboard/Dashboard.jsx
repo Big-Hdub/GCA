@@ -75,8 +75,8 @@ export default function Dashboard() {
                                     </div>
                                 </>}
                                 {role === 'parent' && <>
-                                    <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to your {data?.length > 1 ? 'children' : 'child'}:</h2>
-                                    {data && data[0].lessons?.length && data?.map(({ student, lessons }) => {
+                                    {data && data[0]?.lessons?.length && <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to your {data?.length > 1 ? 'children' : 'child'}:</h2>}
+                                    {data && data[0]?.lessons?.length && data?.map(({ student, lessons }) => {
                                         return (
                                             <div key={`child:${student?.id}`}>
                                                 {lessons && <>
