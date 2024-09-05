@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkUpdateGrade } from "../../redux/grade";
 
-export default function GradeEdit({ grade, gradeId }) {
+export default function GradeEdit({ grade, gradeId, studentId }) {
     const theme = useSelector((store) => store.session.user)?.settings.theme;
     const font = useSelector((store) => store.session.user)?.settings.font_size;
     const [currentGrade, setCurrentGrade] = useState(grade);
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        dispatch(thunkUpdateGrade(JSON.stringify({ grade: currentGrade }), gradeId));
+        dispatch(thunkUpdateGrade(JSON.stringify({ grade: currentGrade }), gradeId, studentId));
     }
 
     return (<>

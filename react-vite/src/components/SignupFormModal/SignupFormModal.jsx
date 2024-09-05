@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkSignup } from "../../redux/session";
+import { thunkSignup, thunkSignupChild } from "../../redux/session";
 import "./SignupForm.css";
 
-function SignupFormModal({ navigate }) {
-  const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
+function SignupFormModal({ navigate, createStudent }) {
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [age, setAge] = useState("");
-  const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [email, setEmail] = useState("");
+  const [level, setLevel] = useState("");
+  const [age, setAge] = useState("");
   const { closeModal } = useModal();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,16 +27,29 @@ function SignupFormModal({ navigate }) {
       });
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
-        age,
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        username,
-        password,
-      })
-    );
+    let serverResponse;
+    if (createStudent) {
+      serverResponse = await dispatch(
+        thunkSignupChild({
+          age,
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          username,
+          password,
+          level,
+        }));
+    } else {
+      serverResponse = await dispatch(
+        thunkSignup({
+          age,
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          username,
+          password,
+        }));
+    }
 
     if (serverResponse) {
       setErrors(serverResponse);
@@ -52,15 +66,6 @@ function SignupFormModal({ navigate }) {
       {errors.server && <p className="error">{errors.server}</p>}
       <form id="signup-modal-form"
         className="flex column gap-10" onSubmit={handleSubmit}>
-        <label>
-          Age
-        </label>
-        <input
-          type="number"
-          value={age}
-          onChange={(e) => setAge(e.target.value)}
-        />
-        {errors.age && <p className="error">{errors.age}</p>}
         <label>
           First name
         </label>
@@ -79,6 +84,26 @@ function SignupFormModal({ navigate }) {
           onChange={(e) => setLastName(e.target.value)}
         />
         {errors.last_name && <p className="error">{errors.last_name}</p>}
+        <label>
+          Age
+        </label>
+        <input
+          type="number"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+        {errors.age && <p className="error">{errors.age}</p>}
+        {createStudent && <>
+          <label>
+            Grade level
+          </label>
+          <input
+            type="number"
+            value={level}
+            onChange={(e) => setLevel(e.target.value)}
+          />
+          {errors.level && <p className="error">{errors.level}</p>}
+        </>}
         <label>
           Email
         </label>

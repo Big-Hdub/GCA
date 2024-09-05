@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 
 export default function Student({ student, theme, font, courses }) {
-    const [course, setCourse] = useState(student.courses[0].id);
+    const [course, setCourse] = useState('');
     const [added, setAdded] = useState(false);
     const dispatch = useDispatch();
 
@@ -22,20 +22,27 @@ export default function Student({ student, theme, font, courses }) {
     }
 
 
-    return (<div key={`student-${student.id}`} className="flex gap-15 acenter">
+    return (<div key={`student-${student.id}`} className="flex gap-15 acenter between">
         <p>{student.name}:</p>
-        <p>Courses</p>
-        <select className={`selpad10 ${theme}1 ${theme} font-${font} w300px`}
-            onChange={(e) => setCourse(e.target.value)}
-            defaultValue={course}>
-            {courses.map((course) =>
-                <option key={`student-${student.id}:course-${+course.id}`}
-                    value={+course.id}>
-                    {course.title} {course.level}
-                </option>)}
-        </select>
-        {added ?
-            < button onClick={() => handleClick(true, +course)} className="button red">Remove from class</button> :
-            < button onClick={() => handleClick(false, +course)} className="button">Add to class</button>}
+        <div className="flex gap-15">
+            <p>Courses</p>
+            <select className={`selpad10 ${theme}1 ${theme} font-${font} w300px`}
+                onChange={(e) => setCourse(e.target.value)}
+                defaultValue={course}>
+                <option value="" disabled>Select a course</option>
+                {courses.map((course) =>
+                    <option key={`student-${student.id}:course-${+course.id}`}
+                        value={+course.id}>
+                        {course.title} {course.level}
+                    </option>)}
+            </select>
+            {course !== '' ? <>
+                {added ?
+                    < button onClick={() => handleClick(true, +course)} className="button red">Remove from class</button> : <div className="w134px">
+                        < button onClick={() => handleClick(false, +course)} className="button">Add to class</button></div>}
+            </> : <>
+                <div className="w134px"></div>
+            </>}
+        </div>
     </div >)
 }

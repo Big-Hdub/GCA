@@ -1,3 +1,5 @@
+import { thunkGetAccount } from "./account";
+
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
@@ -62,6 +64,38 @@ export const thunkSignup = (user) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json();
     dispatch(setUser(data));
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages
+  } else {
+    return { server: "Something went wrong. Please try again" }
+  }
+};
+
+export const thunkSignupChild = (childData) => async (dispatch) => {
+  const response = await fetch("/api/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(childData)
+  });
+  if (response.ok) {
+    dispatch(thunkGetAccount());
+  } else if (response.status < 500) {
+    const errorMessages = await response.json();
+    return errorMessages
+  } else {
+    return { server: "Something went wrong. Please try again" }
+  }
+};
+
+export const thunkEditChild = (childData, userId) => async (dispatch) => {
+  const response = await fetch(`/api/users/${userId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(childData)
+  });
+  if (response.ok) {
+    dispatch(thunkGetAccount());
   } else if (response.status < 500) {
     const errorMessages = await response.json();
     return errorMessages

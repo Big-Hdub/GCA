@@ -51,7 +51,6 @@ class Course(db.Model):
             'image': [image.url for image in self.images][0],
             'title': self.title,
             'level': self.level,
-            'current-grade': self.grades[0].grade,
         }
 
     def to_dict_courses_teacher(self):
