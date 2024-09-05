@@ -28,14 +28,20 @@ def grades():
         return {'courses':
             [{ 'course': course.to_dict(),
             'students': [{'student': student.user.to_dict(),
-                            'grade': [grade.to_dict() for grade in student.grades if grade.course_id==course.id],
-                            'complete': [complete.to_dict() for complete in student.complete if complete.curriculum.course_id==course.id]}
-                        for student in course.students]}
+                        'grade': [grade.to_dict() for grade in student.grades if grade.course_id==course.id],
+                        'complete': [complete.to_dict() for complete in student.complete if complete.curriculum.course_id==course.id]}
+                for student in course.students]}
             for course in courses]}
 
     if user.settings[0].role=='admin':
         courses = Course.query.all()
-        return {'courses': [{ 'course': course.to_dict(), 'students': [{'student': student.user.to_dict(), 'complete': [grade.to_dict() for grade in student.grades]} for student in course.students]} for course in courses]}
+        return {'courses':
+            [{ 'course': course.to_dict(),
+            'students': [{'student': student.user.to_dict(),
+                        'grade': [grade.to_dict() for grade in student.grades if grade.course_id==course.id],
+                        'complete': [complete.to_dict() for complete in student.complete if complete.curriculum.course_id==course.id]}
+                for student in course.students]}
+            for course in courses]}
 
 @grade_routes.route('/<int:grade_id>', methods=['PUT'])
 @login_required
