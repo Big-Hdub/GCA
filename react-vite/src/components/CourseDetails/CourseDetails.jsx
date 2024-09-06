@@ -1,14 +1,14 @@
 import { removeCourses, thunkGetCourseById } from "../../redux/course";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import CreateCourseModal from "../CreateCourseModal";
+import OpenModalButton from "../OpenModalButton";
 import { useEffect, useState } from "react";
 import Header from "../LandingPage/Header";
+import ConfirmModal from "../ConfirmModal";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './CourseDetails.css'
-import OpenModalButton from "../OpenModalButton";
-import ConfirmModal from "../ConfirmModal";
-import CreateCourseModal from "../CreateCourseModal";
 
 export default function CourseDetails() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
@@ -63,7 +63,18 @@ export default function CourseDetails() {
                                         )
                                     })}
                                 </>}
-                                {role == 'teacher' && <>
+                                {role == 'parent' && <>
+                                    <h1>Lessons for {data.course.title} level: {data.course.level}</h1>
+                                    {data.lessons.map((lesson) => {
+                                        return (
+                                            <div key={`lesson:${lesson.id}`} className="flex gap-15">
+                                                <p className={`link`} onClick={() => clickLesson(`/lessons/${lesson.id}`)}>{lesson.title}</p>
+                                                <p>{lesson.type}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </>}
+                                {(role == 'teacher' || role == 'admin') && <>
                                     <h1>Lessons for {data.course.title} level: {data.course.level}</h1>
                                     {data.lessons.map((lesson) => {
                                         return (

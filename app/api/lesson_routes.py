@@ -21,7 +21,7 @@ def lesson(lesson_id):
         return lesson.to_dict_details()
     if user.settings[0].role=='parent' and lesson:
         return lesson.to_dict_parent()
-    if user.settings[0].role=='teacher' and lesson:
+    if user.settings[0].role in ['admin', 'teacher'] and lesson:
         return lesson.to_dict_teacher_details()
 
 
