@@ -54,27 +54,38 @@ export default function Grades() {
                                         </div>
                                     )
                                 })}
-                                {role === 'parent' && data.children.map(({ child, complete, grades }) => {
-                                    return (
-                                        <div className="flex column gap-15" key={`child:${child.id}`}>
-                                            <p>{child.name}</p>
-                                            {grades.map(({ grade, title, id, course }) => {
-                                                return (
-                                                    <div key={`grade:${id}`} className="flex gap-40">
-                                                        <div className="flex between gap-10 w575">
-                                                            <p>{title}:</p>
-                                                            <p>{complete.filter(lesson => lesson.complete && lesson.course === course).length} / {complete.filter(lesson => lesson.assigned && lesson.course === course).length} assignments completed</p>
+                                {role === 'parent' && <>
+                                    {!data.children?.length && <div className={`flex padding-40 column gap-15 ${theme}2`}>
+                                        <h1>No children linked to your account yet.</h1>
+                                        <p>Add children to get started.</p>
+                                        <p>To add children navigate to the account tab in the sidebar.</p>
+                                    </div>}
+                                    {data.children?.length > 0 && data.children.map(({ child, complete, grades }) => {
+                                        return (
+                                            <div className="flex column gap-15" key={`child:${child.id}`}>
+                                                <p>{child.name}</p>
+                                                {!grades.length && <div className={`flex padding-40 column gap-15 ${theme}2`}>
+                                                    <h1>Child not assigned to courses yet.</h1>
+                                                    <p>Contact administration to sign up for courses.</p>
+                                                </div>}
+                                                {grades.length > 0 && grades.map(({ grade, title, id, course }) => {
+                                                    return (
+                                                        <div key={`grade:${id}`} className="flex gap-40">
+                                                            <div className="flex between gap-10 w575">
+                                                                <p>{title}:</p>
+                                                                <p>{complete.filter(lesson => lesson.complete && lesson.course === course).length} / {complete.filter(lesson => lesson.assigned && lesson.course === course).length} assignments completed</p>
+                                                            </div>
+                                                            <div className="flex gap-15">
+                                                                <p>Current grade:</p>
+                                                                <p>{grade === '0' ? 'Not graded yet' : grade}</p>
+                                                            </div>
                                                         </div>
-                                                        <div className="flex gap-15">
-                                                            <p>Current grade:</p>
-                                                            <p>{grade === '0' ? 'Not graded yet' : grade}</p>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })}
-                                        </div>
-                                    )
-                                })}
+                                                    )
+                                                })}
+                                            </div>
+                                        )
+                                    })}
+                                </>}
                                 {(role === 'teacher' || role === 'admin') && data.courses.map(({ course, students }) => {
                                     return (
                                         <div className="flex column gap-15" key={`course:${course.id}`}>

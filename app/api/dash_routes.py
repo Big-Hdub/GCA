@@ -26,3 +26,6 @@ def dashs():
                 for child in user.children]
     if user.settings[0].role=='teacher':
         return user.to_dict_teacher_dash()
+    if user.settings[0].role=='admin':
+        teachers =  User.query.all()
+        return [{'teacher': teacher.to_dict(), 'courses': teacher.to_dict_teacher_dash()} for teacher in teachers if teacher.settings[0].role=='teacher']

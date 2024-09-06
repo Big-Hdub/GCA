@@ -158,7 +158,7 @@ export default function Account() {
                             </div>
                             <div className="flex gap-15 acenter">
                                 <p>Email:</p>
-                                <input type="text"
+                                <input type="email"
                                     className={`${theme}3 ${theme} rad-10`}
                                     value={email}
                                     onChange={(e) => change(() => setEmail(e.target.value))}

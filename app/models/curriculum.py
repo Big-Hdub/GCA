@@ -52,7 +52,6 @@ class Curriculum(db.Model):
     def to_dict_details(self):
         student=Student.query.filter(Student.user_id==current_user.id).first()
         complete=StudentCurriculum.query.filter(StudentCurriculum.student_id==student.id, StudentCurriculum.curriculum_id==self.id).first()
-        print(self.id)
         return {
             'id': self.id,
             'course': self.course_id,

@@ -31,15 +31,16 @@ def assign_lesson(lesson_id):
     """
     Change status of a lesson to complete
     """
+    user = User.query.get(current_user.id)
     data = request.get_json(force=True, cache=True)
-    if data['student']:
+    if data['student'] and user.settings[0].role in ['admin', 'teacher']:
         student = Student.query.filter(Student.user_id==int(data['student'])).first()
         lesson = StudentCurriculum.query.filter(StudentCurriculum.student_id == student.id, StudentCurriculum.curriculum_id == int(lesson_id)).first()
         # lesson=StudentCurriculum.query.get(lesson_id)
         lesson.assigned=True
         db.session.commit()
         return lesson.to_dict()
-
+    return {'message': 'Unauthorized'}, 401
 
 @lessons_routes.route('/<int:lesson_id>', methods=["PUT"])
 @login_required
