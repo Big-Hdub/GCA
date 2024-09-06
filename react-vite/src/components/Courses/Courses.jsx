@@ -45,9 +45,9 @@ export default function Courses() {
                         <main id="main-container" className="flex minh100 gap-60">
                             <Sidebar selection='courses' />
                             <div id="courses-container" className={`flex wrap gap-40 acenter ${theme} font-${font} ${theme}2`}>
-                                {isLoaded && data && data.length && <>
+                                {isLoaded && data && <>
                                     {role === 'student' && <>
-                                        {data?.map(course => {
+                                        {data.length && data?.map(course => {
                                             return (
                                                 <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
                                                     <CourseCard course={course} font={font} theme={theme} />
@@ -55,20 +55,28 @@ export default function Courses() {
                                             )
                                         })}
                                     </>}
-                                    {role === 'parent' && <div className="flex column">
-                                        {data?.map(({ student, courses }) => {
+                                    {role === 'parent' && <div className="flex aselfstart wp100">
+                                        {!data.length && <div className={`flex padding-40 column gap-15 ${theme}2`}>
+                                            <h1>No children linked to your account yet.</h1>
+                                            <p>Add children to get started.</p>
+                                            <p>To add children navigate to the account tab in the sidebar.</p>
+                                        </div>}
+                                        {data.length > 0 && data.map(({ student, courses }) => {
                                             return (
-                                                <div key={`child:${student?.id}`} className="flex column gap-40">
+                                                <div key={`child:${student?.id}`} className="flex column gap-40 wp100">
                                                     <p className="aselfstart">{student.name}</p>
                                                     <div className={`flex wrap gap-40 acenter`}>
-                                                        {
-                                                            courses.map((course) => {
-                                                                return (
-                                                                    <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
-                                                                        <CourseCard course={course} font={font} theme={theme} />
-                                                                    </div>
-                                                                )
-                                                            })
+                                                        {!courses.length && <div className={`flex padding-40 column gap-15 ${theme}2`}>
+                                                            <h1>Child not assigned to courses yet.</h1>
+                                                            <p>Contact administration to sign up for courses.</p>
+                                                        </div>}
+                                                        {courses.length > 0 && courses.map((course) => {
+                                                            return (
+                                                                <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                                    <CourseCard course={course} font={font} theme={theme} />
+                                                                </div>
+                                                            )
+                                                        })
                                                         }
                                                     </div>
                                                 </div>
@@ -78,7 +86,7 @@ export default function Courses() {
                                     {role === 'teacher' && <div className={`flex column gap-25`}>
                                         <OpenModalButton modalComponent={<CreateCourseModal />} buttonText={'Create course'} />
                                         <div className={`flex wrap gap-40 acenter ${theme} font-${font}`}>
-                                            {data?.map(course => {
+                                            {data.length > 0 && data.map(course => {
                                                 return (
                                                     <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
                                                         <CourseCard course={course} font={font} theme={theme} />
@@ -87,6 +95,23 @@ export default function Courses() {
                                             })}
                                         </div>
                                         <OpenModalButton modalComponent={<CreateCourseModal />} buttonText={'Create course'} />
+                                    </div>}
+                                    {role === 'admin' && <div className={`flex column gap-25`}>
+                                        {data.length > 0 && data.map(({ teacher, courses }) => {
+                                            return (<div key={`teacher:${teacher.id}`} className="flex column gap-25">
+                                                <h1>{teacher.name}&apos;s courses:</h1>
+                                                <div className={`flex wrap gap-40 acenter ${theme} font-${font}`}>
+                                                    {courses.length > 0 && courses.map(course => {
+                                                        return (
+                                                            <div key={`course:${course.id}`} className={`course-content-cards ${theme}3`}>
+                                                                <CourseCard course={course} font={font} theme={theme} />
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>)
+                                        })
+                                        }
                                     </div>}
                                 </>
                                 }

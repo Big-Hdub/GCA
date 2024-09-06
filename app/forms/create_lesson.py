@@ -11,7 +11,6 @@ def validate_user(form, field):
         raise ValidationError('Not authorized to do this.')
 
 def validate_type(form, field):
-    print(field.data)
     if not field.data in ['lesson', 'quiz']:
         raise ValidationError('type needs to be either lesson or quiz')
 

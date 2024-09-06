@@ -42,7 +42,7 @@ function LoginFormModal({ navigate }) {
           Email
         </label>
         <input
-          type="text"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required

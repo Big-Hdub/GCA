@@ -31,16 +31,12 @@ export default function Dashboard() {
     useEffect(() => {
         dispatch(removeCourses);
         dispatch(removeLessons);
-        if (!data) {
-            const loadDash = async () => {
-                await dispatch(thunkGetDash())
-                    .then(setIsLoaded(true));
-            }
-            loadDash()
-        } else if (data) {
-            setIsLoaded(true);
+        const loadDash = async () => {
+            await dispatch(thunkGetDash())
+                .then(setIsLoaded(true))
         }
-    }, [dispatch, data])
+        loadDash()
+    }, [dispatch])
 
     useEffect(() => { }, [data])
 
@@ -51,7 +47,7 @@ export default function Dashboard() {
                     <Header main={true} />
                     <main id="main-container" className={`flex minh100 gap-60`}>
                         <Sidebar selection='dashboard' />
-                        {isLoaded &&
+                        {isLoaded && data &&
                             <div id="dashboard-container" className={`flex column gap-40 acenter ${theme} font-${font}`}>
                                 <h1 id="dashboard-welcome">Welcome {sessionUser.name}</h1>
                                 <div id="dashboard-verse-container" className={`flex column gap-10 ${theme}2`}>
@@ -75,8 +71,14 @@ export default function Dashboard() {
                                     </div>
                                 </>}
                                 {role === 'parent' && <>
-                                    {data && data[0]?.lessons?.length && <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to your {data?.length > 1 ? 'children' : 'child'}:</h2>}
-                                    {data && data[0]?.lessons?.length && data?.map(({ student, lessons }) => {
+                                    {!data[0]?.lessons?.length && <div className={`flex padding-40 column gap-15 ${theme}2`}>
+                                        <h1>No children assigned to courses yet.</h1>
+                                        <p>Add children to get started.</p>
+                                        <p>To add children navigate to the account tab in the sidebar.</p>
+                                        <p>After children are added to your account, if you still receive this message contact administration to sign up for courses.</p>
+                                    </div>}
+                                    {data[0]?.lessons?.length && <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to your {data?.length > 1 ? 'children' : 'child'}:</h2>}
+                                    {data[0]?.lessons?.length && data?.map(({ student, lessons }) => {
                                         return (
                                             <div key={`child:${student?.id}`}>
                                                 {lessons && <>
@@ -100,7 +102,7 @@ export default function Dashboard() {
                                 </>}
                                 {role === 'teacher' && <>
                                     <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to your {data?.courses.length > 1 ? 'students' : 'student'}:</h2>
-                                    {data && data.courses && data.courses.map((course) => {
+                                    {data.courses && data.courses.map((course) => {
                                         return (
                                             <div className="flex column wp100" key={`course:${course.id}`}>
                                                 <p className="course-names">Course: {course.title} {course.level}</p>
@@ -128,6 +130,44 @@ export default function Dashboard() {
                                             </div>
                                         )
                                     })}
+                                </>}
+                                {role === 'admin' && <>
+                                    {data?.length > 0 && data.map(({ teacher, courses }) => {
+                                        return (<div key={`teacher:${teacher.id}`} className="flex column gap-15">
+                                            <h1 className="top-130 aselfstart">{teacher.name}:</h1>
+                                            <h2 id="dashboard-lessons-title" className="aselfstart">Lessons assigned to {courses.length > 1 ? 'students' : 'student'}:</h2>
+                                            {courses.courses.map((course) => {
+                                                return (
+                                                    <div className="flex column gap-15 wp100" key={`course:${course.id}`}>
+                                                        <p className="course-names">Course: {course.title} {course.level}</p>
+                                                        {course.students.map(({ student, lessons }) => {
+                                                            return (
+                                                                <div className="flex column wp100" key={`child:${student?.id}`}>
+                                                                    {lessons && <>
+                                                                        <h2 className="student-names mbotton-15 aselfstart">{student?.name}</h2>
+                                                                        <div className={`dashboard-cards-container flex gap-15 ${theme}2`}>
+                                                                            <div className="dashboard-content between acenter flex gap-15">
+                                                                                {lessons?.map((lessonData) => {
+                                                                                    const [complete, assigned, lesson] = [...lessonData]
+                                                                                    return (
+                                                                                        <div key={`teacher:lesson:${lesson.lesson}title:${lesson.title}`} className={`dashboard-content-card`}>
+                                                                                            <DashboardCard lesson={lesson} complete={complete} font={font} theme={theme} teacher={true} assigned={assigned} student={student.id} />
+                                                                                        </div>
+                                                                                    )
+                                                                                })}
+                                                                            </div>
+                                                                        </div>
+                                                                    </>}
+                                                                </div>
+                                                            )
+                                                        })}
+                                                    </div>
+                                                )
+                                            }
+                                            )
+                                            }</div>)
+                                    })
+                                    }
                                 </>}
                             </div>
                         }

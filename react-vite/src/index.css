@@ -49,6 +49,10 @@ body {
     justify-self: end;
 }
 
+.jselfstart {
+    justify-self: start;
+}
+
 .aselfstart {
     align-self: start;
 }
@@ -323,4 +327,9 @@ input {
 
 .selpad10 {
     padding: 0 10px 0 10px;
+}
+
+.top-130 {
+    position: relative;
+    top: -130px
 }

@@ -1,5 +1,6 @@
 #courses-container {
     width: 80%;
+    height: fit-content;
     justify-content: center;
     position: relative;
     top: -50px;

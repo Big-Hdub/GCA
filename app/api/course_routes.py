@@ -27,6 +27,9 @@ def courses():
 
     if user.settings[0].role=='teacher':
         return [course.to_dict_courses_teacher() for course in user.courses]
+    if user.settings[0].role=='admin':
+        teachers =  User.query.all()
+        return [{'teacher': teacher.to_dict(), 'courses': [course.to_dict_courses_teacher() for course in teacher.courses]} for teacher in teachers if teacher.settings[0].role=='teacher']
 
 @courses_routes.route('/<int:course_id>')
 @login_required

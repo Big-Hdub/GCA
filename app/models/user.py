@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from .db import db, environment, SCHEMA, add_prefix_for_prod
+from .db import db, environment, SCHEMA
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 from .student import Family
