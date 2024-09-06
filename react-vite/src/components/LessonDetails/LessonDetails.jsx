@@ -76,7 +76,7 @@ export default function LessonDetails() {
                                     </div>
                                 </>}
                             </>}
-                            {role === 'teacher' && <>
+                            {(role === 'teacher' || role === 'admin') && <>
                                 <Sidebar selection='lesson' course={course.course} lesson={+lessonId} lessons={course.lessons} teacher={true} />
                                 <div id="lesson-container" className={`flex column gap-40 ${theme} font-${font} ${theme}2`}>
                                     <div className="flex between acenter">

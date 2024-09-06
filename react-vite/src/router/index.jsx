@@ -1,16 +1,16 @@
+import Administration from '../components/Administration';
+import LessonDetails from '../components/LessonDetails';
 import CourseDetails from '../components/CourseDetails';
 import { createBrowserRouter } from 'react-router-dom';
 import Construction from '../components/Construction';
 import LandingPage from '../components/LandingPage';
+import LessonForm from '../components/LessonForm';
 import Dashboard from '../components/Dashboard';
 import Settings from '../components/Settings';
 import Courses from '../components/Courses';
 import Account from '../components/Account';
 import Grades from '../components/Grades';
 import Layout from './Layout';
-import LessonDetails from '../components/LessonDetails';
-import LessonForm from '../components/LessonForm';
-import Administration from '../components/Administration';
 
 export const router = createBrowserRouter([
   {
