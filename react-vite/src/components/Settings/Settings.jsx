@@ -6,6 +6,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import { useEffect, useState } from "react";
 import Footer from "../Footer";
 import './Settings.css'
+import FileUpload from "../FileUpload/FileUpload";
 
 
 export default function Settings() {
@@ -79,6 +80,7 @@ export default function Settings() {
                                     <div className="flex gap-25 mleft-25">
                                         <p className="mleft-25">Profile image:</p>
                                         <p className="mleft-25">{sessionUser.settings.image}</p>
+                                        <FileUpload theme={theme} />
                                     </div>
                                 </div>}
                         </div>
