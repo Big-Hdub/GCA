@@ -11,7 +11,7 @@ import Section3 from "./Section3";
 import Section4 from "./Section4";
 import Section5 from "./Section5";
 import Footer from "../Footer";
-import Header from "./Header";
+// import Header from "./Header";
 import './Landing.css';
 
 
@@ -45,8 +45,9 @@ export default function LandingPage() {
 
     return (<>
         {!sessionUser && <div className='flex column landing'>
-            <Header />
+            {/* <Header /> */}
             <main className="flex column">
+                <h1 id="landing-header" className="aselfcenter mtop-80">Welcome to Garden City Academy</h1>
                 <Section1 />
                 <Section2 />
                 <Section3 />

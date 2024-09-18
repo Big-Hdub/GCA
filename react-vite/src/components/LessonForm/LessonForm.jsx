@@ -1,12 +1,11 @@
+import { thunkCreateLesson, thunkEditLesson, thunkGetLessonById } from "../../redux/lesson";
 import { useNavigate, useParams } from "react-router-dom";
 import { thunkGetCourseById } from "../../redux/course";
 import { useDispatch, useSelector } from "react-redux";
 import RenderMarkdown from "../RenderMarkdown";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
-import { thunkCreateLesson, thunkEditLesson, thunkGetLessonById } from "../../redux/lesson";
 import './LessonForm.css'
 
 export default function LessonForm({ edit }) {
@@ -17,11 +16,11 @@ export default function LessonForm({ edit }) {
     const lesson = useSelector((store) => store.lessons.lessons);
     const course = useSelector((store) => store.courses.courses);
     const [isLoaded, setIsLoaded] = useState();
+    const { courseId, lessonId } = useParams();
+    const [errors, setErrors] = useState({});
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [type, setType] = useState('');
-    const [errors, setErrors] = useState({});
-    const { courseId, lessonId } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -99,8 +98,7 @@ export default function LessonForm({ edit }) {
         {sessionUser && course &&
             <div>
                 <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className="flex minh100 gap-60">
+                    <main id="main-container" className="flex minh100 gap-60 mtop-229">
                         {edit ? <Sidebar selection='lesson' lesson={+lessonId} course={course.course} lessons={course.lessons} teacher={true} /> : <Sidebar selection='newLesson' course={course.course} lessons={course.lessons} />}
                         {isLoaded && course?.course?.title && <>
                             <div id="lesson-container" className={`flex column wp100 gap-40 ${theme} font-${font} ${theme}2`}>

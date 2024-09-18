@@ -154,6 +154,17 @@ def upload_file():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/get-file-url/<file_name>', methods=['GET'])
+def get_file_url(file_name):
+    try:
+        # Generate a presigned URL for the file
+        file_url = s3_client.generate_presigned_url('get_object',
+            Params={'Bucket': os.getenv("AWS_S3_BUCKET"), 'Key': file_name},
+            ExpiresIn=3600)
+        return jsonify({'file_url': file_url})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 @app.errorhandler(404)
 def not_found(e):

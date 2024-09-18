@@ -165,6 +165,10 @@ body {
     color: rgb(58, 110, 110)
 }
 
+.button:disabled {
+    background-color: rgb(59, 91, 128);
+}
+
 .button.red {
     background-color: red;
 }
@@ -184,6 +188,14 @@ body {
 .error {
     color: rgb(194, 0, 0);
     text-shadow: 2px 2px 2px black;
+}
+
+.mtop-80 {
+    margin-top: 80px;
+}
+
+.mtop-229 {
+    margin-top: 229px;
 }
 
 .mleft-25 {
@@ -332,4 +344,43 @@ input {
 .top-130 {
     position: relative;
     top: -130px
+}
+
+.file-upload-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.drop-zone {
+    /* border: 2px dashed var(--backgroud1); */
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    /* color: #007bff; */
+}
+
+.drop-zone.dragover {
+    background-color: #e0f7ff;
+}
+
+.file-input {
+    display: none;
+}
+
+.file-name {
+    margin-top: 10px;
+}
+
+header {
+    position: absolute;
+}
+
+#landing-header {
+    font-size: 60px;
+    font-weight: bold;
+    font-style: italic;
+    text-shadow: 2px 2px 2px white;
 }

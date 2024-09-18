@@ -1,14 +1,13 @@
 import { removeLessons, thunkCompleteLesson, thunkGetLessonById } from "../../redux/lesson";
 import { useNavigate, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
+import OpenModalButton from "../OpenModalButton";
 import RenderMarkdown from "../RenderMarkdown";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
+import ConfirmModal from "../ConfirmModal";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './LessonDetails.css'
-import OpenModalButton from "../OpenModalButton";
-import ConfirmModal from "../ConfirmModal";
 
 export default function LessonDetails() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
@@ -41,8 +40,7 @@ export default function LessonDetails() {
         {sessionUser &&
             <div>
                 <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className="flex minh100 gap-60">
+                    <main id="main-container" className="flex minh100 gap-60 mtop-229 ">
                         {isLoaded && lesson && course?.course?.title && <>
                             {role === 'student' && <>
                                 <Sidebar selection='lesson' course={course.course} lesson={+lessonId} lessons={course.lessons} />

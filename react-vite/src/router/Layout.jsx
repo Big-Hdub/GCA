@@ -3,6 +3,7 @@ import { thunkAuthenticate } from "../redux/session";
 import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import Header from "../components/LandingPage/Header";
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ export default function Layout() {
   return (
     <>
       <ModalProvider>
+        <Header main={true} />
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import CreateCourseModal from "../CreateCourseModal";
 import OpenModalButton from "../OpenModalButton";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
 import ConfirmModal from "../ConfirmModal";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
@@ -46,8 +45,7 @@ export default function CourseDetails() {
         {sessionUser &&
             <div>
                 <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className="flex minh100 gap-60">
+                    <main id="main-container" className="flex minh100 gap-60 mtop-229">
                         {isLoaded && data?.course && <>
                             <Sidebar selection='courses' course={data.course.title} />
                             <div id="course-container" className={`flex column gap-25 ${theme} font-${font} ${theme}2`}>

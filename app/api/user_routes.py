@@ -3,6 +3,8 @@ from app.models import User, db, Setting, Student
 from app.forms.signup_form import SignUpForm
 from flask import Blueprint, request
 
+from app.models.profile_image import ProfileImage
+
 user_routes = Blueprint('users', __name__)
 
 
@@ -34,10 +36,14 @@ def user_settings(id):
     """
     user = User.query.get(id)
     if user:
-        if request.json['theme']:
+        if 'theme' in request.json:
             user.settings[0].theme='dark' if user.settings[0].theme=='light' else 'light'
-        if request.json['font']:
+        if 'font' in request.json:
             user.settings[0].font_size = int(request.json['font'])
+        if 'profile-image' in request.json:
+            url=str(request.json['profile-image'])
+            new_image=ProfileImage(url=url)
+            user.settings[0].image=new_image
         db.session.commit()
     return user.to_dict_session()
 
