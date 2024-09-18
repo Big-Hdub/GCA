@@ -1,10 +1,10 @@
 from .api.student_routes import students_routes
-from .api.admin_routes import admin_routes
-from .api.lesson_routes import lessons_routes
 from .api.account_routes import account_routes
+from .api.lesson_routes import lessons_routes
 from .api.course_routes import courses_routes
+from .api.admin_routes import admin_routes
 from .api.grade_routes import grade_routes
-from flask import Flask, request, redirect
+from flask import Flask, jsonify, request, redirect
 from flask_wtf.csrf import generate_csrf
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
@@ -15,6 +15,8 @@ from .seeds import seed_commands
 from .models import db, User
 from flask_cors import CORS
 from .config import Config
+import boto3
+import uuid
 import os
 
 app = Flask(__name__, static_folder='../react-vite/dist', static_url_path='/')
@@ -114,6 +116,54 @@ def react_root(path):
     if path == 'favicon.ico':
         return app.send_from_directory('public', 'favicon.ico')
     return app.send_static_file('index.html')
+
+def generate_unique_filename(filename):
+    base_name, file_extension = os.path.splitext(filename)
+    unique_id = uuid.uuid4().hex
+    unique_filename = f"{base_name}_{unique_id}{file_extension}"
+    return unique_filename
+
+s3_client = boto3.client(
+    "s3",
+    aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+    aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    region_name=os.getenv("AWS_REGION")
+)
+
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({"error": "No file part"}), 400
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify({"error": "No selected file"}), 400
+
+    unique_filename = generate_unique_filename(file.filename)
+
+    try:
+        s3_client.upload_fileobj(
+            file,
+            os.getenv("AWS_S3_BUCKET"),
+            unique_filename
+        )
+
+        file_url = f"https://{os.getenv('AWS_S3_BUCKET')}.s3.amazonaws.com/{unique_filename}"
+        return jsonify({"file_url": file_url})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/get-file-url/<file_name>', methods=['GET'])
+def get_file_url(file_name):
+    try:
+        # Generate a presigned URL for the file
+        file_url = s3_client.generate_presigned_url('get_object',
+            Params={'Bucket': os.getenv("AWS_S3_BUCKET"), 'Key': file_name},
+            ExpiresIn=3600)
+        return jsonify({'file_url': file_url})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.errorhandler(404)

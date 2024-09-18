@@ -2,11 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAdmin } from "../../redux/admin";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
+import Student from "./StudentCard";
 import Footer from "../Footer";
 import './Administration.css';
-import Student from "./StudentCard";
 
 export default function Administration() {
     const font = useSelector((store) => store.session.user)?.settings.font_size;
@@ -33,8 +32,7 @@ export default function Administration() {
         {sessionUser && isLoaded &&
             <div>
                 <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className={`flex minh100 gap-60`}>
+                    <main id="main-container" className={`flex mtop-229 minh100 gap-60`}>
                         <Sidebar selection='administration' />
                         <div id="administration-container" className={`flex column gap-40 padding-40 ${theme} font-${font} ${theme}2`}>
                             <div className={`flex column gap-10 padding-15 ${theme} font-${font} ${theme}3`}>

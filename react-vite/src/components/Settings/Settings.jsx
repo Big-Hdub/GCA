@@ -1,9 +1,9 @@
 import { thunkToggleSettings } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
+import FileUpload from "../FileUpload/FileUpload";
 import { useNavigate } from "react-router-dom";
-import Header from "../LandingPage/Header";
-import Sidebar from "../Sidebar/Sidebar";
 import { useEffect, useState } from "react";
+import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './Settings.css'
 
@@ -49,8 +49,7 @@ export default function Settings() {
         {sessionUser && fontSize &&
             <div>
                 <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className={"flex minh100 gap-60"}>
+                    <main id="main-container" className={"flex minh100 gap-60 mtop-229"}>
                         <Sidebar selection='settings' />
                         <div id="settings-container" className={`flex column gap-40 ${theme} font-${fontSize}`}>
                             {isLoaded &&
@@ -78,8 +77,13 @@ export default function Settings() {
                                     </div>
                                     <div className="flex gap-25 mleft-25">
                                         <p className="mleft-25">Profile image:</p>
-                                        <p className="mleft-25">{sessionUser.settings.image}</p>
+                                        {sessionUser.settings.image.includes('https://garden-city-academy.s3.amazonaws.com') ?
+                                            <p className="mleft-25">
+                                                {sessionUser.settings.image.slice(45, sessionUser.settings.image.length - 37)}
+                                                {sessionUser.settings.image.slice(sessionUser.settings.image.length - 4)}</p> :
+                                            <p className="mleft-25">{sessionUser.settings.image}</p>}
                                     </div>
+                                    <FileUpload theme={theme} session={sessionUser} />
                                 </div>}
                         </div>
                     </main>

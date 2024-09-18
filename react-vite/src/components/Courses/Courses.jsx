@@ -4,7 +4,6 @@ import CreateCourseModal from "../CreateCourseModal";
 import OpenModalButton from "../OpenModalButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import CourseCard from "./CourseCard";
 import Footer from "../Footer";
@@ -41,8 +40,7 @@ export default function Courses() {
             {sessionUser &&
                 <div>
                     <div className={`flex column between ${theme}1`}>
-                        <Header main={true} />
-                        <main id="main-container" className="flex minh100 gap-60">
+                        <main id="main-container" className="flex minh100 gap-60 mtop-229">
                             <Sidebar selection='courses' />
                             <div id="courses-container" className={`flex wrap gap-40 acenter ${theme} font-${font} ${theme}2`}>
                                 {isLoaded && data && <>

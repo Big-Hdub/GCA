@@ -5,7 +5,6 @@ import { removeLessons } from "../../redux/lesson";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DashboardCard from "./DashboardCard";
-import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './Dashboard.css'
@@ -44,8 +43,7 @@ export default function Dashboard() {
         {sessionUser &&
             <div>
                 <div className={`flex column between ${theme}1`}>
-                    <Header main={true} />
-                    <main id="main-container" className={`flex minh100 gap-60`}>
+                    <main id="main-container" className={`flex minh100 gap-60 mtop-229`}>
                         <Sidebar selection='dashboard' />
                         {isLoaded && data &&
                             <div id="dashboard-container" className={`flex column gap-40 acenter ${theme} font-${font}`}>
