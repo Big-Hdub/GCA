@@ -3,7 +3,7 @@ import { thunkGetAccount } from "./account";
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
 
-const setUser = (user) => ({
+export const setUser = (user) => ({
   type: SET_USER,
   payload: user
 });
@@ -31,10 +31,10 @@ export const thunkAuthenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/");
   if (response.ok) {
     const data = await response.json();
-    if (data.errors) {
-      return;
-    }
     dispatch(setUser(data));
+    return data
+  } else {
+    return;
   }
 };
 
@@ -54,6 +54,10 @@ export const thunkLogin = (credentials) => async dispatch => {
     return { server: "Something went wrong. Please try again" }
   }
 };
+
+// export const thunkGetSession = () => async (dispatch) => {
+//   const response = await fetch("/api/")
+// }
 
 export const thunkSignup = (user) => async (dispatch) => {
   const response = await fetch("/api/auth/signup", {
