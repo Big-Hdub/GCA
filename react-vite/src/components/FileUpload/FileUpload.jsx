@@ -1,10 +1,13 @@
+import { setUser } from '../../redux/session';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
 function FileUpload({ theme, session }) {
-    const [file, setFile] = useState(null);
-    const [fileUrl, setFileUrl] = useState("");
-    const [dragging, setDragging] = useState(false);
     const [fileName, setFileName] = useState("No file chosen");
+    const [dragging, setDragging] = useState(false);
+    const [fileUrl, setFileUrl] = useState("");
+    const [file, setFile] = useState(null);
+    const dispatch = useDispatch();
 
     const handleFileChange = (e) => {
         setFileUrl("")
@@ -57,11 +60,11 @@ function FileUpload({ theme, session }) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ 'profile-image': data.file_url })
             });
-            const imagedata = response.json();
-            if (imagedata.ok) {
-                return
+            const imagedata = await response.json();
+            if (response.ok) {
+                return dispatch(setUser(imagedata))
             } else {
-                console.error(imagedata.errors);
+                console.error(imagedata);
             }
         } else {
             console.error(data.error);
@@ -96,16 +99,9 @@ function FileUpload({ theme, session }) {
                         type="submit">Upload</button>
                 </>
                 }
-                {fileUrl && <p>Uploaded File: {fileName}</p>}
+                {fileUrl && <p>File uploaded successfully</p>}
             </form>
         </div>
-        // <div className='flex gap-15'>
-        //     <form onSubmit={handleSubmit} className='flex gap-15 acenter'>
-        //         <input type="file" onChange={handleFileChange} className={`${theme}1 custom-button`} />
-        //         {!fileUrl && <button className='button' type="submit">Upload</button>}
-        //         {fileUrl && <p>Uploaded File</p>}
-        //     </form>
-        // </div>
     );
 }
 

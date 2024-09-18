@@ -23,21 +23,20 @@ export default function ProfileButton() {
 
   useEffect(() => {
     if (sessionUser) {
-      if (url && !profileImage) {
+      if (url && url !== profileImage) {
         if (url.includes('https://garden-city-academy.s3.amazonaws.com')) {
           const loadImage = async () => {
             const response = await fetch(`/api/get-file-url/${url.slice(45)}`)
             if (response.ok) {
               const data = await response.json()
               setProfileImage(data.file_url)
-              console.log(profileImage)
             }
           }
           loadImage()
         }
       }
     }
-  })
+  }, [profileImage, sessionUser, url])
 
   useEffect(() => {
     if (!showMenu) return;
@@ -65,7 +64,7 @@ export default function ProfileButton() {
   return (
     <>
       <button id="profile-button" onClick={toggleMenu}>
-        {profileImage ? <img src={profileImage} className={`${sessionUser.settings.theme}3`} /> :
+        {profileImage ? <img src={profileImage} className={`${sessionUser?.settings.theme}3`} /> :
           <img src='/cross.jpg' className={`default`} />}
       </button>
       {showMenu && (
