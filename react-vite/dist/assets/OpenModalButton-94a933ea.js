@@ -1,0 +1,1 @@
+import{l as f,j as u}from"./index-b5fc81fe.js";function l({modalComponent:o,buttonText:s,onButtonClick:t,onModalClose:n,red:e}){const{setModalContent:a,setOnModalClose:i}=f(),r=()=>{n&&i(n),a(o),typeof t=="function"&&t()};return u.jsx("button",{className:`button wfit${e?" red":""}`,onClick:r,children:s})}export{l as O};

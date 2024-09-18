@@ -67,14 +67,6 @@ export default function ProfileButton() {
       <button id="profile-button" onClick={toggleMenu}>
         {profileImage ? <img src={profileImage} className={`${sessionUser.settings.theme}3`} /> :
           <img src='/cross.jpg' className={`default`} />}
-        {/* {url ? <>
-          {url.includes('https://garden-city-academy.s3.amazonaws.com') ?
-            <img src={`/api/get-file-url/${url.slice(45)}`} alt="S3 File" className={`${sessionUser.settings.theme}3`} /> :
-            <img src={url} className={`${sessionUser.settings.theme}3`} />}
-        </>
-          :
-          <img src='/cross.jpg' className={`${sessionUser.settings.theme}3`} />
-        } */}
       </button>
       {showMenu && (
         <div className={`profile-dropdown ${sessionUser ? sessionUser.settings.theme : 'light '}2`} ref={ulRef}>
