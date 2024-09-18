@@ -1,16 +1,20 @@
-import Administration from '../components/Administration';
-import LessonDetails from '../components/LessonDetails';
-import CourseDetails from '../components/CourseDetails';
+/* eslint-disable react-refresh/only-export-components */
+import { lazy, Suspense } from 'react';
+const Administration = lazy(() => import('../components/Administration'));
+const LessonDetails = lazy(() => import('../components/LessonDetails'));
+const CourseDetails = lazy(() => import('../components/CourseDetails'));
+const LessonForm = lazy(() => import('../components/LessonForm'));
+const Dashboard = lazy(() => import('../components/Dashboard'));
+const Settings = lazy(() => import('../components/Settings'));
+const Courses = lazy(() => import('../components/Courses'));
+const Account = lazy(() => import('../components/Account'));
+const Grades = lazy(() => import('../components/Grades'));
 import { createBrowserRouter } from 'react-router-dom';
 import Construction from '../components/Construction';
 import LandingPage from '../components/LandingPage';
-import LessonForm from '../components/LessonForm';
-import Dashboard from '../components/Dashboard';
-import Settings from '../components/Settings';
-import Courses from '../components/Courses';
-import Account from '../components/Account';
-import Grades from '../components/Grades';
 import Layout from './Layout';
+
+const Loading = () => <div>Loading...</div>;
 
 export const router = createBrowserRouter([
   {
@@ -22,36 +26,60 @@ export const router = createBrowserRouter([
       },
       {
         path: 'administration',
-        element: <Administration main={true} />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Administration />
+          </Suspense>
+        ),
       },
       {
         path: 'dashboard',
-        element: <Dashboard main={true} />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Dashboard />
+          </Suspense>
+        ),
       },
       {
         path: 'courses',
         children: [
           {
             path: '',
-            element: <Courses main={true} />,
+            element: (
+              <Suspense fallback={<Loading />}>
+                <Courses />
+              </Suspense>
+            ),
           },
           {
             path: ':courseId',
             children: [
               {
                 path: '',
-                element: <CourseDetails />
+                element: (
+                  <Suspense fallback={<Loading />}>
+                    <CourseDetails />
+                  </Suspense>
+                ),
               },
               {
                 path: 'lessons',
                 children: [
                   {
                     path: 'new',
-                    element: <LessonForm />
+                    element: (
+                      <Suspense fallback={<Loading />}>
+                        <LessonForm />
+                      </Suspense>
+                    ),
                   },
                   {
                     path: ':lessonId/edit',
-                    element: <LessonForm edit={true} />
+                    element: (
+                      <Suspense fallback={<Loading />}>
+                        <LessonForm edit={true} />
+                      </Suspense>
+                    ),
                   }
                 ]
               }
@@ -61,19 +89,35 @@ export const router = createBrowserRouter([
       },
       {
         path: 'lessons/:lessonId',
-        element: <LessonDetails />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <LessonDetails />
+          </Suspense>
+        ),
       },
       {
         path: 'account',
-        element: <Account main={true} />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Account />
+          </Suspense>
+        ),
       },
       {
         path: 'grades',
-        element: <Grades main={true} />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Grades />
+          </Suspense>
+        ),
       },
       {
         path: 'settings',
-        element: <Settings main={true} />
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Settings />
+          </Suspense>
+        ),
       },
       {
         path: 'about',

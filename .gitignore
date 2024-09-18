@@ -8,3 +8,5 @@ instance
 dev.db
 temp
 node_modules
+.eslintrc.cjs
+eslint.config.js

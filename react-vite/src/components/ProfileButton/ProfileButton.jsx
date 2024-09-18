@@ -10,6 +10,7 @@ import './Profile.css';
 export default function ProfileButton() {
   const sessionUser = useSelector((store) => store.session.user);
   const url = useSelector((store) => store.session.user)?.settings.image;
+  const [profileImage, setProfileImage] = useState(null)
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -19,6 +20,24 @@ export default function ProfileButton() {
     e.stopPropagation();
     setShowMenu(!showMenu);
   };
+
+  useEffect(() => {
+    if (sessionUser) {
+      if (url && !profileImage) {
+        if (url.includes('https://garden-city-academy.s3.amazonaws.com')) {
+          const loadImage = async () => {
+            const response = await fetch(`/api/get-file-url/${url.slice(45)}`)
+            if (response.ok) {
+              const data = await response.json()
+              setProfileImage(data.file_url)
+              console.log(profileImage)
+            }
+          }
+          loadImage()
+        }
+      }
+    }
+  })
 
   useEffect(() => {
     if (!showMenu) return;
@@ -46,7 +65,8 @@ export default function ProfileButton() {
   return (
     <>
       <button id="profile-button" onClick={toggleMenu}>
-        {url ? <img src={url} className={`${sessionUser.settings.theme}3`} /> : <img src='/cross.jpg' className='default' />}
+        {profileImage ? <img src={profileImage} className={`${sessionUser.settings.theme}3`} /> :
+          <img src='/cross.jpg' className={`default`} />}
       </button>
       {showMenu && (
         <div className={`profile-dropdown ${sessionUser ? sessionUser.settings.theme : 'light '}2`} ref={ulRef}>

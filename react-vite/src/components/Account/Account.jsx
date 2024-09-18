@@ -1,13 +1,12 @@
 import { removeAccounts, thunkGetAccount, thunkUpdateAccount } from "../../redux/account";
 import { useDispatch, useSelector } from "react-redux";
+import SignupFormModal from "../SignupFormModal";
+import OpenModalButton from "../OpenModalButton";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import Footer from "../Footer";
 import './Account.css';
-import OpenModalButton from "../OpenModalButton";
-import SignupFormModal from "../SignupFormModal";
 
 
 export default function Account() {
@@ -120,8 +119,7 @@ export default function Account() {
     return (
         <div>
             <div className={`flex column between ${theme}1`}>
-                <Header main={true} />
-                <main id="main-container" className="flex minh100 gap-60">
+                <main id="main-container" className="flex mtop-229 minh100 gap-60">
                     <Sidebar selection='account' />
                     <div id="account-container" className={`flex column gap-25 aend padding-40 ${theme} font-${font} ${theme}2`}>
                         {isLoaded && <>

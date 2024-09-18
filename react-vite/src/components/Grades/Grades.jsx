@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkGetGrade } from "../../redux/grade";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Header from "../LandingPage/Header";
 import Sidebar from "../Sidebar/Sidebar";
 import GradeEdit from "./GradeEdit";
 import Footer from "../Footer";
@@ -34,8 +33,7 @@ export default function Grades() {
     return (
         <div>
             <div className={`flex column between ${theme}1`}>
-                <Header main={true} />
-                <main id="main-container" className="flex minh100 gap-60">
+                <main id="main-container" className="flex minh100 gap-60 mtop-229">
                     <Sidebar selection='grades' />
                     {isLoaded && data &&
                         <div id="grades-container" className={`flex column gap-25 astart padding-40 ${theme} font-${font} ${theme}2`}>
