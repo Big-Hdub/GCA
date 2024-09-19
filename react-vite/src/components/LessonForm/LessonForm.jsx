@@ -15,9 +15,11 @@ export default function LessonForm({ edit }) {
     const sessionUser = useSelector((store) => store.session.user);
     const lesson = useSelector((store) => store.lessons.lessons);
     const course = useSelector((store) => store.courses.courses);
+    // const [filePreviews, setFilePreviews] = useState([]);
     const [isLoaded, setIsLoaded] = useState();
     const { courseId, lessonId } = useParams();
     const [errors, setErrors] = useState({});
+    const [files, setFiles] = useState([]);
     const [title, setTitle] = useState('');
     const [text, setText] = useState('');
     const [type, setType] = useState('');
@@ -25,10 +27,57 @@ export default function LessonForm({ edit }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!sessionUser || role !== 'teacher') {
+        if (!sessionUser || (role !== 'teacher' && role !== 'admin')) {
             navigate('/');
         }
     }, [navigate, sessionUser, role]);
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        const droppedFiles = Array.from(e.dataTransfer.files);
+        setFiles((prevFiles) => [...prevFiles, ...droppedFiles]);
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
+    const handleUpload = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await response.json();
+        if (data.file_url) {
+            const fileResponse = await fetch(`/api/get-file-url/${data.file_url.slice(45)}`)
+            if (fileResponse.ok) {
+                const fileUrl = await fileResponse.json()
+                if (fileUrl) {
+                    const url = fileUrl.file_url
+                    let extension = url.split('.').pop().toLowerCase();
+                    extension = extension.split('?')[0]
+                    if (['jpg', 'jpeg', 'png', 'gif'].includes(extension)) {
+                        setText((prevText) => `${prevText}\n![${'Image'}](${url})`);
+                    } else if (['pdf'].includes(extension)) {
+                        setText((prevText) => `${prevText}\n[${'View PDF'}](${url})`);
+                    } else if (['doc', 'docx'].includes(extension)) {
+                        setText((prevText) => `${prevText}\n[${'View Word Document'}](${url})`);
+                    }
+                }
+            }
+        } else {
+            console.error('File upload failed: ', data.error);
+        }
+    };
+
+    useEffect(() => {
+        if (files.length > 0) {
+            files.forEach((file) => handleUpload(file));
+            setFiles([]);
+        }
+    }, [files]);
 
     useEffect(() => {
         const loadCourse = async () => {
@@ -101,7 +150,7 @@ export default function LessonForm({ edit }) {
                     <main id="main-container" className="flex minh100 gap-60 mtop-229">
                         {edit ? <Sidebar selection='lesson' lesson={+lessonId} course={course.course} lessons={course.lessons} teacher={true} /> : <Sidebar selection='newLesson' course={course.course} lessons={course.lessons} />}
                         {isLoaded && course?.course?.title && <>
-                            <div id="lesson-container" className={`flex column wp100 gap-40 ${theme} font-${font} ${theme}2`}>
+                            <div id="lesson-container" className={`flex column wp100 gap-40 ${theme} font-${font} ${theme}2 padding-40 bsbb`}>
                                 <form id="create-lesson-form"
                                     className="flex column gap-15" onSubmit={handleSubmit}>
                                     <label>
@@ -129,6 +178,8 @@ export default function LessonForm({ edit }) {
                                         onKeyDown={handleKeyPress}
                                         className={`minh100px padding-15 ${theme}1 ${theme}`}
                                         onChange={(e) => setText(e.target.value)}
+                                        onDragOver={handleDragOver}
+                                        onDrop={handleDrop}
                                     />
                                     {errors.text && <p className="error">{errors.text}</p>}
                                     <label>

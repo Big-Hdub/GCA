@@ -2,3 +2,10 @@
     min-width: 97%;
     max-width: 97%;
 }
+
+#lesson-container {
+    height: fit-content;
+    padding: 40px;
+    border-radius: 15px;
+    max-width: 90%;
+}

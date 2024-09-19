@@ -324,6 +324,10 @@ input {
     box-sizing: border-box;
 }
 
+.bsbb {
+    box-sizing: border-box;
+}
+
 #lesson-container {
     width: 80%;
 }
@@ -335,6 +339,10 @@ input {
     flex-direction: column;
     gap: 10px;
     padding: 10px 0;
+}
+
+#lesson-container img {
+    max-width: 100%;
 }
 
 .selpad10 {
